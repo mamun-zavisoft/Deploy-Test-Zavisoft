@@ -1,0 +1,236 @@
+<?php $page = 'users'; ?>
+@extends('layout.mainlayout')
+@section('content')
+    <div class="page-wrapper">
+        <div class="content">
+            @component('components.breadcrumb')
+                @slot('title')
+                    User List
+                @endslot
+                @slot('li_1')
+                    Manage Your Users
+                @endslot
+                @slot('li_2')
+                    Add New User
+                @endslot
+            @endcomponent
+
+            <!-- /product list -->
+            <div class="card table-list-card">
+                <div class="card-body">
+                    <div class="table-top">
+                        <div class="search-set">
+                            <div class="search-input">
+                                <a href="" class="btn btn-searchset"><i data-feather="search"
+                                        class="feather-search"></i></a>
+                            </div>
+                        </div>
+                        <div class="search-path">
+                            <div class="d-flex align-items-center">
+                                <a class="btn btn-filter" id="filter_search">
+                                    <i data-feather="filter" class="filter-icon"></i>
+                                    <span><img src="{{ URL::asset('/build/img/icons/closes.svg') }}" alt="img"></span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="form-sort">
+                            <i data-feather="sliders" class="info-img"></i>
+                            <select class="select">
+                                <option>Sort by Date</option>
+                                <option>Newest</option>
+                                <option>Oldest</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- /Filter -->
+                    <div class="card" id="filter_inputs">
+                        <div class="card-body pb-0">
+                            <div class="row">
+                                <div class="col-lg-3 col-sm-6 col-12">
+                                    <div class="input-blocks">
+                                        <i data-feather="user" class="info-img"></i>
+                                        <select class="select">
+                                            <option>Choose Name</option>
+                                            <option>Lilly</option>
+                                            <option>Benjamin</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-6 col-12">
+                                    <div class="input-blocks">
+                                        <i data-feather="stop-circle" class="info-img"></i>
+                                        <select class="select">
+                                            <option>Choose Status</option>
+                                            <option>Active</option>
+                                            <option>Inactive</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-6 col-12">
+                                    <div class="input-blocks">
+                                        <i data-feather="zap" class="info-img"></i>
+                                        <select class="select">
+                                            <option>Choose Role</option>
+                                            <option>Store Keeper</option>
+                                            <option>Salesman</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-6 col-12">
+                                    <div class="input-blocks">
+                                        <a class="btn btn-filters ms-auto"> <i data-feather="search"
+                                                class="feather-search"></i> Search </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Filter -->
+                    <div class="table-responsive">
+                        <table class="table datanew" id="usersList">
+                            <thead>
+                                <tr>
+                                    <th class="no-sort">
+                                        <label class="checkboxs">
+                                            <input type="checkbox" id="select-all">
+                                            <span class="checkmarks"></span>
+                                        </label>
+                                    </th>
+                                    <th>User Name</th>
+                                    <th>Phone</th>
+                                    <th>email</th>
+                                    <th>Role</th>
+                                    <th>Permissions</th>
+                                    <th>Status</th>
+                                    <th class="no-sort">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($users as $user)
+                                    <tr>
+                                        <td>
+                                            <label class="checkboxs">
+                                                <input type="checkbox">
+                                                <span class="checkmarks"></span>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <div class="userimgname">
+                                                <a href="javascript:void(0);" class="userslist-img bg-img">
+                                                    <img src="{{ URL::asset('/build/img/users/user-23.jpg') }}"
+                                                        alt="product">
+                                                </a>
+                                                <div>
+                                                    <a href="javascript:void(0);">{{ $user->name }}</a>
+                                                </div>
+
+                                            </div>
+                                        </td>
+                                        <td>{{ $user->phone }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td>Admin</td>
+                                        <td>
+                                            @php
+                                                $permissions = $user->permissions
+                                                    ->merge($user->roles->flatMap->permissions)
+                                                    ->unique('id');
+                                            @endphp
+                                            <div class="d-flex flex-wrap gap-2" style="max-height: 50px; overflow-y: auto;">
+                                                @foreach ($permissions as $permission)
+                                                    <span class="badge bg-light text-dark d-flex align-items-center">
+                                                        <span class="me-2"
+                                                            style="width: 8px; height: 8px; background: {{ $user->permissions->contains('id', $permission->id) ? 'red' : 'blue' }}; border-radius: 50%;"></span>
+                                                        {{ $permission->name }}
+                                                    </span>
+                                                @endforeach
+                                            </div>
+                                        </td>
+                                        <td><span class="badge badge-linedanger">Inactive</span></td>
+                                        <td class="action-table-data">
+                                            <div class="edit-delete-action">
+                                                {{-- <a class="me-2 p-2 mb-0" href="javascript:void(0);">
+                                                    <i data-feather="eye" class="action-eye"></i>
+                                                </a> --}}
+                                                <a href="{{ route('users.edit', $user->id) }}" class="me-2 p-2 mb-0">
+                                                    <i data-feather="edit" class="feather-edit"></i>
+                                                </a>
+
+                                                <a class="me-2 confirm-text p-2 mb-0" href="javascript:void(0);">
+                                                    <i data-feather="trash-2" class="feather-trash-2"></i>
+                                                </a>
+                                                <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline delete-form" style="display: none;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <div class="text-center mt-4">No Data Found</div>
+                                @endforelse
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- /product list -->
+        </div>
+    </div>
+@endsection
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            if (!$.fn.DataTable.isDataTable('#usersList')) {
+                $('#usersList').DataTable({
+                    lengthChange: false,
+                    pageLength: 10,
+                    searching: true,
+                    ordering: true,
+                    info: true,
+                    language: {
+                        info: "Showing _START_ to _END_ of _TOTAL_ entries",
+                        infoEmpty: "Showing 0 to 0 of 0 entries",
+                        search: "",
+                        searchPlaceholder: "Search...",
+                        zeroRecords: "No matching records found"
+                    },
+                    columnDefs: [{
+                        targets: 'no-sort',
+                        orderable: false
+                    }],
+                    drawCallback: function() {
+                        // Reinitialize Feather icons after DataTable draw
+                        if (typeof feather !== 'undefined') {
+                            feather.replace();
+                        }
+                    }
+                });
+            }
+
+            $('.confirm-text').on('click', function(e) {
+                e.preventDefault();
+
+                // Get the associated delete form
+                var deleteForm = $(this).closest('tr').find('.delete-form');
+
+                // Show the SweetAlert confirmation dialog
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // If confirmed, submit the form
+                        deleteForm.submit();
+                    }
+                });
+            });
+
+        });
+    </script>
+@endpush

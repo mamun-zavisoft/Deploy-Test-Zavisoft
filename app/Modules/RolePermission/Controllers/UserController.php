@@ -18,14 +18,13 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('permission:user-create')->only('create', 'store');
-
     }
 
     public function index(Request $request)
     {
         $users = User::paginate();
 
-        return view('RolePermission::users.index', compact('users'));
+        return view('backend.users.index', compact('users'));
     }
 
     public function create()
@@ -55,7 +54,7 @@ class UserController extends Controller
                 'password' => Hash::make($request->password),
                 'role' => '2', // change accordingly to your default role
             ]);
-            
+
             $role = Role::find($request->role_id);
 
             if ($user) {
@@ -79,15 +78,15 @@ class UserController extends Controller
         $groupedPermissions = Permission::select('group_name', 'id', 'name')
             ->orderBy('group_name')->get()->groupBy('group_name');
 
-        return view('RolePermission::users.edit', compact('user', 'roles', 'groupedPermissions'));
+        return view('backend.users.edit', compact('user', 'roles', 'groupedPermissions'));
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$id,
-            'phone' => 'required|unique:users,phone,'.$id,
+            'email' => 'required|email|unique:users,email,' . $id,
+            'phone' => 'required|unique:users,phone,' . $id,
             'role_id' => 'required',
         ]);
 
@@ -109,7 +108,7 @@ class UserController extends Controller
         } else {
             $user->permissions()->detach();
         }
-        Cache::forget('user_permissions'.$user->id);
+        Cache::forget('user_permissions' . $user->id);
 
         $user->save();
 

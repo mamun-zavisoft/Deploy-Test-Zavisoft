@@ -6,7 +6,7 @@
 
     <div class="mb-3 d-flex justify-content-between align-items-center">
         {{-- @permission('user-create') --}}
-            <a href="{{ route('users.create') }}" class="btn btn-primary btn-sm">Add new</a>
+        <a href="{{ route('users.create') }}" class="btn btn-primary btn-sm">Add new</a>
         {{-- @endpermission --}}
         <div class="input-group w-25">
             <input type="text" class="form-control" placeholder="Search ..."
@@ -15,7 +15,7 @@
     </div>
 
     <div class="table-responsive">
-        <table class="table">
+        <table class="table " id="data11">
             <thead>
                 <tr>
                     <th scope="col">SL</th>
@@ -86,6 +86,25 @@
 
 @push('scripts')
     <script>
+        $(document).ready(function() {
+
+            $('#data11').DataTable({
+                "paging": true, // Enable pagination
+                "pageLength": 10, // Default rows per page
+                "lengthMenu": [10, 25, 50, 100], // Dropdown options for rows per page
+                "pagingType": "full_numbers", // Pagination style
+                "language": {
+                    "paginate": {
+                        "first": "« First",
+                        "last": "Last »",
+                        "next": "Next ›",
+                        "previous": "‹ Prev"
+                    },
+                    "lengthMenu": "Show _MENU_ entries",
+                    "info": "Showing _START_ to _END_ of _TOTAL_ users"
+                }
+            });
+        });
         $(document).on('submit', '.delete-form', function(e) {
             e.preventDefault();
 

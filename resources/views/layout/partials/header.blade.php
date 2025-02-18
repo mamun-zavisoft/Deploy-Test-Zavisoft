@@ -209,7 +209,7 @@
                             class="img-fluid">
                     </span>
                     <span class="user-detail">
-                        <span class="user-name">John Smilga</span>
+                        <span class="user-name">{{ auth()->user() ? auth()->user()->name : '' }}</span>
                         <span class="user-role">Super Admin</span>
                     </span>
                 </span>
@@ -221,7 +221,7 @@
                                 alt="">
                             <span class="status online"></span></span>
                         <div class="profilesets">
-                            <h6>John Smilga</h6>
+                            <h6>{{ auth()->user() ? auth()->user()->name : '' }}</h6>
                             <h5>Super Admin</h5>
                         </div>
                     </div>

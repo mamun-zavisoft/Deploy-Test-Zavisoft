@@ -12,7 +12,8 @@
     <title>Fast Auto Clinics</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="https://scontent.fdac14-1.fna.fbcdn.net/v/t39.30808-1/414208409_122103875102160003_9223256422369593478_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=105&ccb=1-7&_nc_sid=2d3e12&_nc_ohc=_5lD4NlXr8oQ7kNvgFDfhlf&_nc_oc=AdiALp63nvIoFdQHDlZOdTwBS9nwG_0z2YZoB8VlycJB8nuAfYi7KFOhv1DXsoQNd90&_nc_zt=24&_nc_ht=scontent.fdac14-1.fna&_nc_gid=AfJSptb8xYm91Gx-HAOf9Jr&oh=00_AYDBQUdqU0iLrL7Hzq5_b43qQp64HGEldOVSElVSOSuPVQ&oe=67BA0491">
+    <link rel="shortcut icon" type="image/x-icon"
+        href="https://scontent.fdac14-1.fna.fbcdn.net/v/t39.30808-1/414208409_122103875102160003_9223256422369593478_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=105&ccb=1-7&_nc_sid=2d3e12&_nc_ohc=_5lD4NlXr8oQ7kNvgFDfhlf&_nc_oc=AdiALp63nvIoFdQHDlZOdTwBS9nwG_0z2YZoB8VlycJB8nuAfYi7KFOhv1DXsoQNd90&_nc_zt=24&_nc_ht=scontent.fdac14-1.fna&_nc_gid=AfJSptb8xYm91Gx-HAOf9Jr&oh=00_AYDBQUdqU0iLrL7Hzq5_b43qQp64HGEldOVSElVSOSuPVQ&oe=67BA0491">
 
     @include('layout.partials.head')
 </head>
@@ -21,62 +22,12 @@
 
     <body class="main-chat-blk">
 @endif
-@if (
-    !Route::is([
-        'chat',
-        'under-maintenance',
-        'coming-soon',
-        'error-404',
-        'error-500',
-        'two-step-verification-3',
-        'two-step-verification-2',
-        'two-step-verification',
-        'email-verification-3',
-        'email-verification-2',
-        'email-verification',
-        'reset-password-3',
-        'reset-password-2',
-        'reset-password',
-        'forgot-password-3',
-        'forgot-password-2',
-        'forgot-password',
-        'register-3',
-        'register-2',
-        'register',
-        'signin-3',
-        'signin-2',
-        'signin',
-        'success',
-        'success-2',
-        'success-3',
-    ]))
+@if (!Route::is(['register', 'login']))
 
     <body>
 @endif
 
-@if (Route::is([
-        'two-step-verification-3',
-        'two-step-verification-2',
-        'two-step-verification',
-        'email-verification-3',
-        'email-verification-2',
-        'email-verification',
-        'reset-password-3',
-        'reset-password-2',
-        'reset-password',
-        'forgot-password-3',
-        'forgot-password-2',
-        'forgot-password',
-        'register-3',
-        'register-2',
-        'register',
-        'signin-3',
-        'signin-2',
-        'signin',
-        'success',
-        'success-2',
-        'success-3',
-    ]))
+@if (Route::is(['register', 'login']))
 
     <body class="account-page">
 @endif
@@ -89,70 +40,11 @@
 @if (Route::is(['lock-screen']))
     <div class="main-wrapper login-body">
 @endif
-@if (
-    !Route::is([
-        'under-maintenance',
-        'coming-soon',
-        'error-404',
-        'error-500',
-        'two-step-verification-3',
-        'two-step-verification-2',
-        'two-step-verification',
-        'email-verification-3',
-        'email-verification-2',
-        'email-verification',
-        'reset-password-3',
-        'reset-password-2',
-        'reset-password',
-        'forgot-password-3',
-        'forgot-password-2',
-        'forgot-password',
-        'register-3',
-        'register-2',
-        'register',
-        'signin-3',
-        'signin-2',
-        'login',
-        'success',
-        'success-2',
-        'success-3',
-        'lock-screen',
-    ]))
+@if (!Route::is(['register', 'login']))
     @include('layout.partials.header')
 @endif
-@if (
-    !Route::is([
-        'pos',
-        'under-maintenance',
-        'coming-soon',
-        'error-404',
-        'error-500',
-        'two-step-verification-3',
-        'two-step-verification-2',
-        'two-step-verification',
-        'email-verification-3',
-        'email-verification-2',
-        'email-verification',
-        'reset-password-3',
-        'reset-password-2',
-        'reset-password',
-        'forgot-password-3',
-        'forgot-password-2',
-        'forgot-password',
-        'register-3',
-        'register-2',
-        'register',
-        'signin-3',
-        'signin-2',
-        'login',
-        'success',
-        'success-2',
-        'success-3',
-        'lock-screen',
-    ]))
+@if (!Route::is(['register', 'login']))
     @include('layout.partials.sidebar')
-    {{-- @include('layout.partials.collapsed-sidebar') --}}
-    {{-- @include('layout.partials.horizontal-sidebar') --}}
 @endif
 @yield('content')
 </div>
@@ -161,6 +53,8 @@
 @component('components.modalpopup')
 @endcomponent
 @include('layout.partials.footer-scripts')
+
+@stack('scripts')
 </body>
 
 </html>

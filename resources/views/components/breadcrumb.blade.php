@@ -95,13 +95,13 @@
                         data-feather="chevron-up" class="feather-chevron-up"></i></a>
             </li>
         </ul>
-        @if (Route::is(['users']))
+        @if (Route::is(['users.*']))
             <div class="page-btn">
-                <a href="#" class="btn btn-added" data-bs-toggle="modal" data-bs-target="#add-units"><i
+                <a href="{{ route('users.create') }}" class="btn btn-added" data-bs-toggle="modal" data-bs-target="#add-units"><i
                         data-feather="plus-circle" class="me-2"></i>Add New User</a>
             </div>
         @endif
-        @if (Route::is(['roles-permissions']))
+        @if (Route::is(['roles.*']))
             <div class="page-btn">
                 <a href="#" class="btn btn-added" data-bs-toggle="modal" data-bs-target="#add-units"><i
                         data-feather="plus-circle" class="me-2"></i> Add New Role</a>
