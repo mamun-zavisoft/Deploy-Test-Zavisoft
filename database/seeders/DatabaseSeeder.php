@@ -19,27 +19,26 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        User::truncate();
 
-        $users = [];
-        $password = \Hash::make('12345678');
-        $createdAt = now();
-        $updatedAt = now();
-        for($i = 0; $i < 1000000; $i++) {
-            $users[] = [
-                'name' => 'User ' . $i,
-                'email' => 'user' . $i . '@example.com',
-                'phone' => '0000'. $i,
-                'password' => $password,
-                'created_at' => $createdAt,
-                'updated_at' => $updatedAt
-            ];
+        // $users = [];
+        // $password = \Hash::make('12345678');
+        // $createdAt = now();
+        // $updatedAt = now();
+        // for($i = 0; $i < 1000000; $i++) {
+        //     $users[] = [
+        //         'name' => 'User ' . $i,
+        //         'email' => 'user' . $i . '@example.com',
+        //         'phone' => '0000'. $i,
+        //         'password' => $password,
+        //         'created_at' => $createdAt,
+        //         'updated_at' => $updatedAt
+        //     ];
 
-            if (count($users) === 10000) {
-                User::insert($users);
-                $users = [];
-                $this->command->info('Inserted ' . $i+1 . ' users');
-            }
-        }
+        //     if (count($users) === 10000) {
+        //         User::insert($users);
+        //         $users = [];
+        //         $this->command->info('Inserted ' . $i+1 . ' users');
+        //     }
+        // }
     }
 }
