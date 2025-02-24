@@ -38,7 +38,8 @@
                                         </td>
                                         <td>{{ $category->name }}</td>
                                         <td><span class="d-flex"><img
-                                                    src="{{ $category->image ?: URL::asset('/build/img/brand/brand-icon-01.png') }}"
+                                                    src="{{ $category->image ?: asset('build/img/no-image.svg') }}"
+                                                    style="width: 50px; height: 50px;" 
                                                     alt=""></span></td>
                                         <td>{{ $category->created_at->format('d M Y') }}</td>
                                         <td class="action-table-data">
@@ -87,17 +88,20 @@
                                                                         value="{{ $category->name }}" name="name">
                                                                 </div>
                                                                 <label class="form-label">Logo</label>
-                                                                <div class="profile-pic-upload mb-3">
+                                                                <div class="profile-pic-upload mb-3 image-container">
                                                                     <div class="profile-pic brand-pic">
-                                                                        <span><img
-                                                                                src="{{ URL::asset('/build/img/brand/brand-icon-02.png') }}"
-                                                                                alt=""></span>
+                                                                        <span>
+                                                                            <img src="{{ $category->image ?: asset('build/img/icons/upload.svg') }}"
+                                                                                class="image-preview" alt="">
+                                                                        </span>
                                                                         <a href="javascript:void(0);"
-                                                                            class="remove-photo"><i data-feather="x"
-                                                                                class="x-square-add"></i></a>
+                                                                            class="remove-photo d-none">
+                                                                            <i data-feather="x" class="x-square-add"></i>
+                                                                        </a>
                                                                     </div>
                                                                     <div class="image-upload mb-0">
-                                                                        <input type="file">
+                                                                        <input class="image-input" type="file"
+                                                                            name="image">
                                                                         <div class="image-uploads">
                                                                             <h4>Change Image</h4>
                                                                         </div>
@@ -151,13 +155,18 @@
                                     <input type="text" name="name" class="form-control">
                                 </div>
                                 <label class="form-label">Logo</label>
-                                <div class="profile-pic-upload mb-3">
+                                <div class="profile-pic-upload mb-3 image-container">
                                     <div class="profile-pic brand-pic">
-                                        <span><i data-feather="plus-circle" class="plus-down-add"></i> Add
-                                            Image</span>
+                                        <span>
+                                            <img src="{{ asset('build/img/icons/upload.svg') }}"
+                                                class="image-preview" alt="">
+                                        </span>
+                                        <a href="javascript:void(0);" class="remove-photo d-none">
+                                            <i data-feather="x" class="x-square-add"></i>
+                                        </a>
                                     </div>
                                     <div class="image-upload mb-0">
-                                        <input type="file" name="image">
+                                        <input class="image-input" type="file" name="image">
                                         <div class="image-uploads">
                                             <h4>Change Image</h4>
                                         </div>

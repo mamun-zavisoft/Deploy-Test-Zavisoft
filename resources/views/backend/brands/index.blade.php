@@ -162,7 +162,7 @@
                                 <div class="profile-pic-upload mb-3 image-container">
                                     <div class="profile-pic brand-pic">
                                         <span>
-                                            <img src="{{ $brand->image ?: asset('build/img/icons/upload.svg') }}"
+                                            <img src="{{ asset('build/img/icons/upload.svg') }}"
                                                 class="image-preview" alt="">
                                         </span>
                                         <a href="javascript:void(0);" class="remove-photo d-none">
@@ -262,11 +262,6 @@
                     }
                 });
             });
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
-            
         });
     </script>
 @endpush
