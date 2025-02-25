@@ -63,10 +63,15 @@
     @endif
 
     @if (isset($button) && isset($backButtonRoute))
-        <div class="page-btn">
-            <a href="{{ route($backButtonRoute) }}" class="btn btn-added"><i data-feather="arrow-left" class="me-2"></i>
-                {{ $button }}</a>
-        </div>
+        <ul class="table-top-head">
+            <li>
+                <div class="page-btn">
+                    <a href="{{ route($backButtonRoute) }}" class="btn btn-secondary"><i data-feather="arrow-left"
+                            class="me-2"></i>
+                        {{ $button }}</a>
+                </div>
+            </li>
+        </ul>
     @endif
 
 

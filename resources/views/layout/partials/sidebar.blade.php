@@ -7,12 +7,25 @@
                 <li class="submenu-open">
                     <h6 class="submenu-hdr">Inventory</h6>
                     <ul>
+                        <li class="{{ Request::is('products', 'product-details') ? 'active' : '' }}"><a
+                                href="{{ route('admin.products.index') }}"><i data-feather="box"></i><span>Products</span></a>
+                        </li>
                         <li class="{{ Request::is('categories') ? 'active' : '' }}"><a
-                                href="{{ route('admin.categories.index') }}"><i data-feather="codepen"></i><span>Category</span></a>
+                                href="{{ route('admin.categories.index') }}"><i
+                                    data-feather="codepen"></i><span>Category</span></a>
                         </li>
                         <li class="{{ Request::is('brands') ? 'active' : '' }}"><a
-                                href="{{ route('admin.brands.index') }}"><i
-                                    data-feather="tag"></i><span>Brands</span></a></li>
+                                href="{{ route('admin.brands.index') }}">
+                                <i data-feather="tag"></i><span>Brands</span></a>
+                        </li>
+                        <li class="{{ Request::is('zones') ? 'active' : '' }}"><a
+                                href="{{ route('admin.zones.index') }}">
+                                <i data-feather="map-pin"></i><span>Zones</span></a>
+                        </li>
+                        <li class="{{ Request::is('racks') ? 'active' : '' }}"><a
+                                href="{{ route('admin.racks.index') }}">
+                                <i data-feather="layers"></i><span>Racks</span></a>
+                        </li>
 
                     </ul>
                 </li>
@@ -21,7 +34,12 @@
                     <h6 class="submenu-hdr">Peoples</h6>
                     <ul>
                         <li class="{{ Request::is('suppliers') ? 'active' : '' }}"><a
-                                href="{{ route('admin.suppliers.index') }}"><i data-feather="users"></i><span>Suppliers</span></a>
+                                href="{{ route('admin.suppliers.index') }}"><i
+                                    data-feather="users"></i><span>Suppliers</span></a>
+                        </li>
+                        <li class="{{ Request::is('zones') ? 'active' : '' }}"><a
+                                href="{{ route('admin.zones.index') }}"><i
+                                    data-feather="archive"></i><span>Zones</span></a>
                         </li>
                     </ul>
                 </li>
