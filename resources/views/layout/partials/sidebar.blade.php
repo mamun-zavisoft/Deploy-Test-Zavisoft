@@ -7,7 +7,7 @@
                 <li class="submenu-open">
                     <h6 class="submenu-hdr">Inventory</h6>
                     <ul>
-                        <li class="{{ Request::is('products', 'product-details') ? 'active' : '' }}"><a
+                        <li class="{{ Request::is('products*',) ? 'active' : '' }}"><a
                                 href="{{ route('admin.products.index') }}"><i data-feather="box"></i><span>Products</span></a>
                         </li>
                         <li class="{{ Request::is('categories') ? 'active' : '' }}"><a
@@ -29,6 +29,10 @@
                         <li class="{{ Request::is('service-charts*') ? 'active' : '' }}"><a
                                 href="{{ route('admin.service-charts.index') }}">
                                 <i data-feather="bar-chart"></i><span>Service Charts</span></a>
+                        </li>
+                        <li class="{{ Request::is('drawers*') ? 'active' : '' }}"><a
+                                href="{{ route('admin.drawers.index') }}">
+                                <i data-feather="hard-drive"></i><span>Drawers</span></a>
                         </li>
 
                     </ul>

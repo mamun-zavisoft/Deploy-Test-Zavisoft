@@ -6,24 +6,24 @@ namespace App\Models;
 
 use App\Media\HasMedia;
 use App\Media\Mediable;
+use App\Modules\RolePermission\Traits\RolePermission;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Modules\RolePermission\Traits\RolePermission;
 use Illuminate\Support\Facades\Cache;
 
 class User extends Authenticatable implements Mediable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, RolePermission, HasMedia;
+    use HasFactory, HasMedia, Notifiable, RolePermission;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
-
     protected $guard_name = 'admin';
+
     protected $appends = ['image'];
 
     protected $fillable = [
@@ -32,6 +32,8 @@ class User extends Authenticatable implements Mediable
         'phone',
         'password',
         'image',
+        'role',
+        'zone_id',
     ];
 
     /**
@@ -59,9 +61,10 @@ class User extends Authenticatable implements Mediable
 
     public function hasPermission($permissionName)
     {
-        $permissions = Cache::remember('user_permissions' . $this->id, now()->addMonths(5), function () {
+        $permissions = Cache::remember('user_permissions'.$this->id, now()->addMonths(5), function () {
             return $this->getAllPermissions()->pluck('name')->toArray();
         });
+
         return in_array($permissionName, $permissions);
     }
 

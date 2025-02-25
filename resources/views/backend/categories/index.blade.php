@@ -247,6 +247,7 @@
                             location.reload();
                         }, 1000);
                     } else {
+                        SubmitBtn.prop('disabled', false);
                         toastr.error(response.message);
                     }
                 }).fail(function(xhr) {

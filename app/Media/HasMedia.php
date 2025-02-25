@@ -91,17 +91,20 @@ trait HasMedia
     public function getUrl($collectionName = null)
     {
         try {
-            $query = $this->media();
-            if ($collectionName) {
-                $query->where('collection_name', $collectionName);
-            }
-            $media = $query->select('file_path')->get()->map(function ($media) {
-                return Storage::disk($this->disk_name)->url($media->file_path);
+
+            $mediaCollect = collect($this->media)->filter(fn($media) => $collectionName ? $media->collection_name === $collectionName : true)->values();
+
+
+            $media = $mediaCollect->map(function ($media) {
+                return (object)[
+                    'id' => $media->id,
+                    'url' => Storage::disk($this->disk_name)->url($media->file_path),
+                ];
             })->toArray();
 
             return $media ?? [];
         } catch (\Exception $exception) {
-            throw new \Exception("Failed to retrieve media URL: " . $exception->getMessage());
+            throw new \Exception('Failed to retrieve media URL: ' . $exception->getMessage());
         }
     }
 

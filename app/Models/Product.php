@@ -4,14 +4,12 @@ namespace App\Models;
 
 use App\Media\HasMedia;
 use App\Media\Mediable;
-
-
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model implements Mediable
 {
     use HasMedia;
-    
+
     protected $guarded = [];
 
     protected $appends = ['thumbnail', 'images'];
@@ -24,7 +22,7 @@ class Product extends Model implements Mediable
     public function category()
     {
         return $this->belongsTo(Category::class);
-    }    
+    }
 
     public function zone()
     {
@@ -51,7 +49,6 @@ class Product extends Model implements Mediable
     public function setImagesAttribute($file)
     {
         if ($file) {
-
             $this->addMedia($file, 'images', []);
         }
     }

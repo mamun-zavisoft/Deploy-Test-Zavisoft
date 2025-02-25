@@ -12,4 +12,9 @@ class Rack extends Model
     {
         return $this->belongsTo(Zone::class);
     }
+
+    public function drawers()
+    {
+        return $this->hasMany(Drawer::class);
+    }
 }
