@@ -6,8 +6,8 @@ use App\Actions\FetchProduct;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\Zone;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -23,18 +23,17 @@ class ProductController extends Controller
 
     public function create()
     {
-        $zones = Zone::select('id', 'name')->get();
         $brands = Brand::select('id', 'name')->get();
         $categories = Category::select('id', 'name')->get();
 
-        return view('backend.products.create', compact('zones', 'brands', 'categories'));
+        return view('backend.products.create', compact('brands', 'categories'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'category_id' => 'required|integer|exists:categories,id',
-            'brand_id' => 'required|integer|exists:brands,id',
+            'category_id' => 'nullable|integer|exists:categories,id',
+            'brand_id' => 'nullable|integer|exists:brands,id',
             'name' => 'required|string|max:255|unique:products,name',
             'description' => 'nullable|string|max:4000',
             'purchase_price' => 'required|numeric|min:0',
@@ -43,8 +42,8 @@ class ProductController extends Controller
             'images' => 'nullable|array',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        // dd($request->all());
         try {
+            DB::beginTransaction();
             $product = Product::create([
                 'name' => $request->name,
                 'brand_id' => $request->brand_id,
@@ -52,58 +51,90 @@ class ProductController extends Controller
                 'description' => $request->description,
                 'purchase_price' => $request->purchase_price,
                 'sale_price' => $request->sale_price,
+                'zone_id' => auth()->user()?->zone_id,
             ]);
 
             $product->thumbnail = $request->file('thumbnail');
 
-            foreach($request->images as $image) {
-                $product->images = $image;
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $image) {
+                    $product->images = $image;
+                }
             }
 
             $product->save();
-          
-            return response()->json(['message' => 'Product created successfully!', 'type' => 'success'], 200);
+
+            DB::commit();
+
+            return response()->json(['message' => 'Product created successfully!', 'type' => 'success', 'redirectUrl' => route('admin.products.index')], 200);
         } catch (\Throwable $th) {
+            DB::rollBack();
+
             return response()->json(['message' => $th->getMessage(), 'type' => 'error']);
         }
     }
 
-    public function edit(Category $category)
+    public function edit(Product $product)
     {
-        $zones = Zone::select('id', 'name')->get();
         $brands = Brand::select('id', 'name')->get();
         $categories = Category::select('id', 'name')->get();
 
-        return view('backend.categories.edit', compact('category', 'zones', 'brands', 'categories'));
+        return view('backend.products.edit', compact('brands', 'categories', 'product'));
     }
 
-    public function update(Request $request, Category $category)
+    public function update(Request $request, Product $product)
     {
         $request->validate([
-            'name' => 'required|string|max:50|unique:brands,name,' . $category->id,
+            'category_id' => 'nullable|integer|exists:categories,id',
+            'brand_id' => 'nullable|integer|exists:brands,id',
+            'name' => 'required|string|max:255|unique:products,name,' . $product->id,
+            'description' => 'nullable|string|max:4000',
+            'purchase_price' => 'required|numeric|min:0',
+            'sale_price' => 'required|numeric|min:0',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'images' => 'nullable|array',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-
         try {
-            $category->update([
+            DB::beginTransaction();
+            $product->update([
                 'name' => $request->name,
+                'brand_id' => $request->brand_id,
+                'category_id' => $request->category_id,
+                'description' => $request->description,
+                'purchase_price' => $request->purchase_price,
+                'sale_price' => $request->sale_price,
+                'zone_id' => auth()->user()?->zone_id,
             ]);
 
-            $category->image = $request->file('image');
-            $category->save();
+            $product->thumbnail = $request->file('thumbnail');
 
-            return response()->json(['message' => 'Category updated successfully!', 'type' => 'success']);
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $image) {
+                    $product->images = $image;
+                }
+            }
+
+            $product->save();
+
+            DB::commit();
+
+            return response()->json(['message' => 'Product Updated successfully!', 'type' => 'success'], 200);
         } catch (\Throwable $th) {
+            DB::rollBack();
+
             return response()->json(['message' => $th->getMessage(), 'type' => 'error']);
         }
     }
 
-    public function destroy(Category $category)
+    public function destroy(Product $product)
     {
         // if ($category->products()->exists()) {
         //     return response()->json(['message' => 'Category has products, cannot delete!'], 422);
         // }
-        $category->delete();
-        return redirect()->back()->with('success', 'Category deleted successfully!');
+        $product->delete();
+
+        return redirect()->back()->with('success', 'Product deleted successfully!');
         // return response()->json(['message' => 'Brand deleted successfully!']);
     }
 }

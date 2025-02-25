@@ -2,7 +2,7 @@
 @section('content')
     <div class="page-wrapper">
         <div class="content">
-            <x-breadcrumb title="Product List" sub-title="Manage Your Products" button="Back to Product"
+            <x-breadcrumb title="Product Create" button="Back to Product"
                 back-button-route="admin.products.index" />
 
             <!-- /add -->
@@ -29,17 +29,6 @@
                                         <div class="row">
                                             <div class="col-lg-4 col-sm-6 col-12">
                                                 <div class="mb-3 add-product">
-                                                    <label class="form-label">Zone*</label>
-                                                    <select class="select">
-                                                        <option>Choose</option>
-                                                        @foreach ($zones as $zone)
-                                                            <option value="{{ $zone->id }}">{{ $zone->name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4 col-sm-6 col-12">
-                                                <div class="mb-3 add-product">
                                                     <div class="add-newplus">
                                                         <label class="form-label">Category</label>
                                                         <a href="javascript:void(0);" data-bs-toggle="modal"
@@ -49,7 +38,7 @@
                                                                 New</span></a>
                                                     </div>
                                                     <select class="select" name="category_id">
-                                                        <option>Choose</option>
+                                                        <option value="">Choose</option>
                                                         @foreach ($categories as $category)
                                                             <option value="{{ $category->id }}">{{ $category->name }}
                                                             </option>
@@ -66,7 +55,7 @@
                                                                 class="plus-down-add"></i><span>Add New</span></a>
                                                     </div>
                                                     <select class="select" name="brand_id">
-                                                        <option>Choose</option>
+                                                        <option value="">Choose</option>
                                                         @foreach ($brands as $brand)
                                                             <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                                                         @endforeach
@@ -121,14 +110,14 @@
                                                 <div class="row">
                                                     <div class="col-lg-4 col-sm-6 col-12">
                                                         <div class="input-blocks add-product">
-                                                            <label>Purchase Price</label>
+                                                            <label>Purchase Price*</label>
                                                             <input type="text" class="form-control"
                                                                 name="purchase_price">
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4 col-sm-6 col-12">
                                                         <div class="input-blocks add-product">
-                                                            <label>Sale Price</label>
+                                                            <label>Sale Price*</label>
                                                             <input type="text" class="form-control" name="sale_price">
                                                         </div>
                                                     </div>
