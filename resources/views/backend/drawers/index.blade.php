@@ -2,7 +2,7 @@
 @section('content')
     <div class="page-wrapper">
         <div class="content">
-            <x-breadcrumb-modal title="Brand List" sub-title="Manage Your Brands" button="Add Brand" modal-id="add-brand" />
+            <x-breadcrumb-modal title="Drawer List" sub-title="Manage drawer" button="Add drawer" modal-id="add-drawer" />
 
             <!-- /product list -->
             <div class="card table-list-card">
@@ -16,7 +16,6 @@
                         </div>
 
                     </div>
-                    <!-- /Filter -->
 
                     <!-- /Filter -->
                     <div class="table-responsive">
@@ -24,37 +23,24 @@
                             <thead>
                                 <tr>
                                     <th class="no-sort">SL</th>
-                                    <th>Brand</th>
-                                    <th>Logo</th>
-                                    <th>Created On</th>
-                                    <th>Status</th>
+                                    <th>Rack</th>
+                                    <th>Drawer</th>
                                     <th class="no-sort">Action</th>
                                 </tr>
                             </thead>
                             <tbody id="tbody">
-                                @foreach ($brands as $brand)
-                                @php
-                                    $image = $brand->image;
-                                @endphp
+                                @foreach ($drawers as $drawer)
                                     <tr>
-                                        <td>
-                                            {{ $loop->iteration + $brands->firstItem() - 1 }}
-                                        </td>
-                                        <td>{{ $brand->name }}</td>
-                                        <td><span class="d-flex"><img
-                                                    src="{{ $image ?: asset('build/img/no-image.svg') }}"
-                                                    style="width: 50px; height: 50px;" alt=""></span></td>
-                                        <td>{{ $brand->created_at->format('d M Y') }}</td>
-                                        <td><span
-                                                class="badge rounded-pill bg-outline-{{ $brand->status == 1 ? 'success' : 'warning' }}">{{ $brand->status == 1 ? 'Active' : 'Inactive' }}</span>
-                                        </td>
+                                        <td>{{ $loop->iteration + $drawers->firstItem() - 1 }}</td>
+                                        <td>{{ $drawer->rack?->name }}</td>
+                                        <td>{{ $drawer->name }}</td>
                                         <td class="action-table-data">
                                             <div class="edit-delete-action">
                                                 <a class="me-2 p-2" href="#" data-bs-toggle="modal"
-                                                    data-bs-target="#edit-brand-{{ $brand->id }}">
+                                                    data-bs-target="#edit-drawer-{{ $drawer->id }}">
                                                     <i data-feather="edit" class="feather-edit"></i>
                                                 </a>
-                                                <form action="{{ route('admin.brands.destroy', $brand->id) }}"
+                                                <form action="{{ route('admin.drawers.destroy', $drawer->id) }}"
                                                     method="post" class="delete-form">
                                                     @csrf
                                                     @method('DELETE')
@@ -65,17 +51,18 @@
                                             </div>
 
                                         </td>
+
                                     </tr>
 
-                                    <!-- Edit Brand -->
-                                    <div class="modal fade" id="edit-brand-{{ $brand->id }}">
+                                    <!-- Edit drawer -->
+                                    <div class="modal fade" id="edit-drawer-{{ $drawer->id }}">
                                         <div class="modal-dialog modal-dialog-centered custom-modal-two">
                                             <div class="modal-content">
                                                 <div class="page-wrapper-new p-0">
                                                     <div class="content">
                                                         <div class="modal-header border-0 custom-modal-header">
                                                             <div class="page-title">
-                                                                <h4>Edit Brand</h4>
+                                                                <h4>Edit Drawer</h4>
                                                             </div>
                                                             <button type="button" class="close" data-bs-dismiss="modal"
                                                                 aria-label="Close">
@@ -83,35 +70,27 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body custom-modal-body new-employee-field">
-                                                            <form class="editForm" data-id="{{ $brand->id }}"
-                                                                action="{{ route('admin.brands.update', $brand->id) }}"
+                                                            <form class="editForm" data-id="{{ $drawer->id }}"
+                                                                action="{{ route('admin.drawers.update', $drawer->id) }}"
                                                                 method="POST" enctype="multipart/form-data">
                                                                 @csrf
                                                                 @method('PUT')
                                                                 <div class="mb-3">
-                                                                    <label class="form-label">Brand*</label>
-                                                                    <input type="text" class="form-control"
-                                                                        value="{{ $brand->name }}" name="name">
+                                                                    <label class="form-label">Rack*</label>
+                                                                    <select class="select" name="rack_id">
+                                                                        <option value="">Choose</option>
+                                                                        @foreach ($racks as $rack)
+                                                                            <option value="{{ $rack->id }}"
+                                                                                {{ $rack->id == $drawer->rack_id ? 'selected' : '' }}>
+                                                                                {{ $rack->name }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
                                                                 </div>
-                                                                <label class="form-label">Logo</label>
-                                                                <div class="profile-pic-upload mb-3 image-container">
-                                                                    <div class="profile-pic brand-pic">
-                                                                        <span>
-                                                                            <img src="{{ $image ?: asset('build/img/icons/upload.svg') }}"
-                                                                                class="image-preview" alt="">
-                                                                        </span>
-                                                                        <a href="javascript:void(0);"
-                                                                            class="remove-photo d-none">
-                                                                            <i data-feather="x" class="x-square-add"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                    <div class="image-upload mb-0">
-                                                                        <input class="image-input" type="file"
-                                                                            name="image">
-                                                                        <div class="image-uploads">
-                                                                            <h4>Change Image</h4>
-                                                                        </div>
-                                                                    </div>
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Drawer Name*</label>
+                                                                    <input type="text" class="form-control"
+                                                                        value="{{ $drawer->name }}" name="name">
                                                                 </div>
 
                                                                 <div class="modal-footer-btn">
@@ -127,7 +106,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- Edit Brand -->
+                                    <!-- Edit drawer -->
                                 @endforeach
 
                             </tbody>
@@ -139,52 +118,41 @@
         </div>
     </div>
 
-    <!-- Add Brand -->
-    <div class="modal fade" id="add-brand">
+    <!-- Add Drawer -->
+    <div class="modal fade" id="add-drawer">
         <div class="modal-dialog modal-dialog-centered custom-modal-two">
             <div class="modal-content">
                 <div class="page-wrapper-new p-0">
                     <div class="content">
                         <div class="modal-header border-0 custom-modal-header">
                             <div class="page-title">
-                                <h4>Create Brand</h4>
+                                <h4>Create Drawer</h4>
                             </div>
                             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body custom-modal-body new-employee-field">
-                            <form action="{{ route('admin.brands.store') }}" method="POST"
-                                enctype="multipart/form-data" id="storeForm">
+                            <form action="{{ route('admin.drawers.store') }}" method="POST" enctype="multipart/form-data"
+                                id="storeForm">
                                 @csrf
                                 <div class="mb-3">
-                                    <label class="form-label">Brand</label>
+                                    <label class="form-label">Rack*</label>
+                                    <select class="select" name="rack_id">
+                                        <option value="">Choose</option>
+                                        @foreach ($racks as $rack)
+                                            <option value="{{ $rack->id }}">{{ $rack->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Drawer Name*</label>
                                     <input type="text" name="name" class="form-control">
                                 </div>
-                                <label class="form-label">Logo</label>
-                                <div class="profile-pic-upload mb-3 image-container">
-                                    <div class="profile-pic brand-pic">
-                                        <span>
-                                            <img src="{{ asset('build/img/icons/upload.svg') }}"
-                                                class="image-preview" alt="">
-                                        </span>
-                                        <a href="javascript:void(0);" class="remove-photo d-none">
-                                            <i data-feather="x" class="x-square-add"></i>
-                                        </a>
-                                    </div>
-                                    <div class="image-upload mb-0">
-                                        <input class="image-input" type="file" name="image">
-                                        <div class="image-uploads">
-                                            <h4>Change Image</h4>
-                                        </div>
-                                    </div>
-                                </div>
-
-
                                 <div class="modal-footer-btn">
                                     <button type="button" class="btn btn-cancel me-2"
                                         data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-submit" id="submit_btn">Create Brand</button>
+                                    <button type="submit" class="btn btn-submit" id="submit_btn">Create Drawer</button>
                                 </div>
                             </form>
                         </div>
@@ -220,6 +188,7 @@
                             location.reload();
                         }, 1000);
                     } else {
+                        SubmitBtn.prop('disabled', false);
                         toastr.error(response.message);
                     }
                 }).fail(function(xhr) {
@@ -230,6 +199,9 @@
                         $.each(response.errors, function(key, value) {
                             toastr.error(value);
                         });
+                    }
+                    if (response && response.message) {
+                        toastr.error(response.message);
                     }
                 });
             });
@@ -252,7 +224,6 @@
                             location.reload();
                         }, 1000);
                     } else {
-                        SubmitBtn.prop('disabled', false);
                         toastr.error(response.message);
                     }
                 }).fail(function(xhr) {
@@ -262,6 +233,9 @@
                         $.each(response.errors, function(key, value) {
                             toastr.error(value);
                         });
+                    }
+                    if (response && response.message) {
+                        toastr.error(response.message);
                     }
                 });
             });

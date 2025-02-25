@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DrawerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RackController;
 use App\Http\Controllers\SettingController;
@@ -16,6 +17,7 @@ Route::middleware('auth')->name('admin.')->group(function () {
     Route::resource('/suppliers', SupplierController::class);
     Route::resource('/products', ProductController::class);
     Route::resource('/racks', RackController::class);
+    Route::resource('/drawers', DrawerController::class);
 
 
     Route::controller(SettingController::class)->group(function () {

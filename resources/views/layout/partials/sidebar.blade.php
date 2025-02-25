@@ -26,6 +26,10 @@
                                 href="{{ route('admin.racks.index') }}">
                                 <i data-feather="layers"></i><span>Racks</span></a>
                         </li>
+                        <li class="{{ Request::is('drawers*') ? 'active' : '' }}"><a
+                                href="{{ route('admin.drawers.index') }}">
+                                <i data-feather="hard-drive"></i><span>Drawers</span></a>
+                        </li>
 
                     </ul>
                 </li>
