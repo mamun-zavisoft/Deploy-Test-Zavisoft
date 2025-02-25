@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DrawerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RackController;
+use App\Http\Controllers\ServiceChartController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\ZoneController;
@@ -17,6 +18,7 @@ Route::middleware('auth')->name('admin.')->group(function () {
     Route::resource('/suppliers', SupplierController::class);
     Route::resource('/products', ProductController::class);
     Route::resource('/racks', RackController::class);
+    Route::resource('/service-charts', ServiceChartController::class);
     Route::resource('/drawers', DrawerController::class);
 
 
