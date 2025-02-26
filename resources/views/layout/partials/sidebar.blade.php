@@ -7,8 +7,9 @@
                 <li class="submenu-open">
                     <h6 class="submenu-hdr">Inventory</h6>
                     <ul>
-                        <li class="{{ Request::is('products*',) ? 'active' : '' }}"><a
-                                href="{{ route('admin.products.index') }}"><i data-feather="box"></i><span>Products</span></a>
+                        <li class="{{ Request::is('products*') ? 'active' : '' }}"><a
+                                href="{{ route('admin.products.index') }}"><i
+                                    data-feather="box"></i><span>Products</span></a>
                         </li>
                         <li class="{{ Request::is('categories') ? 'active' : '' }}"><a
                                 href="{{ route('admin.categories.index') }}"><i
@@ -34,7 +35,22 @@
                                 href="{{ route('admin.drawers.index') }}">
                                 <i data-feather="hard-drive"></i><span>Drawers</span></a>
                         </li>
+                        <li class="{{ Request::is('accounts*') ? 'active' : '' }}"><a
+                                href="{{ route('admin.accounts.index') }}">
+                                <i data-feather="credit-card"></i><span>Accounts</span></a>
+                        </li>
 
+                    </ul>
+                </li>
+                {{-- purchase --}}
+                <li class="submenu-open">
+                    <h6 class="submenu-hdr">Purchases</h6>
+                    <ul>
+                        <li class="{{ Request::is('purchases*') ? 'active' : '' }}"><a
+                                href="{{ route('admin.purchases.index') }}"><i
+                                    data-feather="shopping-bag"></i><span>Purchases</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 {{-- peoples --}}

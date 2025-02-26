@@ -137,4 +137,23 @@ class ProductController extends Controller
         return redirect()->back()->with('success', 'Product deleted successfully!');
         // return response()->json(['message' => 'Brand deleted successfully!']);
     }
+
+    public function search(Request $request)
+    {
+        $search = $request->search ?? '';
+        $query = Product::query();
+
+
+        if ($search !== '') {
+            $query->where('name', 'LIKE', '%'.$search.'%');
+        }
+        $products = $query->orderBy('id', 'desc')->limit(50)->get();
+        $productCount = $products->count();
+
+        if ($productCount === 0) {
+            return '<h5>Product Not Found</h5>';
+        } else {
+            return view('backend.products.search_list', compact('products'));
+        }
+    }
 }
