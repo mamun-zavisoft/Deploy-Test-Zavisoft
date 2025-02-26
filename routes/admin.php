@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DrawerController;
@@ -22,6 +23,7 @@ Route::middleware('auth')->name('admin.')->group(function () {
     Route::resource('/service-charts', ServiceChartController::class);
     Route::resource('/drawers', DrawerController::class);
     Route::resource('/purchases', PurchaseController::class);
+    Route::resource('/accounts', AccountController::class);
 
     // single action routes
     Route::get('/product/search', [ProductController::class, 'search'])->name('products.search');
