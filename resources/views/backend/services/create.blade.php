@@ -163,8 +163,11 @@
                 <select name="parts[__index__][product_id]" class="form-control part-select" required>
                     <option value="">Select Part</option>
                     @foreach ($products as $product)
-                        <option value="{{ $product->id }}" data-total-stock="{{ $product->total_available_qty }}">
-                            {{ $product->name }} (Total Stock: {{ $product->total_available_qty }})
+                    @php
+                        $totalStock = $product->getTotalAvailableQuantity();
+                    @endphp
+                        <option value="{{ $product->id }}" data-total-stock="{{ $totalStock }}">
+                            {{ $product->name }} (Total Stock: {{ $totalStock }})
                         </option>
                     @endforeach
                 </select>
@@ -415,6 +418,8 @@
                         if (response.stock) {
                             let availableQty = response.stock.available_qty || 0;
                             let salePrice = response.stock.sale_price || 0;
+                            console.log(salePrice);
+                            
 
                             // Update UI with stock info
                             row.find('.part-quantity')
@@ -424,9 +429,8 @@
 
                             row.find('.stock-info').text(`Available: ${availableQty}`);
                             row.find('.part-price')
-                                .val(salePrice.toFixed(2))
-                                .data('unit-price', salePrice);
-
+                                .val(parseFloat(salePrice).toFixed(2))
+                                .data('unit-price', parseFloat(salePrice));
                             // Set the latest purchase ID if provided in the API response
                             if (response.stock.stock_purchase_id) {
                                 row.find('.stock-purchase-id').val(response.stock.stock_purchase_id);
@@ -506,9 +510,9 @@
                     type: 'POST',
                     data: formData,
                     success: function(response) {
-                        toastr.success('Service created successfully');
+                        toastr.success(response.message);
                         setTimeout(function() {
-                            window.location.href = response.redirect ||
+                            window.location.href = response.redirectUrl ||
                                 "{{ route('admin.services.index') }}";
                         }, 1000);
                     },
