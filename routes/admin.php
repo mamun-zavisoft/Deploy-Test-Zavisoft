@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DrawerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\PurchasesDetailController;
 use App\Http\Controllers\RackController;
 use App\Http\Controllers\ServiceChartController;
 use App\Http\Controllers\ServiceController;
@@ -30,6 +31,7 @@ Route::middleware('auth')->name('admin.')->group(function () {
     Route::resource('/accounts', AccountController::class);
     Route::resource('/vehicles', VehiclesController::class);
     Route::resource('/services', ServiceController::class);
+    Route::resource('/purchase-details', PurchasesDetailController::class);
     
     // single action routes
     Route::get('/product/search', [ProductController::class, 'search'])->name('products.search');
