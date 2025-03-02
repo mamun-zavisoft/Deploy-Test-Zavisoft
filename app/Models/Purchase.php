@@ -32,6 +32,6 @@ class Purchase extends Model
 
     public function payment()
     {
-        return $this->morphOne(Payment::class, 'transaction', 'transaction_type', 'transaction_id');
+        return $this->hasOne(Payment::class);
     }
 }

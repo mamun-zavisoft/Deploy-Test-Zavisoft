@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->enum('transaction_type', ['purchase', 'sale']); // 'purchase' or 'sale'
-            $table->unsignedBigInteger('transaction_id'); // Purchase/Sale ID
+            $table->enum('transaction_type', ['purchase', 'sale']);
+            $table->foreignId('purchase_id')->nullable()->constrained();
+            $table->foreignId('sale_id')->nullable()->constrained(); 
             $table->decimal('grand_total', 15, 2);
             $table->decimal('due_amount', 15, 2)->default(0);
             $table->decimal('paid_amount', 15, 2)->default(0);
@@ -22,7 +23,7 @@ return new class extends Migration
 
             $table->timestamps();
 
-            $table->index(['transaction_type', 'transaction_id']);
+            $table->index(['transaction_type']);
         });
     }
 

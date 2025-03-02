@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('payment_details', function (Blueprint $table) {
             $table->id();
             $table->foreignId('payment_id')->constrained();
-            $table->foreignId('account_id')->nullable()->constrained(); // Reference to accounts table
+            $table->foreignId('account_id')->nullable()->constrained();
             $table->decimal('amount', 15, 2);
             $table->string('payment_method')->nullable(); // e.g., Cash, Bank Transfer
+            $table->date('date')->nullable()->default(now());
             $table->text('note')->nullable();
             $table->timestamps();
         });

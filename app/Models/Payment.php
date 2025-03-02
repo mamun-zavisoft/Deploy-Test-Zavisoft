@@ -8,12 +8,12 @@ class Payment extends Model
 {
     protected $guarded = [];
 
-     /**
-     * Get the related Purchase or Sale.
-     */
-    public function transaction()
-    {
-        return $this->morphTo(null, 'transaction_type', 'transaction_id');
+    public function purchase(){
+        return $this->belongsTo(Purchase::class, 'purchase_id', 'id');
+    }
+
+    public function sale(){
+        return $this->belongsTo(Sale::class, 'sale_id', 'id');
     }
 
     public function paymentDetails()
