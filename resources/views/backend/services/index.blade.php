@@ -58,7 +58,8 @@
                                         <td>{{ $service->created_at?->format('d M Y') }}</td>
                                         <td class="action-table-data">
                                             <div class="edit-delete-action">
-                                                <a class="me-2 p-2" href="javascript:void(0);">
+                                                <a class="me-2 p-2" href="javascript:void(0);" data-bs-toggle="modal"
+                                                data-bs-target="#service-{{ $service->id }}">
                                                     <i data-feather="eye" class="action-eye"></i>
                                                 </a>
                                                 <a class="me-2 p-2" data-bs-toggle="modal" data-bs-target="#edit-units">
@@ -70,6 +71,120 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    <div class="modal fade" id="service-{{ $service->id }}">
+                                    <div class="modal-dialog modal-dialog-centered" style="max-width: 90%; width: 90%; height: 100vh;">
+                                        <div class="modal-content" style="height: 100%;">
+                                            <div class="page-wrapper-new p-0" style="height: 100%;">
+                                                <div class="content" style="height: 100%;">
+                                                    <div class="modal-header border-0 custom-modal-header">
+                                                        <div class="page-title">
+                                                            <h4>Service Details</h4>
+                                                        </div>
+                                                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body custom-modal-body new-employee-field" style="flex-grow: 1; overflow-y: auto;">
+                                                        <div class="row mb-4">
+                                                            <div class="col-md-8">
+                                                                <div class="card">
+                                                                    <div class="card-body">
+                                                                        <h5 class="card-title font-weight-bold mb-3">Vehicle Info</h5>
+                                                                        <p class="mb-1">Vehicle: 
+                                                                            <span class="fw-bolder text-{{ $service->vehicle?->owner_type == 1 ? 'success' : 'warning' }}">
+                                                                                {{ $service->vehicle?->owner_type == 1 ? 'Self' : 'External' }}
+                                                                            </span>
+                                                                        </p>
+                                                                        <p class="mb-1">License Plate: {{ $service->vehicle->license_plate }}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="col-md-4">
+                                                                <div class="card">
+                                                                    <div class="card-body">
+                                                                        <h5 class="card-title font-weight-bold mb-3">Invoice Info</h5>
+                                                                        <div class="d-flex justify-content-between mb-1">
+                                                                            <span>Reference:</span>
+                                                                            <span class="fw-bolder"></span>
+                                                                        </div>
+                                                                        <div class="d-flex justify-content-between mb-1">
+                                                                            <span>Payment Status:</span>
+                                                                            <span class="fw-bolder">
+                                                                            </span>
+                                                                        </div>
+                                                                        <div class="d-flex justify-content-between">
+                                                                            <span>Status:</span>
+                                                                            <span class="fw-bolder">
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <!-- Service Details Section -->
+                                                        <div class="card mb-4">
+                                                            <div class="card-body">
+                                                                <h5 class="card-title font-weight-bold mb-4">Service Details</h5>
+                                                                <div class="d-flex flex-wrap fw-bold border-bottom pb-2">
+                                                                    <div class="flex-fill">Service Name</div>
+                                                                    <div class="flex-fill">Code</div>
+                                                                    <div class="flex-fill text-center">Price</div>
+                                                                    <div class="flex-fill text-center">Total Amount</div>
+                                                                    <div class="flex-fill text-center">Service Type</div>
+                                                                </div>
+
+                                                                @foreach ($service->serviceDetails as $data)
+                                                                    <div class="d-flex flex-wrap py-2 border-bottom">
+                                                                        <div class="flex-fill">{{ $data->serviceChart?->name }}</div>
+                                                                        <div class="flex-fill">{{ $data->serviceChart?->code }}</div>
+                                                                        <div class="flex-fill text-center">{{ $data->serviceChart?->price }}</div>
+                                                                        <div class="flex-fill text-center">{{ $data->quantity * $data->serviceChart?->price }}</div>
+                                                                        <div class="flex-fill text-center">{{ $data->serviceChart?->service_type }}</div>
+                                                                    </div>
+                                                                @endforeach
+                                                                <!-- Total Section -->
+                                                                <div class="row justify-content-end mt-4">
+                                                                    <div class="col-md-5">
+                                                                        <div class="bg-light p-3 rounded">                                                
+                                                                            <div class="d-flex justify-content-between">
+                                                                                <span class="font-weight-bold">Grand Total</span>
+                                                                                <span class="font-weight-bold"></span>
+                                                                            </div>
+                                                                            <div class="d-flex justify-content-between mb-2">
+                                                                                <span>Discount</span>
+                                                                                <span></span>
+                                                                            </div>
+                                                                            <div class="d-flex justify-content-between mb-2">
+                                                                                <span>Total Price</span>
+                                                                                <span></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <!-- Footer Actions -->
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <div class="d-flex justify-content-end">
+                                                                    <button class="btn btn-secondary me-2">
+                                                                        <i class="fa fa-print me-1"></i> Print
+                                                                    </button>
+                                                                    <button class="btn btn-primary">
+                                                                        <i class="fa fa-download me-1"></i> Download PDF
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 @endforeach
                             </tbody>
                         </table>

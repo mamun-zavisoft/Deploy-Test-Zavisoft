@@ -35,8 +35,7 @@ Route::middleware('auth')->name('admin.')->group(function () {
     Route::resource('/vehicles', VehiclesController::class);
     Route::resource('/services', ServiceController::class);
     Route::resource('/purchase-details', PurchasesDetailController::class);
-    Route::resource('service-details', ServiceDetailController::class);
-    
+     
     // single action routes
     Route::get('/product/search', [ProductController::class, 'search'])->name('products.search');
     Route::put('/purchases/statusChange/{id}', [PurchaseController::class, 'statusChange'])->name('purchases.statusChange');
