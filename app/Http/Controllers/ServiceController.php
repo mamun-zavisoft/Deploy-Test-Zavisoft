@@ -210,4 +210,11 @@ class ServiceController extends Controller
             return 'full_paid';
         }
     }
+
+    public function view_payments($id)
+    {
+        $service = Service::find($id);
+        $accounts = Account::select('id', 'name', 'balance')->get();
+        return view('backend.services.view_payments', compact('service', 'accounts'));
+    }
 }
