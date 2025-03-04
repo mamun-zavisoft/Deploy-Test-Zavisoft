@@ -97,7 +97,7 @@
                                         <li>
                                             <h4>Paid</h4>
                                             <h5 id="paid_amount">0</h5>
-                                            <input type="hidden" name="paid_amount">
+                                             <input type="hidden" name="paid_amount"> {{-- main paid amount data sent by amount field --}}
                                         </li>
                                         <li>
                                             <h4>Due</h4>
@@ -150,7 +150,8 @@
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label for="payment_account" class="form-label">Accounts</label>
-                                                <select class="form-control select2" id="payment_account" name="account_id">
+                                                <select class="form-control select2" id="payment_account"
+                                                    name="account_id">
                                                     <option value="">Select Account</option>
                                                     @foreach ($accounts as $account)
                                                         <option value="{{ $account->id }}">
@@ -183,7 +184,7 @@
                             </div>
                         </div>
 
-                        
+
 
                         <div class="card bg-light mb-4">
                             <div class="card-body">
@@ -682,6 +683,8 @@
                     $('#paymentSection').removeClass('d-none');
                     // Initialize select2 on payment dropdowns
                     $('#payment_type, #payment_account').select2();
+                    // Update paid/due calculation
+                    updatePaidDueAmounts();
                 } else {
                     $('#paymentSection').addClass('d-none');
                     // Reset payment fields when hiding
@@ -689,6 +692,11 @@
                     $('#payment_account').val('');
                     $('#payment_amount').val('');
                     $('.amount-field').hide();
+                    // Reset paid/due amounts to zero when service type is self
+                    $('#paid_amount').text('0.00');
+                    $('#due_amount').text(grandTotal.toFixed(2));
+                    $('input[name="paid_amount"]').val(0);
+                    $('input[name="due_amount"]').val(grandTotal);
                 }
             });
 
@@ -698,21 +706,78 @@
                     $('.amount-field').show();
                     // Set maximum amount to grand total
                     $('#payment_amount').attr('max', grandTotal);
+                    // Set a default value (e.g., half of grand total)
+                    if (!$('#payment_amount').val()) {
+                        $('#payment_amount').val(Math.round(grandTotal / 2));
+                    }
+                    // Update paid/due calculation
+                    updatePaidDueAmounts();
                 } else if ($(this).val() === 'full_paid') {
                     $('.amount-field').hide();
                     // Set payment amount to grand total for calculation purposes
                     $('#payment_amount').val(grandTotal);
+                    // Update paid/due calculation
+                    updatePaidDueAmounts();
                 } else {
                     // For full_due
                     $('.amount-field').hide();
                     $('#payment_amount').val(0);
+                    // Update paid/due calculation
+                    updatePaidDueAmounts();
                 }
             });
 
+            // Function to update paid and due amounts
+
+            function updatePaidDueAmounts() {
+                let paidAmount = 0;
+                let dueAmount = grandTotal;
+
+                // Check if external service is selected
+                if ($('select[name="service_type"]').val() === 'external') {
+                    let paymentType = $('#payment_type').val();
+
+                    if (paymentType === 'full_paid') {
+                        paidAmount = grandTotal;
+                        dueAmount = 0;
+                    } else if (paymentType === 'partial_paid') {
+                        paidAmount = parseFloat($('#payment_amount').val()) || 0;
+                        dueAmount = grandTotal - paidAmount;
+
+                        // Ensure paid amount doesn't exceed grand total
+                        if (paidAmount > grandTotal) {
+                            paidAmount = grandTotal;
+                            dueAmount = 0;
+                            $('#payment_amount').val(grandTotal);
+                        }
+                    } else {
+                        // full_due or empty selection
+                        paidAmount = 0;
+                        dueAmount = grandTotal;
+                    }
+                } else {
+                    // For 'self' service type
+                    paidAmount = 0;
+                    dueAmount = grandTotal;
+                }
+
+                // Update UI
+                $('#paid_amount').text(paidAmount.toFixed(2));
+                $('#due_amount').text(dueAmount.toFixed(2));
+
+                // Update hidden input fields
+                $('input[name="paid_amount"]').val(paidAmount);
+                $('input[name="due_amount"]').val(dueAmount);
+            }
+
+
             // Update payment amount max when grand total changes
             function updatePaymentFields() {
+                // Get current payment type
+                let paymentType = $('#payment_type').val();
+
                 // Set maximum payment amount to new grand total
-                if ($('#payment_type').val() === 'partial_paid') {
+                if (paymentType === 'partial_paid') {
                     let currentAmount = parseFloat($('#payment_amount').val()) || 0;
                     $('#payment_amount').attr('max', grandTotal);
 
@@ -721,9 +786,12 @@
                         $('#payment_amount').val(grandTotal);
                         toastr.warning('Payment amount has been adjusted to match the grand total');
                     }
-                } else if ($('#payment_type').val() === 'full_paid') {
+                } else if (paymentType === 'full_paid') {
                     $('#payment_amount').val(grandTotal);
                 }
+
+                // Always update paid/due calculation when grand total changes
+                updatePaidDueAmounts();
             }
 
             // Add payment field update to the updateTotals function
@@ -746,6 +814,9 @@
                     $(this).val(grandTotal);
                     toastr.warning('Payment amount cannot be more than the grand total');
                 }
+
+                // Update paid/due amounts whenever payment amount changes
+                updatePaidDueAmounts();
             });
 
             // Validate payment fields before form submission
@@ -777,6 +848,7 @@
                         if (amount > grandTotal) {
                             $('#payment_amount').val(grandTotal);
                             toastr.warning('Payment amount adjusted to match grand total');
+                            updatePaidDueAmounts(); // Update paid/due after adjustment
                         }
                     }
                 }
@@ -784,6 +856,8 @@
                 // Continue with original validation
                 return true;
             });
+            // Initialize paid/due amounts on page load
+            updatePaidDueAmounts();
         });
     </script>
 @endpush
