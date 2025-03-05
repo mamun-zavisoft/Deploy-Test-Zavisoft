@@ -4,7 +4,7 @@
     <!-- Logo -->
     <div class="header-left active">
         <a href="{{ url('index') }}" class="logo logo-normal">
-            <img src="{{ URL::asset('build/icons/main_logo.jpg') }}" alt="">
+            {{-- <img src="{{ URL::asset('build/icons/main_logo.jpg') }}" alt=""> --}}
         </a>
         <a href="{{ url('index') }}" class="logo logo-white">
             <img src="{{ URL::asset('/build/img/logo-white.png') }}" alt="">
@@ -63,17 +63,17 @@
                             <ul class="customers">
                                 <li>
                                     <a href="javascript:void(0);">Aron Varu<img
-                                            src="{{ URL::asset('/build/img/profiles/avator1.jpg') }}" alt=""
+                                            src="#" alt=""
                                             class="img-fluid"></a>
                                 </li>
                                 <li>
                                     <a href="javascript:void(0);">Jonita<img
-                                            src="{{ URL::asset('/build/img/profiles/avatar-01.jpg') }}" alt=""
+                                            src="#" alt=""
                                             class="img-fluid"></a>
                                 </li>
                                 <li>
                                     <a href="javascript:void(0);">Aaron<img
-                                            src="{{ URL::asset('/build/img/profiles/avatar-10.jpg') }}" alt=""
+                                            src="#" alt=""
                                             class="img-fluid"></a>
                                 </li>
                             </ul>
@@ -107,7 +107,7 @@
                                 <div class="media d-flex">
                                     <span class="avatar flex-shrink-0">
                                         <img alt=""
-                                            src="{{ URL::asset('/build/img/profiles/avatar-02.jpg') }}">
+                                            src="#">
                                     </span>
                                     <div class="media-body flex-grow-1">
                                         <p class="noti-details"><span class="noti-title">John Doe</span> added
@@ -124,7 +124,7 @@
                                 <div class="media d-flex">
                                     <span class="avatar flex-shrink-0">
                                         <img alt=""
-                                            src="{{ URL::asset('/build/img/profiles/avatar-03.jpg') }}">
+                                            src="#">
                                     </span>
                                     <div class="media-body flex-grow-1">
                                         <p class="noti-details"><span class="noti-title">Tarah Shropshire</span>
@@ -142,7 +142,7 @@
                                 <div class="media d-flex">
                                     <span class="avatar flex-shrink-0">
                                         <img alt=""
-                                            src="{{ URL::asset('/build/img/profiles/avatar-06.jpg') }}">
+                                            src="#">
                                     </span>
                                     <div class="media-body flex-grow-1">
                                         <p class="noti-details"><span class="noti-title">Misty Tison</span>
@@ -161,7 +161,7 @@
                                 <div class="media d-flex">
                                     <span class="avatar flex-shrink-0">
                                         <img alt=""
-                                            src="{{ URL::asset('/build/img/profiles/avatar-17.jpg') }}">
+                                            src="#">
                                     </span>
                                     <div class="media-body flex-grow-1">
                                         <p class="noti-details"><span class="noti-title">Rolland Webber</span>
@@ -178,7 +178,7 @@
                                 <div class="media d-flex">
                                     <span class="avatar flex-shrink-0">
                                         <img alt=""
-                                            src="{{ URL::asset('/build/img/profiles/avatar-13.jpg') }}">
+                                            src="#">
                                     </span>
                                     <div class="media-body flex-grow-1">
                                         <p class="noti-details"><span class="noti-title">Bernardo Galaviz</span>
@@ -205,7 +205,7 @@
             <a href="javascript:void(0);" class="dropdown-toggle nav-link userset" data-bs-toggle="dropdown">
                 <span class="user-info">
                     <span class="user-letter">
-                        <img src="{{ URL::asset('/build/img/profiles/avator1.jpg') }}" alt=""
+                        <img src="#" alt=""
                             class="img-fluid">
                     </span>
                     <span class="user-detail">
@@ -217,7 +217,7 @@
             <div class="dropdown-menu menu-drop-user">
                 <div class="profilename">
                     <div class="profileset">
-                        <span class="user-img"><img src="{{ URL::asset('/build/img/profiles/avator1.jpg') }}"
+                        <span class="user-img"><img src="#"
                                 alt="">
                             <span class="status online"></span></span>
                         <div class="profilesets">
@@ -235,7 +235,7 @@
                         @csrf
                     <a class="dropdown-item logout pb-0" href="#" onclick="event.preventDefault();
                                         this.closest('form').submit();"><img
-                            src="{{ URL::asset('/build/img/icons/log-out.svg') }}" class="me-2"
+                            src="#" class="me-2"
                             alt="img">Logout</a>
                     </form>
                 </div>

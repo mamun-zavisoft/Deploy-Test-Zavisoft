@@ -13,7 +13,7 @@
 
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon"
-        href="https://scontent.fdac14-1.fna.fbcdn.net/v/t39.30808-1/414208409_122103875102160003_9223256422369593478_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=105&ccb=1-7&_nc_sid=2d3e12&_nc_ohc=_5lD4NlXr8oQ7kNvgFDfhlf&_nc_oc=AdiALp63nvIoFdQHDlZOdTwBS9nwG_0z2YZoB8VlycJB8nuAfYi7KFOhv1DXsoQNd90&_nc_zt=24&_nc_ht=scontent.fdac14-1.fna&_nc_gid=AfJSptb8xYm91Gx-HAOf9Jr&oh=00_AYDBQUdqU0iLrL7Hzq5_b43qQp64HGEldOVSElVSOSuPVQ&oe=67BA0491">
+        href="#">
 
     @include('layout.partials.head')
 </head>

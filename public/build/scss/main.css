@@ -11473,6 +11473,18 @@ th .checkboxs .checkmarks::after, td .checkboxs .checkmarks::after {
   display: block;
 }
 
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 [data-layout-mode=dark_mode] {
   --bs-heading-color: $black-bg;
   --dt-html-background: $black-bg;
@@ -23977,7 +23989,7 @@ td p.description-para {
   border-radius: 8px;
 }
 .product-quantity input {
-  width: 35px;
+  width: 60px;
   border: 0;
   background-color: #FAFBFE;
   text-align: center;
