@@ -55,7 +55,7 @@
             </div>
         </div>
     @empty
-        <div class="py-2">
+        <div class="py-2 text-center">
             <p class="text-muted">No payment found</p>
         </div>
     @endforelse
@@ -141,6 +141,7 @@
             $('.payment-form-container').hide();
             $('.add-payment-btn').show();
             $('.amount-field').hide();
+            $('#close-btn').hide();
         });
 
         // Show/hide amount field based on payment type selection

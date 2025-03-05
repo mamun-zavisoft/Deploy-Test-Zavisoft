@@ -39,7 +39,7 @@
 <div class="mt-4">
     <h5 class="mb-3">Payments</h5>
     <div class="d-flex fw-bold border-bottom pb-2">
-        <div class="flex-grow-1" style="width: 150px;">Payment Type</div>
+        <div class="flex-grow-1" style="width: 150px;">Paid to</div>
         <div class="text-center" style="width: 110px;">Amount</div>
         <div class="text-center" style="width: 110px;">Date</div>
         <div class="text-center" style="width: 110px;">Note</div>
@@ -56,7 +56,7 @@
                 </div>
             </div>
         @empty
-            <div class="py-2">
+            <div class="py-2 text-center">
                 <p class="text-muted">No payment found</p>
             </div>
         @endforelse
@@ -143,6 +143,7 @@
             $('.payment-form-container').hide();
             $('.add-payment-btn').show();
             $('.amount-field').hide();
+            $('#close-btn').hide();
         });
 
         // Show/hide amount field based on payment type selection

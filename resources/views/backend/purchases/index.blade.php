@@ -66,9 +66,9 @@
                                                 <span class="badges status-badge bg-success">Stored</span>
                                             @endif
                                         </td>
-                                        <td>{{ $purchase->grand_total }}</td>
-                                        <td>{{ $purchase->paid_amount }}</td>
-                                        <td>{{ $purchase->due_amount }}</td>
+                                        <td>{{ number_format($purchase->grand_total) }}</td>
+                                        <td>{{ number_format($purchase->paid_amount) }}</td>
+                                        <td>{{ number_format($purchase->due_amount) }}</td>
                                         <td>
                                             @if ($purchase->paid_status == 'full_due')
                                                 <span class="badge-linedanger payment_view"
@@ -91,12 +91,12 @@
                                                 data-bs-target="#purchase-{{ $purchase->id }}">
                                                     <i data-feather="eye" class="action-eye"></i>
                                                 </a>
-                                                <a class="me-2 p-2" data-bs-toggle="modal" data-bs-target="#edit-units">
+                                                {{-- <a class="me-2 p-2" data-bs-toggle="modal" data-bs-target="#edit-units">
                                                     <i data-feather="edit" class="feather-edit"></i>
                                                 </a>
                                                 <a class="confirm-text p-2" href="javascript:void(0);">
                                                     <i data-feather="trash-2" class="feather-trash-2"></i>
-                                                </a>
+                                                </a> --}}
                                             </div>
                                         </td>
                                     </tr>
