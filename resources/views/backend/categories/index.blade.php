@@ -145,7 +145,7 @@
                             <div class="page-title">
                                 <h4>Create Category</h4>
                             </div>
-                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" onclick="$('#storeForm')[0].reset()">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>

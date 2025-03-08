@@ -5,7 +5,7 @@
             <x-breadcrumb title="Product Edit" button="Back to Product" back-button-route="admin.products.index" />
 
             <!-- /update -->
-            <form id="storeForm" action="{{ route('admin.products.update', $product->id) }}" method="POST"
+            <form id="updateForm" action="{{ route('admin.products.update', $product->id) }}" method="POST"
                 enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
@@ -254,7 +254,7 @@
         });
 
 
-        $('#storeForm').submit(function(e) {
+        $('#updateForm').submit(function(e) {
             e.preventDefault();
             let SubmitBtn = $('#submit_btn');
             SubmitBtn.prop('disabled', true);
@@ -272,7 +272,7 @@
                     $('#add-brand').modal('hide');
                     toastr.success(response.message);
                     setTimeout(() => {
-                        window.location.href = response.redirectUrl;
+                        window.location.href = response.redirectUrl || `{{ route('admin.products.index') }}`;
                     }, 1000);
                 } else {
                     toastr.error(response.message);
