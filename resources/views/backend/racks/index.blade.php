@@ -5,7 +5,7 @@
         <div class="content">
             <x-breadcrumb-modal title="Rack List" sub-title="Manage Your Rack" button="Add Rack" modal-id="add-rack" />
 
-            <!-- /product list -->
+            <!-- /Rack list -->
             <div class="card table-list-card">
                 <div class="card-body">
                     <div class="table-top">
@@ -26,7 +26,7 @@
                                 <tr>
                                     <th class="no-sort">SL</th>
                                     <th>Name</th>
-                                    <th>Created On</th>
+                                    <th>Available Stored Quantity</th>
                                     <th class="no-sort">Action</th>
                                 </tr>
                             </thead>
@@ -37,7 +37,7 @@
                                             {{ $loop->iteration + $racks->firstItem() - 1 }}
                                         </td>
                                         <td>{{ $rack->name }}</td>
-                                        <td>{{ $rack->created_at?->format('d M Y') }}</td>
+                                        <td>{{ $rack->total_products_count }}</td>
                                         <td class="action-table-data">
                                             <div class="edit-delete-action">
                                                 <a class="me-2 edit-icon  p-2" href="#" data-bs-toggle="modal"
@@ -101,30 +101,116 @@
                                         </div>
                                     </div>
                                     <!-- Edit Brand -->
+
                                     <!-- Rack Products Modal -->
                                     <div class="modal fade" id="drawers-{{ $rack->id }}">
-                                        <div class="modal-dialog modal-dialog-centered custom-modal-two">
+                                        <div class="modal-dialog modal-dialog-centered modal-lg">
                                             <div class="modal-content">
                                                 <div class="page-wrapper-new p-0">
                                                     <div class="content">
                                                         <div class="modal-header border-0 custom-modal-header justify-content-between">
                                                             <div class="page-title">
-                                                                <h4>Rack Detail</h4>
+                                                                <h4>Rack: {{ $rack->name }}</h4>
                                                             </div>
-                                                            <button type="button" class="close" data-bs-dismiss="modal"
-                                                                aria-label="Close">
+                                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
-                                                        <div class="modal-body custom-modal-body new-employee-field">
-                                                            
+                                                        <div class="modal-body custom-modal-body">
+                                                            <div class="border rounded shadow-sm">
+                                                                <div class="p-3 border-bottom bg-light">
+                                                                    <div class="d-flex justify-content-between align-items-center">
+                                                                        <h5 class="fw-bold mb-0">Drawers</h5>
+                                                                        <span class="badge bg-primary">Total Drawers: {{ $rack->drawers->count() }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="p-0">
+                                                                    @forelse($rack->drawers as $drawer)
+                                                                    <div class="border-bottom">
+                                                                        <div class="d-flex justify-content-between align-items-center p-3">
+                                                                            <div>
+                                                                                <h6 class="mb-0 fw-bold">{{ $drawer->name }}</h6>
+                                                                            </div>
+                                                                            <div class="d-flex align-items-center">
+                                                                                <span class="badge bg-info me-3">{{ $drawer->available_products_count }} units</span>
+                                                                                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#drawer-products-{{ $drawer->id }}">
+                                                                                    <i data-feather="eye" class="feather-eye"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    @empty
+                                                                    <div class="p-3 text-center">
+                                                                        <p class="mb-0 text-muted">No drawers found for this rack</p>
+                                                                    </div>
+                                                                    @endforelse
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- Rack Products Modal -->
+                                    <!-- End Rack Products Modal -->
+
+                                    <!-- Drawer Products Modals (One for each drawer) -->
+                                    @foreach($rack->drawers as $drawer)
+                                    <div class="modal fade" id="drawer-products-{{ $drawer->id }}" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header border-0 custom-modal-header justify-content-between">
+                                                    <div class="page-title">
+                                                        <h4>Products in {{ $drawer->name }}</h4>
+                                                    </div>
+                                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body custom-modal-body">
+                                                    <div class="border rounded shadow-sm">
+                                                        <div class="p-3 border-bottom bg-light">
+                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                <h5 class="fw-bold mb-0">Available Products</h5>
+                                                                <span class="badge bg-primary">Total: {{ $drawer->available_products_count }} units</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="p-0">
+                                                            <div class="px-3 py-2">
+                                                                <div class="d-flex justify-content-between fw-bold border-bottom pb-2 mb-2">
+                                                                    <div>Product</div>
+                                                                    <div>Quantity</div>
+                                                                </div>
+                                                                
+                                                                @php
+                                                                    $availableProducts = $drawer->available_products;
+                                                                @endphp
+                                                                
+                                                                @forelse($availableProducts as $product)
+                                                                    <div class="d-flex justify-content-between py-2 border-bottom">
+                                                                        <div class="productimgname gap-1">
+                                                                            <a href="javascript:void(0);" class="product-img stock-img">
+                                                                                <img src="{{ $product->thumbnail ?: asset('build/img/no-image.svg') }}"
+                                                                                    alt="product" style="width: 50px; height: 50px;">   
+                                                                            </a>
+                                                                            <a href="javascript:void(0);">{{ $product->name }}</a>
+                                                                        </div>
+                                                                        <div><span class="badge bg-secondary">{{ $product->available_quantity }}</span></div>
+                                                                    </div>
+                                                                @empty
+                                                                <div class="text-center py-3">
+                                                                    <p class="mb-0 text-muted">No products found in this drawer</p>
+                                                                </div>
+                                                                @endforelse
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endforeach
+                                    <!-- End Drawer Products Modals -->
                                 @endforeach
 
                             </tbody>
@@ -132,11 +218,11 @@
                     </div>
                 </div>
             </div>
-            <!-- /product list -->
+            <!-- /Rack list -->
         </div>
     </div>
 
-    <!-- Add Brand -->
+    <!-- Add Rack -->
     <div class="modal fade" id="add-rack">
         <div class="modal-dialog modal-dialog-centered custom-modal-two">
             <div class="modal-content">
