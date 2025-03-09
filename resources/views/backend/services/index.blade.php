@@ -33,8 +33,6 @@
                                     <th>Part Purchased</th>
                                     <th>Payment Type</th>
                                     <th>Grand Total</th>
-                                    <th>Paid</th>
-                                    <th>Due</th>
                                     <th>Paid Status</th>
                                     <th>Created On</th>
                                     <th class="no-sort">Action</th>
@@ -58,10 +56,7 @@
                                             </span>
                                         </td>
                                         <td>Cash</td>
-
                                         <td>{{ $service->grand_total }}</td>
-                                        <td>{{ $service->paid_amount }}</td>
-                                        <td>{{ $service->due_amount }}</td>
                                         <td>
                                             @if ($service->paid_status == 'full_due')
                                                 <span class="badge-linedanger payment_view"
@@ -97,46 +92,46 @@
                                         </td>
                                     </tr>
                                     <div class="modal fade" id="service-{{ $service->id }}">
-                                    <div class="modal-dialog modal-dialog-centered modal-xl">
-                                        <div class="modal-content">
-                                            <div class="modal-header border-0 custom-modal-header">
-                                                <div class="page-title">
-                                                    <h4>Service Details</h4>
+                                        <div class="modal-dialog modal-dialog-centered modal-xl">
+                                            <div class="modal-content">
+                                                <div class="modal-header border-0 custom-modal-header">
+                                                    <div class="page-title">
+                                                        <h4>Service Details</h4>
+                                                    </div>
+                                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
                                                 </div>
-                                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body custom-modal-body" style="max-height: 80vh; overflow-y: auto;">
-                                                <!-- Top Section: Vehicle and Invoice Info -->
-                                                <div class="row mb-4">
-                                                    <div class="col-md-8">
-                                                        <div class="card h-100">
-                                                            <div class="card-body">
-                                                                <h5 class="card-title fw-bold mb-3">Vehicle Info</h5>
-                                                                <div class="row mb-2">
-                                                                    <div class="col-md-4 fw-bold">Vehicle Type:</div>
-                                                                    <div class="col-md-8">
-                                                                        <span class="text-{{ $service->vehicle?->owner_type == 1 ? 'success' : 'warning' }}">
-                                                                            {{ $service->vehicle?->owner_type == 1 ? 'Self' : 'External' }}
-                                                                        </span>
+                                                <div class="modal-body custom-modal-body" style="max-height: 80vh; overflow-y: auto;">
+                                                    <!-- Top Section: Vehicle and Invoice Info -->
+                                                    <div class="row mb-4">
+                                                        <div class="col-md-8">
+                                                            <div class="card h-100">
+                                                                <div class="card-body ms-4">
+                                                                    <h5 class="card-title fw-bold mb-3">Vehicle Info</h5>
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-md-4 fw-bold">Vehicle Type:</div>
+                                                                        <div class="col-md-8">
+                                                                            <span class="text-{{ $service->vehicle?->owner_type == 1 ? 'success' : 'warning' }}">
+                                                                                {{ $service->vehicle?->owner_type == 1 ? 'Self' : 'External' }}
+                                                                            </span>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="row mb-2">
-                                                                    <div class="col-md-4 fw-bold">Vehicle Number:</div>
-                                                                    <div class="col-md-8">{{ $service->vehicle?->license_plate ?? 'N/A' }}</div>
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-md-4 fw-bold">Vehicle Number:</div>
+                                                                        <div class="col-md-8">{{ $service->vehicle?->license_plate ?? 'N/A' }}</div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    
-                                                    <div class="col-md-4">
+                                                        
+                                                        <div class="col-md-4">
                                                         <div class="card h-100">
                                                             <div class="card-body">
                                                                 <h5 class="card-title fw-bold mb-3">Service Info</h5>
                                                                 <div class="row mb-2">
-                                                                    <div class="col-md-5 fw-bold">Reference No:</div>
-                                                                    <div class="col-md-7">45-GYP-46</div>
+                                                                    <div class="col-md-5 fw-bold">Invoice NO:</div>
+                                                                    <div class="col-md-7">{{  $service->transaction_id }}</div>
                                                                 </div>
                                                                 <div class="row mb-2">
                                                                     <div class="col-md-5 fw-bold">Service Type:</div>
@@ -165,6 +160,9 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    </div>
+                                                    
+                                                    
                                                 </div>
                                                 
                                                 <!-- Service Details Section -->
@@ -258,33 +256,32 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    
+                                                    <!-- Additional Notes Section -->
+                                                    @if(!empty($service->notes))
+                                                    <div class="card mb-4">
+                                                        <div class="card-header bg-light">
+                                                            <h5 class="card-title fw-bold m-0">Additional Notes</h5>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <p class="mb-0">{{ $service->notes }}</p>
+                                                        </div>
+                                                    </div>
+                                                    @endif
                                                 </div>
                                                 
-                                                <!-- Additional Notes Section -->
-                                                @if(!empty($service->notes))
-                                                <div class="card mb-4">
-                                                    <div class="card-header bg-light">
-                                                        <h5 class="card-title fw-bold m-0">Additional Notes</h5>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <p class="mb-0">{{ $service->notes }}</p>
-                                                    </div>
+                                                <!-- Modal Footer -->
+                                                <div class="modal-footer justify-content-end">
+                                                    <button type="button" class="btn btn-secondary me-2" onclick="window.print()">
+                                                        <i class="fas fa-print me-1"></i> Print
+                                                    </button>
+                                                    <button type="button" class="btn btn-primary">
+                                                        <i class="fas fa-download me-1"></i> Download PDF
+                                                    </button>
                                                 </div>
-                                                @endif
-                                            </div>
-                                            
-                                            <!-- Modal Footer -->
-                                            <div class="modal-footer justify-content-end">
-                                                <button type="button" class="btn btn-secondary me-2" onclick="window.print()">
-                                                    <i class="fas fa-print me-1"></i> Print
-                                                </button>
-                                                <button type="button" class="btn btn-primary">
-                                                    <i class="fas fa-download me-1"></i> Download PDF
-                                                </button>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                                 @endforeach
                             </tbody>
                         </table>

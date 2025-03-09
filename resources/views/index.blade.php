@@ -10,7 +10,7 @@
                             <span><img src="{{ URL::asset('/build/img/icons/dash1.svg') }}" alt="img"></span>
                         </div>
                         <div class="dash-widgetcontent">
-                            <h5>$<span class="counters" data-count="307144.00">$307,144.00</span></h5>
+                            <h5>৳<span class="counters" data-count="{{ $totalDueAmount }}">{{ $totalDueAmount }}</span></h5>
                             <h6>Total Purchase Due</h6>
                         </div>
                     </div>
@@ -21,7 +21,7 @@
                             <span><img src="{{ URL::asset('/build/img/icons/dash2.svg') }}" alt="img"></span>
                         </div>
                         <div class="dash-widgetcontent">
-                            <h5>$<span class="counters" data-count="4385.00">$4,385.00</span></h5>
+                            <h5>৳<span class="counters" data-count="4385.00">৳4,385.00</span></h5>
                             <h6>Total Sales Due</h6>
                         </div>
                     </div>
@@ -32,7 +32,7 @@
                             <span><img src="{{ URL::asset('/build/img/icons/dash3.svg') }}" alt="img"></span>
                         </div>
                         <div class="dash-widgetcontent">
-                            <h5>$<span class="counters" data-count="385656.50">$385,656.50</span></h5>
+                            <h5>৳<span class="counters" data-count="385656.50">৳385,656.50</span></h5>
                             <h6>Total Sale Amount</h6>
                         </div>
                     </div>
@@ -43,59 +43,52 @@
                             <span><img src="{{ URL::asset('/build/img/icons/dash4.svg') }}" alt="img"></span>
                         </div>
                         <div class="dash-widgetcontent">
-                            <h5>$<span class="counters" data-count="40000.00">$400.00</span></h5>
+                            <h5>৳<span class="counters" data-count="40000.00">৳400.00</span></h5>
                             <h6>Total Expense Amount</h6>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-sm-6 col-12 d-flex">
-                    <div class="dash-count">
-                        <div class="dash-counts">
-                            <h4>100</h4>
-                            <h5>Customers</h5>
-                        </div>
-                        <div class="dash-imgs">
-                            <i data-feather="user"></i>
-                        </div>
+                <div class="row">
+                    <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                        <a href="{{ url('vehicles') }}" class="dash-count text-decoration-none w-100 vehicle" style="text-decoration: none; color: inherit;">
+                            <div class="dash-counts text-start">
+                                <h5>Vehicle</h5>
+                                <h4 class="mb-2">{{ $totalVehicle }}</h4>
+                                <div class="d-flex justify-content-center align-items-center mt-2 text-white">
+                                    <span class="me-3">Self: {{ $selfVehicle }}</span> 
+                                    <div style="width: 2px; height: 20px; background: white; margin: 0 10px;"></div> 
+                                    <span class="ms-3">Outside: {{ $outsideVehicle }}</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                        <a href="{{ url('suppliers') }}" class="dash-count das1 text-decoration-none w-100">
+                            <div class="dash-counts mb-3">
+                                <h5>Supplier</h5>
+                                <h4>{{ $totalSupplier }}</h4>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                        <a href="{{ url('services') }}" class="dash-count das2 text-decoration-none w-100">
+                            <div class="dash-counts mb-3">
+                                <h5>Service</h5>
+                                <h4>{{ $totalService }}</h4>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                        <a href="#" class="dash-count das3 text-decoration-none w-100">
+                            <div class="dash-counts mb-3">
+                                <h5>Sale Invoice</h5>
+                                <h4>170</h4>
+                            </div>
+                        </a>
                     </div>
                 </div>
-                <div class="col-xl-3 col-sm-6 col-12 d-flex">
-                    <div class="dash-count das1">
-                        <div class="dash-counts">
-                            <h4>110</h4>
-                            <h5>Suppliers</h5>
-                        </div>
-                        <div class="dash-imgs">
-                            <i data-feather="user-check"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-sm-6 col-12 d-flex">
-                    <div class="dash-count das2">
-                        <div class="dash-counts">
-                            <h4>150</h4>
-                            <h5>Purchase Invoice</h5>
-                        </div>
-                        <div class="dash-imgs">
-                            <img src="{{ URL::asset('/build/img/icons/file-text-icon-01.svg') }}" class="img-fluid"
-                                alt="icon">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-sm-6 col-12 d-flex">
-                    <div class="dash-count das3">
-                        <div class="dash-counts">
-                            <h4>170</h4>
-                            <h5>Sales Invoice</h5>
-                        </div>
-                        <div class="dash-imgs">
-                            <i data-feather="file"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Button trigger modal -->
 
+            <!-- Button trigger modal -->
             <div class="row">
                 <div class="col-xl-7 col-sm-12 col-12 d-flex">
                     <div class="card flex-fill">
@@ -137,7 +130,7 @@
                 <div class="col-xl-5 col-sm-12 col-12 d-flex">
                     <div class="card flex-fill default-cover mb-4">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h4 class="card-title mb-0">Recent Products</h4>
+                            <h4 class="card-title mb-0">Recent Purchase</h4>
                             <div class="view-all-link">
                                 <a href="javascript:void(0);" class="view-all d-flex align-items-center">
                                     View All<span class="ps-2 d-flex align-items-center"><i data-feather="arrow-right"
@@ -150,56 +143,27 @@
                                 <table class="table dashboard-recent-products">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
                                             <th>Products</th>
                                             <th>Price</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td class="productimgname">
-                                                <a href="{{ url('product-list') }}" class="product-img">
-                                                    <img src="{{ URL::asset('/build/img/products/stock-img-01.png') }}"
-                                                        alt="product">
-                                                </a>
-                                                <a href="{{ url('product-list') }}">Lenevo 3rd Generation</a>
-                                            </td>
-                                            <td>$12500</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td class="productimgname">
-                                                <a href="{{ url('product-list') }}" class="product-img">
-                                                    <img src="{{ URL::asset('/build/img/products/stock-img-06.png') }}"
-                                                        alt="product">
-                                                </a>
-                                                <a href="{{ url('product-list') }}">Bold V3.2</a>
-                                            </td>
-                                            <td>$1600</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td class="productimgname">
-                                                <a href="{{ url('product-list') }}" class="product-img">
-                                                    <img src="{{ URL::asset('/build/img/products/stock-img-02.png') }}"
-                                                        alt="product">
-                                                </a>
-                                                <a href="{{ url('product-list') }}">Nike Jordan</a>
-                                            </td>
-                                            <td>$2000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td class="productimgname">
-                                                <a href="{{ url('product-list') }}" class="product-img">
-                                                    <img src="{{ URL::asset('/build/img/products/stock-img-03.png') }}"
-                                                        alt="product">
-                                                </a>
-                                                <a href="{{ url('product-list') }}">Apple Series 5 Watch</a>
-                                            </td>
-                                            <td>$800</td>
-                                        </tr>
+                                    @foreach ($purchases as $purchase)
+                                        @foreach ($purchase->purchaseDetails as $data)
+                                            <tr>
+                                                <td>
+                                                    <div class="productimgname">
+                                                        <a href="javascript:void(0);" class="product-img stock-img">
+                                                            <img src="{{ $data->product->thumbnail ?: asset('build/img/no-image.svg') }}"
+                                                                alt="product" height="50px" width="30px">
+                                                        </a>
+                                                        <a href="javascript:void(0);">{{ $data->product->name }}</a>
+                                                    </div>
+                                                </td>
+                                                <td>{{ $data->product?->purchase_price }}</td>
+                                            </tr>
+                                        @endforeach
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -209,7 +173,7 @@
             </div>
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Expired Products</h4>
+                    <h4 class="card-title">Recent Service</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive dataview">
@@ -222,164 +186,188 @@
                                             <span class="checkmarks"></span>
                                         </label>
                                     </th>
-                                    <th>Product</th>
-                                    <th>SKU</th>
-                                    <th>Manufactured Date</th>
-                                    <th>Expired Date</th>
-                                    <th class="no-sort">Action</th>
+                                    <th>Service</th>
+                                    <th>Total Price</th>
+                                    <th>Created Date</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <label class="checkboxs">
-                                            <input type="checkbox">
-                                            <span class="checkmarks"></span>
-                                        </label>
-                                    </td>
-                                    <td>
-                                        <div class="productimgname">
-                                            <a href="javascript:void(0);" class="product-img stock-img">
-                                                <img src="{{ URL::asset('/build/img/products/expire-product-01.png') }}"
-                                                    alt="product">
-                                            </a>
-                                            <a href="javascript:void(0);">Red Premium Handy </a>
+                                @foreach ($services as $service)
+                                    <tr>
+                                        <td>
+                                            <label class="checkboxs">
+                                                <input type="checkbox">
+                                                <span class="checkmarks"></span>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <a href="#service-{{ $service->id }}" data-bs-toggle="modal" style="cursor: pointer; text-decoration: none;" class="service-name">
+                                            {{ $service->service_type == 'self' ? 'Self' : 'External' }}
+                                        </td>
+                                        <td>{{ $service->grand_total }}</td>
+                                        <td>{{ $service->created_at?->format('d M Y') }}</td>
+                                    </tr>
+                                @endforeach
+                                @foreach ($services as $service)
+                                    <div class="modal fade" id="service-{{ $service->id }}" tabindex="-1" aria-labelledby="serviceLabel-{{ $service->id }}" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-xl">
+                                            <div class="modal-content">
+                                                <div class="modal-header border-0 custom-modal-header">
+                                                    <div class="page-title">
+                                                        <h4>Service Details</h4>
+                                                    </div>
+                                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body custom-modal-body" style="max-height: 80vh; overflow-y: auto;">
+                                                    <!-- Top Section: Vehicle and Invoice Info -->
+                                                    <div class="row mb-4">
+                                                        <div class="col-md-8">
+                                                            <div class="card h-100">
+                                                                <div class="card-body ms-4">
+                                                                    <h5 class="card-title fw-bold mb-3">Vehicle Info</h5>
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-md-4 fw-bold">Vehicle Type:</div>
+                                                                        <div class="col-md-8">
+                                                                            <span class="text-{{ $service->vehicle?->owner_type == 1 ? 'success' : 'warning' }}">
+                                                                                {{ $service->vehicle?->owner_type == 1 ? 'Self' : 'External' }}
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-md-4 fw-bold">Vehicle Number:</div>
+                                                                        <div class="col-md-8">{{ $service->vehicle?->license_plate ?? 'N/A' }}</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div class="col-md-4">
+                                                            <div class="card h-100">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title fw-bold mb-3">Service Info</h5>
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-md-5 fw-bold">Reference No:</div>
+                                                                        <div class="col-md-7">45-GYP-46</div>
+                                                                    </div>
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-md-5 fw-bold">Service Type:</div>
+                                                                        <div class="col-md-7">
+                                                                            <span class="text-{{ $service->service_type == 1 ? 'success' : 'warning' }}">
+                                                                                {{ $service->service_type == 1 ? 'Self' : 'External' }}
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-md-5 fw-bold">Payment Status:</div>
+                                                                        <div class="col-md-7">
+                                                                            <span class="badge bg-{{ $service->payment_status == 'paid' ? 'success' : 'warning' }}">
+                                                                                {{ ucfirst($service->payment_status ?? 'N/A') }}
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-md-5 fw-bold">Service Date:</div>
+                                                                        <div class="col-md-7">{{ $service->created_at?->format('d M Y') ?? 'N/A' }}</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Service Details Section -->
+                                                    <div class="card mb-4">
+                                                        <div class="card-header bg-light">
+                                                            <h5 class="card-title fw-bold m-0">Service Details</h5>
+                                                        </div>
+                                                        <div class="card-body ms-2">
+                                                            <div class="d-flex fw-bold border-bottom pb-2" style="display: flex; flex-wrap: wrap;">
+                                                                <div class="p-2" style="flex: 1;">Service Name</div>
+                                                                <div class="p-2" style="flex: 1;">Price</div>
+                                                                <div class="p-2" style="flex: 1;">Code</div>
+                                                            </div>
+
+                                                            @foreach($service->serviceDetails as $data)
+                                                                <div class="d-flex border-bottom py-2" style="display: flex; flex-wrap: wrap;">
+                                                                    <div class="p-2" style="flex: 1;">{{ $data->serviceChart?->name }}</div>
+                                                                    <div class="p-2" style="flex: 1;">{{ $data->serviceChart?->price }}</div>
+                                                                    <div class="p-2" style="flex: 1;">{{ $data->serviceChart?->code }}</div>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Product Used Table -->
+                                                    <div class="card mb-4">
+                                                        <div class="card-header bg-light">
+                                                            <h5 class="card-title fw-bold m-0">Products Used</h5>
+                                                        </div>
+                                                        @if(is_null($service->sale))
+                                                            <p class="text-center text-danger bg-warning bg-opacity-25 mt-3">No Part's Found</p>
+                                                        @else
+                                                        <div class="card-body ms-2">                                                                <!-- Table Head -->
+                                                            <div class="d-flex fw-bold border-bottom pb-2" style="display: flex; flex-wrap: wrap;">
+                                                                <div class="p-2" style="flex: 1;">Product Name</div>
+                                                                <div class="p-2" style="flex: 1;">Quantity</div>
+                                                                <div class="p-2" style="flex: 1;">Price</div>
+                                                                <div class="p-2" style="flex: 1;">Amount</div>
+                                                            </div>
+                                                            <!-- Table Body -->
+                                                            @foreach($service->sale->saleDetails as $saleDetail)
+                                                                <div class="d-flex border-bottom py-2" style="display: flex; flex-wrap: wrap;">
+                                                                    <div class="p-2" style="flex: 1;">{{ $saleDetail->product?->name }}</div>
+                                                                    <div class="p-2" style="flex: 1;">{{ $saleDetail->qty }}</div>
+                                                                    <div class="p-2" style="flex: 1;">{{ $saleDetail->unit_price }}</div>
+                                                                    <div class="p-2" style="flex: 1;">{{ $saleDetail->unit_price * $saleDetail->qty }}</div>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                        @endif
+                                                    </div>
+
+                                                    <!-- Billing Summary Section -->
+                                                   <div class="card mb-4">
+                                                        <div class="card-header bg-light">
+                                                            <h5 class="card-title fw-bold m-0">Billing Summary</h5>
+                                                        </div>
+                                                        <div class="card-body ">
+                                                            <div class="row justify-content-end">
+                                                                <div class="col-md-6">
+                                                                    <div class="d-flex justify-content-between mb-2">
+                                                                        <div class="fw-bold">Service Total:</div>
+                                                                        <div>{{ $service->total_amount ?? '0.00' }}</div>
+                                                                    </div>
+                                                                    <div class="d-flex justify-content-between mb-2">
+                                                                        <div class="fw-bold">Discount:</div>
+                                                                        <div class="text-danger">
+                                                                            {{ $service->discount ?? '0.00' }}                                                                       
+                                                                        </div>
+                                                                    </div>                                                                
+                                                                    <hr>
+                                                                    <div class="d-flex justify-content-between">
+                                                                        <div class="fw-bold fs-5">Grand Total:</div>
+                                                                        <div class="fw-bold fs-5">{{ $service->grand_total ?? '0.00' }}</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <!-- Modal Footer -->
+                                                    <div class="modal-footer justify-content-end">
+                                                        <button type="button" class="btn btn-secondary me-2" onclick="window.print()">
+                                                            <i class="fas fa-print me-1"></i> Print
+                                                        </button>
+                                                        <button type="button" class="btn btn-primary">
+                                                            <i class="fas fa-download me-1"></i> Download PDF
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </td>
-                                    <td><a href="javascript:void(0);">PT006</a></td>
-                                    <td>17 Jan 2023</td>
-                                    <td>29 Mar 2023</td>
-                                    <td class="action-table-data">
-                                        <div class="edit-delete-action">
-                                            <a class="me-2 p-2" href="#">
-                                                <i data-feather="edit" class="feather-edit"></i>
-                                            </a>
-                                            <a class=" confirm-text p-2" href="javascript:void(0);">
-                                                <i data-feather="trash-2" class="feather-trash-2"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <label class="checkboxs">
-                                            <input type="checkbox">
-                                            <span class="checkmarks"></span>
-                                        </label>
-                                    </td>
-                                    <td>
-                                        <div class="productimgname">
-                                            <a href="javascript:void(0);" class="product-img stock-img">
-                                                <img src="{{ URL::asset('/build/img/products/expire-product-02.png') }}"
-                                                    alt="product">
-                                            </a>
-                                            <a href="javascript:void(0);">Iphone 14 Pro</a>
-                                        </div>
-                                    </td>
-                                    <td><a href="javascript:void(0);">PT007</a></td>
-                                    <td>22 Feb 2023</td>
-                                    <td>04 Apr 2023</td>
-                                    <td class="action-table-data">
-                                        <div class="edit-delete-action">
-                                            <a class="me-2 p-2" href="#">
-                                                <i data-feather="edit" class="feather-edit"></i>
-                                            </a>
-                                            <a class="confirm-text p-2" href="javascript:void(0);">
-                                                <i data-feather="trash-2" class="feather-trash-2"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <label class="checkboxs">
-                                            <input type="checkbox">
-                                            <span class="checkmarks"></span>
-                                        </label>
-                                    </td>
-                                    <td>
-                                        <div class="productimgname">
-                                            <a href="javascript:void(0);" class="product-img stock-img">
-                                                <img src="{{ URL::asset('/build/img/products/expire-product-03.png') }}"
-                                                    alt="product">
-                                            </a>
-                                            <a href="javascript:void(0);">Black Slim 200 </a>
-                                        </div>
-                                    </td>
-                                    <td><a href="javascript:void(0);">PT008</a></td>
-                                    <td>18 Mar 2023</td>
-                                    <td>13 May 2023</td>
-                                    <td class="action-table-data">
-                                        <div class="edit-delete-action">
-                                            <a class="me-2 p-2" href="#">
-                                                <i data-feather="edit" class="feather-edit"></i>
-                                            </a>
-                                            <a class=" confirm-text p-2" href="javascript:void(0);">
-                                                <i data-feather="trash-2" class="feather-trash-2"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <label class="checkboxs">
-                                            <input type="checkbox">
-                                            <span class="checkmarks"></span>
-                                        </label>
-                                    </td>
-                                    <td>
-                                        <div class="productimgname">
-                                            <a href="javascript:void(0);" class="product-img stock-img">
-                                                <img src="{{ URL::asset('/build/img/products/expire-product-04.png') }}"
-                                                    alt="product">
-                                            </a>
-                                            <a href="javascript:void(0);">Woodcraft Sandal</a>
-                                        </div>
-                                    </td>
-                                    <td><a href="javascript:void(0);">PT009</a></td>
-                                    <td>29 Mar 2023</td>
-                                    <td>27 May 2023</td>
-                                    <td class="action-table-data">
-                                        <div class="edit-delete-action">
-                                            <a class="me-2 p-2" href="#">
-                                                <i data-feather="edit" class="feather-edit"></i>
-                                            </a>
-                                            <a class=" confirm-text p-2" href="javascript:void(0);">
-                                                <i data-feather="trash-2" class="feather-trash-2"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <label class="checkboxs">
-                                            <input type="checkbox">
-                                            <span class="checkmarks"></span>
-                                        </label>
-                                    </td>
-                                    <td>
-                                        <div class="productimgname">
-                                            <a href="javascript:void(0);" class="product-img stock-img">
-                                                <img src="{{ URL::asset('/build/img/products/stock-img-03.png') }}"
-                                                    alt="product">
-                                            </a>
-                                            <a href="javascript:void(0);">Apple Series 5 Watch </a>
-                                        </div>
-                                    </td>
-                                    <td><a href="javascript:void(0);">PT010</a></td>
-                                    <td>24 Mar 2023</td>
-                                    <td>26 May 2023</td>
-                                    <td class="action-table-data">
-                                        <div class="edit-delete-action">
-                                            <a class="me-2 p-2" href="#">
-                                                <i data-feather="edit" class="feather-edit"></i>
-                                            </a>
-                                            <a class=" confirm-text p-2" href="javascript:void(0);">
-                                                <i data-feather="trash-2" class="feather-trash-2"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
+                                    </div>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

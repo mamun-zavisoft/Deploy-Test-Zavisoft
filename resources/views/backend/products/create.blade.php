@@ -32,10 +32,62 @@
                                                     <div class="add-newplus">
                                                         <label class="form-label">Category</label>
                                                         <a href="javascript:void(0);" data-bs-toggle="modal"
-                                                            data-bs-target="#add-units-category"><i
+                                                            data-bs-target="#add-category"><i
                                                                 data-feather="plus-circle"
                                                                 class="plus-down-add"></i><span>Add
                                                                 New</span></a>
+                                                    </div>
+                                                    <div class="modal fade" id="add-category">
+                                                        <div class="modal-dialog modal-dialog-centered custom-modal-two">
+                                                            <div class="modal-content">
+                                                                <div class="page-wrapper-new p-0">
+                                                                    <div class="content">
+                                                                        <div class="modal-header border-0 custom-modal-header">
+                                                                            <div class="page-title">
+                                                                                <h4>Create Category</h4>
+                                                                            </div>
+                                                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body custom-modal-body new-employee-field">
+                                                                            <form action="{{ route('admin.categories.store') }}" method="POST" enctype="multipart/form-data"
+                                                                                id="storeForm">
+                                                                                @csrf
+                                                                                <div class="mb-3">
+                                                                                    <label class="form-label">Category</label>
+                                                                                    <input type="text" name="name" class="form-control">
+                                                                                </div>
+                                                                                <label class="form-label">Logo</label>
+                                                                                <div class="profile-pic-upload mb-3 image-container">
+                                                                                    <div class="profile-pic brand-pic">
+                                                                                        <span>
+                                                                                            <img src="{{ asset('build/img/icons/upload.svg') }}"
+                                                                                                class="image-preview" alt="">
+                                                                                        </span>
+                                                                                        <a href="javascript:void(0);" class="remove-photo d-none">
+                                                                                            <i data-feather="x" class="x-square-add"></i>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                    <div class="image-upload mb-0">
+                                                                                        <input class="image-input" type="file" name="image">
+                                                                                        <div class="image-uploads">
+                                                                                            <h4>Change Image</h4>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="modal-footer-btn">
+                                                                                    <button type="button" class="btn btn-cancel me-2"
+                                                                                        data-bs-dismiss="modal">Cancel</button>
+                                                                                    <button type="submit" class="btn btn-submit" id="submit_btn">Create Category</button>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <select class="select" name="category_id">
                                                         <option value="">Choose</option>
@@ -51,8 +103,61 @@
                                                     <div class="add-newplus">
                                                         <label class="form-label">Brand</label>
                                                         <a href="javascript:void(0);" data-bs-toggle="modal"
-                                                            data-bs-target="#add-units-brand"><i data-feather="plus-circle"
+                                                            data-bs-target="#add-brand"><i data-feather="plus-circle"
                                                                 class="plus-down-add"></i><span>Add New</span></a>
+                                                    </div>
+                                                    <div class="modal fade" id="add-brand">
+                                                        <div class="modal-dialog modal-dialog-centered custom-modal-two">
+                                                            <div class="modal-content">
+                                                                <div class="page-wrapper-new p-0">
+                                                                    <div class="content">
+                                                                        <div class="modal-header border-0 custom-modal-header">
+                                                                            <div class="page-title">
+                                                                                <h4>Create Brand</h4>
+                                                                            </div>
+                                                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body custom-modal-body new-employee-field">
+                                                                            <form action="{{ route('admin.brands.store') }}" method="POST"
+                                                                                enctype="multipart/form-data" id="storeForm">
+                                                                                @csrf
+                                                                                <div class="mb-3">
+                                                                                    <label class="form-label">Brand</label>
+                                                                                    <input type="text" name="name" class="form-control">
+                                                                                </div>
+                                                                                <label class="form-label">Logo</label>
+                                                                                <div class="profile-pic-upload mb-3 image-container">
+                                                                                    <div class="profile-pic brand-pic">
+                                                                                        <span>
+                                                                                            <img src="{{ asset('build/img/icons/upload.svg') }}"
+                                                                                                class="image-preview" alt="">
+                                                                                        </span>
+                                                                                        <a href="javascript:void(0);" class="remove-photo d-none">
+                                                                                            <i data-feather="x" class="x-square-add"></i>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                    <div class="image-upload mb-0">
+                                                                                        <input class="image-input" type="file" name="image">
+                                                                                        <div class="image-uploads">
+                                                                                            <h4>Change Image</h4>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+
+                                                                                <div class="modal-footer-btn">
+                                                                                    <button type="button" class="btn btn-cancel me-2"
+                                                                                        data-bs-dismiss="modal">Cancel</button>
+                                                                                    <button type="submit" class="btn btn-submit" id="submit_btn">Create Brand</button>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <select class="select" name="brand_id">
                                                         <option value="">Choose</option>

@@ -105,6 +105,13 @@
                                                             </p>
                                                         </div>
                                                     </div>
+
+                                                    <!-- Product Description -->
+                                                    <div class="mb-4 p-3 border rounded shadow-sm bg-light">
+                                                        <h5 class="fw-bold mb-2">Description</h5>
+                                                        <p class="text-dark">{{ $product->description ?: 'No description available.' }}</p>
+                                                    </div>
+
                                                     <div class="d-flex flex-wrap gap-4">
                                                         <div class="p-4 border rounded shadow-sm flex-grow-1 bg-light">
                                                             <h5 class="fw-bold mb-2">Purchase Price</h5>
@@ -122,16 +129,17 @@
                                                 </div>
                                                 <!-- Modal Footer -->
                                                 <div class="modal-footer justify-content-end">
-                                                <button type="button" class="btn btn-secondary me-2" onclick="window.print()">
-                                                    <i class="fas fa-print me-1"></i> Print
-                                                </button>
-                                                <button type="button" class="btn btn-primary">
-                                                    <i class="fas fa-download me-1"></i> Download PDF
-                                                </button>
-                                            </div>
+                                                    <button type="button" class="btn btn-secondary me-2" onclick="window.print()">
+                                                        <i class="fas fa-print me-1"></i> Print
+                                                    </button>
+                                                    <button type="button" class="btn btn-primary">
+                                                        <i class="fas fa-download me-1"></i> Download PDF
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+
                                 @endforeach
                             </tbody>
                         </table>

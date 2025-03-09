@@ -158,7 +158,7 @@
 
                                                         <div class="col-md-4">
                                                             <div class="card">
-                                                                <div class="card-body">
+                                                                <div class="card-body ms-5">
                                                                     <h5 class="card-title font-weight-bold mb-3">Invoice Info</h5>
                                                                     <div class="d-flex justify-content-between mb-1">
                                                                         <span>Reference:</span>
@@ -166,12 +166,14 @@
                                                                     </div>
                                                                     <div class="d-flex justify-content-between mb-1">
                                                                         <span>Payment Status:</span>
-                                                                        <span class="fw-bolder text-{{ $purchase->paid_status == 'full_paid' ? 'success' : 'warning' }}">{{ $purchase->paid_status }}</span>
+                                                                        <span class="fw-bolder text-{{ $purchase->paid_status == 'full_paid' ? 'success' : 'warning' }}">
+                                                                            {{ $purchase->paid_status == 'full_paid' ? 'Full Paid' : 'Partial Paid' }}
+                                                                        </span>
                                                                     </div>
                                                                     <div class="d-flex justify-content-between">
                                                                         <span>Status:</span>
                                                                         <span class="fw-bolder text-{{ $purchase->status == 'pending' ? 'warning' : 'success' }}">
-                                                                            {{ $purchase->status }}
+                                                                            {{ $purchase->status == 'pending' ? 'Pending' : 'Received' }}
                                                                         </span>
                                                                     </div>
                                                                 </div>
@@ -191,7 +193,6 @@
                                                                 <div class="p-2" style="flex: 1;">Purchase Price</div>
                                                                 <div class="p-2" style="flex: 1;">Sale Price</div>
                                                                 <div class="p-2" style="flex: 1;">Total Price</div>
-                                                                <div class="p-2" style="flex: 1;">Status</div>
                                                             </div>
 
                                                             <!-- Table Body -->
@@ -201,10 +202,7 @@
                                                                     <div class="p-2" style="flex: 1;">{{ $data->quantity }}</div>
                                                                     <div class="p-2" style="flex: 1;">{{ $data->product->purchase_price }}</div>
                                                                     <div class="p-2" style="flex: 1;">{{ $data->product->sale_price }}</div>
-                                                                    <div class="p-2" style="flex: 1;">{{ $data->quantity * $data->product->purchase_price }}</div>
-                                                                    <div class="p-2 fw-bolder text-{{ $data->product->status == 1 ? 'success' : 'warning' }}" style="flex: 1;">
-                                                                        {{ $data->product->status == 1 ? 'Active' : 'InActive' }}
-                                                                    </div>
+                                                                    <div class="p-2" style="flex: 1;">{{ $data->quantity * $data->product->purchase_price }}</div> 
                                                                 </div>
                                                             @endforeach
                                                         </div>
@@ -215,7 +213,7 @@
                                                         <div class="col-md-5">
                                                             <div class="bg-light p-3 rounded">
                                                                 <div class="d-flex justify-content-between">
-                                                                    <span class="font-weight-bold">Grand Total</span>
+                                                                    <span class="font-weight-bold">Total Price</span>
                                                                     <span class="font-weight-bold">{{ $purchase->grand_total }}</span>
                                                                 </div>
                                                                 <div class="d-flex justify-content-between">
@@ -227,7 +225,7 @@
                                                                     <span>{{ $purchase->discount_amount }}</span>
                                                                 </div>
                                                                 <div class="d-flex justify-content-between mb-2">
-                                                                    <span>Total Price</span>
+                                                                    <span>Grand Total Price</span>
                                                                     <span>{{ ($purchase->grand_total + $purchase->shipping_charge) - $purchase->discount_amount }}</span>
                                                                 </div>
                                                             </div>
