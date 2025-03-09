@@ -33,16 +33,15 @@
                             </thead>
                             <tbody id="tbody">
                                 @foreach ($brands as $brand)
-                                @php
-                                    $image = $brand->image;
-                                @endphp
+                                    @php
+                                        $image = $brand->image;
+                                    @endphp
                                     <tr>
                                         <td>
                                             {{ $loop->iteration + $brands->firstItem() - 1 }}
                                         </td>
                                         <td>{{ $brand->name }}</td>
-                                        <td><span class="d-flex"><img
-                                                    src="{{ $image ?: asset('build/img/no-image.svg') }}"
+                                        <td><span class="d-flex"><img src="{{ $image ?: asset('build/img/no-image.svg') }}"
                                                     style="width: 50px; height: 50px;" alt=""></span></td>
                                         <td>{{ $brand->created_at->format('d M Y') }}</td>
                                         <td><span
@@ -73,7 +72,8 @@
                                             <div class="modal-content">
                                                 <div class="page-wrapper-new p-0">
                                                     <div class="content">
-                                                        <div class="modal-header border-0 custom-modal-header">
+                                                        <div
+                                                            class="modal-header border-0 custom-modal-header justify-content-between">
                                                             <div class="page-title">
                                                                 <h4>Edit Brand</h4>
                                                             </div>
@@ -145,11 +145,12 @@
             <div class="modal-content">
                 <div class="page-wrapper-new p-0">
                     <div class="content">
-                        <div class="modal-header border-0 custom-modal-header">
+                        <div class="modal-header border-0 custom-modal-header justify-content-between">
                             <div class="page-title">
                                 <h4>Create Brand</h4>
                             </div>
-                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" onclick="$('#storeForm')[0].reset()">
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"
+                                onclick="$('#storeForm')[0].reset()">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
@@ -165,8 +166,8 @@
                                 <div class="profile-pic-upload mb-3 image-container">
                                     <div class="profile-pic brand-pic">
                                         <span>
-                                            <img src="{{ asset('build/img/icons/upload.svg') }}"
-                                                class="image-preview" alt="">
+                                            <img src="{{ asset('build/img/icons/upload.svg') }}" class="image-preview"
+                                                alt="">
                                         </span>
                                         <a href="javascript:void(0);" class="remove-photo d-none">
                                             <i data-feather="x" class="x-square-add"></i>

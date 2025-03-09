@@ -94,7 +94,7 @@
                                     <div class="modal fade" id="service-{{ $service->id }}">
                                         <div class="modal-dialog modal-dialog-centered modal-xl">
                                             <div class="modal-content">
-                                                <div class="modal-header border-0 custom-modal-header">
+                                                <div class="modal-header border-0 custom-modal-header justify-content-between">
                                                     <div class="page-title">
                                                         <h4>Service Details</h4>
                                                     </div>
@@ -292,7 +292,7 @@
                                 <div class="modal-content" style="width: auto; padding-bottom: 50px;">
                                     <div class="page-wrapper-new p-0">
                                         <div class="content">
-                                            <div class="modal-header border-0 custom-modal-header">
+                                            <div class="modal-header border-0 custom-modal-header justify-content-between">
                                                 <div class="page-title">
                                                     <h4>Service Payments</h4>
                                                 </div>

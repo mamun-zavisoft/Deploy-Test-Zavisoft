@@ -52,7 +52,7 @@
                                     <div class="modal fade" id="sale-{{ $sale->id }}">
                                         <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 90%; width: 80%;">
                                             <div class="modal-content" style="max-height: 90vh; display: flex; flex-direction: column;">
-                                                <div class="modal-header border-0 custom-modal-header">
+                                                <div class="modal-header border-0 custom-modal-header justify-content-between">
                                                     <div class="page-title">
                                                         <h4>Sale Details</h4>
                                                     </div>
@@ -166,7 +166,7 @@
                                 <div class="modal-content" style="width: auto; padding-bottom: 50px;">
                                     <div class="page-wrapper-new p-0">
                                         <div class="content">
-                                            <div class="modal-header border-0 custom-modal-header">
+                                            <div class="modal-header border-0 custom-modal-header justify-content-between">
                                                 <div class="page-title">
                                                     <h4>Purchase Payments</h4>
                                                 </div>

@@ -50,13 +50,14 @@
                 </div>
                 <div class="row">
                     <div class="col-xl-3 col-sm-6 col-12 d-flex">
-                        <a href="{{ url('vehicles') }}" class="dash-count text-decoration-none w-100 vehicle" style="text-decoration: none; color: inherit;">
+                        <a href="{{ url('vehicles') }}" class="dash-count text-decoration-none w-100 vehicle"
+                            style="text-decoration: none; color: inherit;">
                             <div class="dash-counts text-start">
                                 <h5>Vehicle</h5>
                                 <h4 class="mb-2">{{ $totalVehicle }}</h4>
                                 <div class="d-flex justify-content-center align-items-center mt-2 text-white">
-                                    <span class="me-3">Self: {{ $selfVehicle }}</span> 
-                                    <div style="width: 2px; height: 20px; background: white; margin: 0 10px;"></div> 
+                                    <span class="me-3">Self: {{ $selfVehicle }}</span>
+                                    <div style="width: 2px; height: 20px; background: white; margin: 0 10px;"></div>
                                     <span class="ms-3">Outside: {{ $outsideVehicle }}</span>
                                 </div>
                             </div>
@@ -88,291 +89,332 @@
                     </div>
                 </div>
 
-            <!-- Button trigger modal -->
-            <div class="row">
-                <div class="col-xl-7 col-sm-12 col-12 d-flex">
-                    <div class="card flex-fill">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="card-title mb-0">Purchase & Sales</h5>
-                            <div class="graph-sets">
-                                <ul class="mb-0">
-                                    <li>
-                                        <span>Sales</span>
-                                    </li>
-                                    <li>
-                                        <span>Purchase</span>
-                                    </li>
-                                </ul>
-                                <div class="dropdown dropdown-wraper">
-                                    <button class="btn btn-light btn-sm dropdown-toggle" type="button"
-                                        id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                        2023
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <!-- Button trigger modal -->
+                <div class="row">
+                    <div class="col-xl-7 col-sm-12 col-12 d-flex">
+                        <div class="card flex-fill">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="card-title mb-0">Purchase & Sales</h5>
+                                <div class="graph-sets">
+                                    <ul class="mb-0">
                                         <li>
-                                            <a href="javascript:void(0);" class="dropdown-item">2023</a>
+                                            <span>Sales</span>
                                         </li>
                                         <li>
-                                            <a href="javascript:void(0);" class="dropdown-item">2022</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);" class="dropdown-item">2021</a>
+                                            <span>Purchase</span>
                                         </li>
                                     </ul>
+                                    <div class="dropdown dropdown-wraper">
+                                        <button class="btn btn-light btn-sm dropdown-toggle" type="button"
+                                            id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                            2023
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <li>
+                                                <a href="javascript:void(0);" class="dropdown-item">2023</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0);" class="dropdown-item">2022</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0);" class="dropdown-item">2021</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div id="sales_charts"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-sm-12 col-12 d-flex">
+                        <div class="card flex-fill default-cover mb-4">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h4 class="card-title mb-0">Recent Purchase</h4>
+                                <div class="view-all-link">
+                                    <a href="javascript:void(0);" class="view-all d-flex align-items-center">
+                                        View All<span class="ps-2 d-flex align-items-center"><i data-feather="arrow-right"
+                                                class="feather-16"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive dataview">
+                                    <table class="table dashboard-recent-products">
+                                        <thead>
+                                            <tr>
+                                                <th>Products</th>
+                                                <th>Price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($purchases as $purchase)
+                                                @foreach ($purchase->purchaseDetails as $data)
+                                                    <tr>
+                                                        <td>
+                                                            <div class="productimgname">
+                                                                <a href="javascript:void(0);" class="product-img stock-img">
+                                                                    <img src="{{ $data->product->thumbnail ?: asset('build/img/no-image.svg') }}"
+                                                                        alt="product" height="50px" width="30px">
+                                                                </a>
+                                                                <a
+                                                                    href="javascript:void(0);">{{ $data->product->name }}</a>
+                                                            </div>
+                                                        </td>
+                                                        <td>{{ $data->product?->purchase_price }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body">
-                            <div id="sales_charts"></div>
-                        </div>
                     </div>
                 </div>
-                <div class="col-xl-5 col-sm-12 col-12 d-flex">
-                    <div class="card flex-fill default-cover mb-4">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h4 class="card-title mb-0">Recent Purchase</h4>
-                            <div class="view-all-link">
-                                <a href="javascript:void(0);" class="view-all d-flex align-items-center">
-                                    View All<span class="ps-2 d-flex align-items-center"><i data-feather="arrow-right"
-                                            class="feather-16"></i></span>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive dataview">
-                                <table class="table dashboard-recent-products">
-                                    <thead>
-                                        <tr>
-                                            <th>Products</th>
-                                            <th>Price</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach ($purchases as $purchase)
-                                        @foreach ($purchase->purchaseDetails as $data)
-                                            <tr>
-                                                <td>
-                                                    <div class="productimgname">
-                                                        <a href="javascript:void(0);" class="product-img stock-img">
-                                                            <img src="{{ $data->product->thumbnail ?: asset('build/img/no-image.svg') }}"
-                                                                alt="product" height="50px" width="30px">
-                                                        </a>
-                                                        <a href="javascript:void(0);">{{ $data->product->name }}</a>
-                                                    </div>
-                                                </td>
-                                                <td>{{ $data->product?->purchase_price }}</td>
-                                            </tr>
-                                        @endforeach
-                                    @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Recent Service</h4>
                     </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Recent Service</h4>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive dataview">
-                        <table class="table dashboard-expired-products">
-                            <thead>
-                                <tr>
-                                    <th class="no-sort">
-                                        <label class="checkboxs">
-                                            <input type="checkbox" id="select-all">
-                                            <span class="checkmarks"></span>
-                                        </label>
-                                    </th>
-                                    <th>Service</th>
-                                    <th>Total Price</th>
-                                    <th>Created Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($services as $service)
+                    <div class="card-body">
+                        <div class="table-responsive dataview">
+                            <table class="table dashboard-expired-products">
+                                <thead>
                                     <tr>
-                                        <td>
+                                        <th class="no-sort">
                                             <label class="checkboxs">
-                                                <input type="checkbox">
+                                                <input type="checkbox" id="select-all">
                                                 <span class="checkmarks"></span>
                                             </label>
-                                        </td>
-                                        <td>
-                                            <a href="#service-{{ $service->id }}" data-bs-toggle="modal" style="cursor: pointer; text-decoration: none;" class="service-name">
-                                            {{ $service->service_type == 'self' ? 'Self' : 'External' }}
-                                        </td>
-                                        <td>{{ $service->grand_total }}</td>
-                                        <td>{{ $service->created_at?->format('d M Y') }}</td>
+                                        </th>
+                                        <th>Service</th>
+                                        <th>Total Price</th>
+                                        <th>Created Date</th>
                                     </tr>
-                                @endforeach
-                                @foreach ($services as $service)
-                                    <div class="modal fade" id="service-{{ $service->id }}" tabindex="-1" aria-labelledby="serviceLabel-{{ $service->id }}" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered modal-xl">
-                                            <div class="modal-content">
-                                                <div class="modal-header border-0 custom-modal-header">
-                                                    <div class="page-title">
-                                                        <h4>Service Details</h4>
-                                                    </div>
-                                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body custom-modal-body" style="max-height: 80vh; overflow-y: auto;">
-                                                    <!-- Top Section: Vehicle and Invoice Info -->
-                                                    <div class="row mb-4">
-                                                        <div class="col-md-8">
-                                                            <div class="card h-100">
-                                                                <div class="card-body ms-4">
-                                                                    <h5 class="card-title fw-bold mb-3">Vehicle Info</h5>
-                                                                    <div class="row mb-2">
-                                                                        <div class="col-md-4 fw-bold">Vehicle Type:</div>
-                                                                        <div class="col-md-8">
-                                                                            <span class="text-{{ $service->vehicle?->owner_type == 1 ? 'success' : 'warning' }}">
-                                                                                {{ $service->vehicle?->owner_type == 1 ? 'Self' : 'External' }}
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="row mb-2">
-                                                                        <div class="col-md-4 fw-bold">Vehicle Number:</div>
-                                                                        <div class="col-md-8">{{ $service->vehicle?->license_plate ?? 'N/A' }}</div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                </thead>
+                                <tbody>
+                                    @foreach ($services as $service)
+                                        <tr>
+                                            <td>
+                                                <label class="checkboxs">
+                                                    <input type="checkbox">
+                                                    <span class="checkmarks"></span>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <a href="#service-{{ $service->id }}" data-bs-toggle="modal"
+                                                    style="cursor: pointer; text-decoration: none;" class="service-name">
+                                                    {{ $service->service_type == 'self' ? 'Self' : 'External' }}
+                                            </td>
+                                            <td>{{ $service->grand_total }}</td>
+                                            <td>{{ $service->created_at?->format('d M Y') }}</td>
+                                        </tr>
+                                    @endforeach
+                                    @foreach ($services as $service)
+                                        <div class="modal fade" id="service-{{ $service->id }}" tabindex="-1"
+                                            aria-labelledby="serviceLabel-{{ $service->id }}" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered modal-xl">
+                                                <div class="modal-content">
+                                                    <div
+                                                        class="modal-header border-0 custom-modal-header justify-content-between">
+                                                        <div class="page-title">
+                                                            <h4>Service Details</h4>
                                                         </div>
-                                                        
-                                                        <div class="col-md-4">
-                                                            <div class="card h-100">
-                                                                <div class="card-body">
-                                                                    <h5 class="card-title fw-bold mb-3">Service Info</h5>
-                                                                    <div class="row mb-2">
-                                                                        <div class="col-md-5 fw-bold">Reference No:</div>
-                                                                        <div class="col-md-7">45-GYP-46</div>
-                                                                    </div>
-                                                                    <div class="row mb-2">
-                                                                        <div class="col-md-5 fw-bold">Service Type:</div>
-                                                                        <div class="col-md-7">
-                                                                            <span class="text-{{ $service->service_type == 1 ? 'success' : 'warning' }}">
-                                                                                {{ $service->service_type == 1 ? 'Self' : 'External' }}
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="row mb-2">
-                                                                        <div class="col-md-5 fw-bold">Payment Status:</div>
-                                                                        <div class="col-md-7">
-                                                                            <span class="badge bg-{{ $service->payment_status == 'paid' ? 'success' : 'warning' }}">
-                                                                                {{ ucfirst($service->payment_status ?? 'N/A') }}
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <div class="col-md-5 fw-bold">Service Date:</div>
-                                                                        <div class="col-md-7">{{ $service->created_at?->format('d M Y') ?? 'N/A' }}</div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Service Details Section -->
-                                                    <div class="card mb-4">
-                                                        <div class="card-header bg-light">
-                                                            <h5 class="card-title fw-bold m-0">Service Details</h5>
-                                                        </div>
-                                                        <div class="card-body ms-2">
-                                                            <div class="d-flex fw-bold border-bottom pb-2" style="display: flex; flex-wrap: wrap;">
-                                                                <div class="p-2" style="flex: 1;">Service Name</div>
-                                                                <div class="p-2" style="flex: 1;">Price</div>
-                                                                <div class="p-2" style="flex: 1;">Code</div>
-                                                            </div>
-
-                                                            @foreach($service->serviceDetails as $data)
-                                                                <div class="d-flex border-bottom py-2" style="display: flex; flex-wrap: wrap;">
-                                                                    <div class="p-2" style="flex: 1;">{{ $data->serviceChart?->name }}</div>
-                                                                    <div class="p-2" style="flex: 1;">{{ $data->serviceChart?->price }}</div>
-                                                                    <div class="p-2" style="flex: 1;">{{ $data->serviceChart?->code }}</div>
-                                                                </div>
-                                                            @endforeach
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Product Used Table -->
-                                                    <div class="card mb-4">
-                                                        <div class="card-header bg-light">
-                                                            <h5 class="card-title fw-bold m-0">Products Used</h5>
-                                                        </div>
-                                                        @if(is_null($service->sale))
-                                                            <p class="text-center text-danger bg-warning bg-opacity-25 mt-3">No Part's Found</p>
-                                                        @else
-                                                        <div class="card-body ms-2">                                                                <!-- Table Head -->
-                                                            <div class="d-flex fw-bold border-bottom pb-2" style="display: flex; flex-wrap: wrap;">
-                                                                <div class="p-2" style="flex: 1;">Product Name</div>
-                                                                <div class="p-2" style="flex: 1;">Quantity</div>
-                                                                <div class="p-2" style="flex: 1;">Price</div>
-                                                                <div class="p-2" style="flex: 1;">Amount</div>
-                                                            </div>
-                                                            <!-- Table Body -->
-                                                            @foreach($service->sale->saleDetails as $saleDetail)
-                                                                <div class="d-flex border-bottom py-2" style="display: flex; flex-wrap: wrap;">
-                                                                    <div class="p-2" style="flex: 1;">{{ $saleDetail->product?->name }}</div>
-                                                                    <div class="p-2" style="flex: 1;">{{ $saleDetail->qty }}</div>
-                                                                    <div class="p-2" style="flex: 1;">{{ $saleDetail->unit_price }}</div>
-                                                                    <div class="p-2" style="flex: 1;">{{ $saleDetail->unit_price * $saleDetail->qty }}</div>
-                                                                </div>
-                                                            @endforeach
-                                                        </div>
-                                                        @endif
-                                                    </div>
-
-                                                    <!-- Billing Summary Section -->
-                                                   <div class="card mb-4">
-                                                        <div class="card-header bg-light">
-                                                            <h5 class="card-title fw-bold m-0">Billing Summary</h5>
-                                                        </div>
-                                                        <div class="card-body ">
-                                                            <div class="row justify-content-end">
-                                                                <div class="col-md-6">
-                                                                    <div class="d-flex justify-content-between mb-2">
-                                                                        <div class="fw-bold">Service Total:</div>
-                                                                        <div>{{ $service->total_amount ?? '0.00' }}</div>
-                                                                    </div>
-                                                                    <div class="d-flex justify-content-between mb-2">
-                                                                        <div class="fw-bold">Discount:</div>
-                                                                        <div class="text-danger">
-                                                                            {{ $service->discount ?? '0.00' }}                                                                       
-                                                                        </div>
-                                                                    </div>                                                                
-                                                                    <hr>
-                                                                    <div class="d-flex justify-content-between">
-                                                                        <div class="fw-bold fs-5">Grand Total:</div>
-                                                                        <div class="fw-bold fs-5">{{ $service->grand_total ?? '0.00' }}</div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <!-- Modal Footer -->
-                                                    <div class="modal-footer justify-content-end">
-                                                        <button type="button" class="btn btn-secondary me-2" onclick="window.print()">
-                                                            <i class="fas fa-print me-1"></i> Print
+                                                        <button type="button" class="close" data-bs-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
                                                         </button>
-                                                        <button type="button" class="btn btn-primary">
-                                                            <i class="fas fa-download me-1"></i> Download PDF
-                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body custom-modal-body"
+                                                        style="max-height: 80vh; overflow-y: auto;">
+                                                        <!-- Top Section: Vehicle and Invoice Info -->
+                                                        <div class="row mb-4">
+                                                            <div class="col-md-8">
+                                                                <div class="card h-100">
+                                                                    <div class="card-body ms-4">
+                                                                        <h5 class="card-title fw-bold mb-3">Vehicle Info
+                                                                        </h5>
+                                                                        <div class="row mb-2">
+                                                                            <div class="col-md-4 fw-bold">Vehicle Type:
+                                                                            </div>
+                                                                            <div class="col-md-8">
+                                                                                <span
+                                                                                    class="text-{{ $service->vehicle?->owner_type == 1 ? 'success' : 'warning' }}">
+                                                                                    {{ $service->vehicle?->owner_type == 1 ? 'Self' : 'External' }}
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row mb-2">
+                                                                            <div class="col-md-4 fw-bold">Vehicle Number:
+                                                                            </div>
+                                                                            <div class="col-md-8">
+                                                                                {{ $service->vehicle?->license_plate ?? 'N/A' }}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-4">
+                                                                <div class="card h-100">
+                                                                    <div class="card-body">
+                                                                        <h5 class="card-title fw-bold mb-3">Service Info
+                                                                        </h5>
+                                                                        <div class="row mb-2">
+                                                                            <div class="col-md-5 fw-bold">Reference No:
+                                                                            </div>
+                                                                            <div class="col-md-7">45-GYP-46</div>
+                                                                        </div>
+                                                                        <div class="row mb-2">
+                                                                            <div class="col-md-5 fw-bold">Service Type:
+                                                                            </div>
+                                                                            <div class="col-md-7">
+                                                                                <span
+                                                                                    class="text-{{ $service->service_type == 1 ? 'success' : 'warning' }}">
+                                                                                    {{ $service->service_type == 1 ? 'Self' : 'External' }}
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row mb-2">
+                                                                            <div class="col-md-5 fw-bold">Payment Status:
+                                                                            </div>
+                                                                            <div class="col-md-7">
+                                                                                <span
+                                                                                    class="badge bg-{{ $service->payment_status == 'paid' ? 'success' : 'warning' }}">
+                                                                                    {{ ucfirst($service->payment_status ?? 'N/A') }}
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-md-5 fw-bold">Service Date:
+                                                                            </div>
+                                                                            <div class="col-md-7">
+                                                                                {{ $service->created_at?->format('d M Y') ?? 'N/A' }}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Service Details Section -->
+                                                        <div class="card mb-4">
+                                                            <div class="card-header bg-light">
+                                                                <h5 class="card-title fw-bold m-0">Service Details</h5>
+                                                            </div>
+                                                            <div class="card-body ms-2">
+                                                                <div class="d-flex fw-bold border-bottom pb-2"
+                                                                    style="display: flex; flex-wrap: wrap;">
+                                                                    <div class="p-2" style="flex: 1;">Service Name
+                                                                    </div>
+                                                                    <div class="p-2" style="flex: 1;">Price</div>
+                                                                    <div class="p-2" style="flex: 1;">Code</div>
+                                                                </div>
+
+                                                                @foreach ($service->serviceDetails as $data)
+                                                                    <div class="d-flex border-bottom py-2"
+                                                                        style="display: flex; flex-wrap: wrap;">
+                                                                        <div class="p-2" style="flex: 1;">
+                                                                            {{ $data->serviceChart?->name }}</div>
+                                                                        <div class="p-2" style="flex: 1;">
+                                                                            {{ $data->serviceChart?->price }}</div>
+                                                                        <div class="p-2" style="flex: 1;">
+                                                                            {{ $data->serviceChart?->code }}</div>
+                                                                    </div>
+                                                                @endforeach
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Product Used Table -->
+                                                        <div class="card mb-4">
+                                                            <div class="card-header bg-light">
+                                                                <h5 class="card-title fw-bold m-0">Products Used</h5>
+                                                            </div>
+                                                            @if (is_null($service->sale))
+                                                                <p
+                                                                    class="text-center text-danger bg-warning bg-opacity-25 mt-3">
+                                                                    No Part's Found</p>
+                                                            @else
+                                                                <div class="card-body ms-2"> <!-- Table Head -->
+                                                                    <div class="d-flex fw-bold border-bottom pb-2"
+                                                                        style="display: flex; flex-wrap: wrap;">
+                                                                        <div class="p-2" style="flex: 1;">Product Name
+                                                                        </div>
+                                                                        <div class="p-2" style="flex: 1;">Quantity
+                                                                        </div>
+                                                                        <div class="p-2" style="flex: 1;">Price</div>
+                                                                        <div class="p-2" style="flex: 1;">Amount</div>
+                                                                    </div>
+                                                                    <!-- Table Body -->
+                                                                    @foreach ($service->sale->saleDetails as $saleDetail)
+                                                                        <div class="d-flex border-bottom py-2"
+                                                                            style="display: flex; flex-wrap: wrap;">
+                                                                            <div class="p-2" style="flex: 1;">
+                                                                                {{ $saleDetail->product?->name }}</div>
+                                                                            <div class="p-2" style="flex: 1;">
+                                                                                {{ $saleDetail->qty }}</div>
+                                                                            <div class="p-2" style="flex: 1;">
+                                                                                {{ $saleDetail->unit_price }}</div>
+                                                                            <div class="p-2" style="flex: 1;">
+                                                                                {{ $saleDetail->unit_price * $saleDetail->qty }}
+                                                                            </div>
+                                                                        </div>
+                                                                    @endforeach
+                                                                </div>
+                                                            @endif
+                                                        </div>
+
+                                                        <!-- Billing Summary Section -->
+                                                        <div class="card mb-4">
+                                                            <div class="card-header bg-light">
+                                                                <h5 class="card-title fw-bold m-0">Billing Summary</h5>
+                                                            </div>
+                                                            <div class="card-body ">
+                                                                <div class="row justify-content-end">
+                                                                    <div class="col-md-6">
+                                                                        <div class="d-flex justify-content-between mb-2">
+                                                                            <div class="fw-bold">Service Total:</div>
+                                                                            <div>{{ $service->total_amount ?? '0.00' }}
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="d-flex justify-content-between mb-2">
+                                                                            <div class="fw-bold">Discount:</div>
+                                                                            <div class="text-danger">
+                                                                                {{ $service->discount ?? '0.00' }}
+                                                                            </div>
+                                                                        </div>
+                                                                        <hr>
+                                                                        <div class="d-flex justify-content-between">
+                                                                            <div class="fw-bold fs-5">Grand Total:</div>
+                                                                            <div class="fw-bold fs-5">
+                                                                                {{ $service->grand_total ?? '0.00' }}</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Modal Footer -->
+                                                        <div class="modal-footer justify-content-end">
+                                                            <button type="button" class="btn btn-secondary me-2"
+                                                                onclick="window.print()">
+                                                                <i class="fas fa-print me-1"></i> Print
+                                                            </button>
+                                                            <button type="button" class="btn btn-primary">
+                                                                <i class="fas fa-download me-1"></i> Download PDF
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-@endsection
+    @endsection

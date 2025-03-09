@@ -98,7 +98,8 @@ class Product extends Model implements Mediable
         return $availableCount;
     }
 
-    public function getTotalAvailableQuantityAttribute(){
+    public function getTotalAvailableQuantityAttribute()
+    {
         return $this->getTotalAvailableQuantity();
     }
 
@@ -142,6 +143,24 @@ class Product extends Model implements Mediable
             ->groupBy('racks.id', 'racks.name')
             ->having('available_quantity', '>', 0)
             ->orderBy('racks.name')
+            ->get();
+    }
+
+    /**
+     * Get all drawers in a specific rack that contain available quantities of this product
+     */
+    public function getDrawersInRack($rackId)
+    {
+        return DB::table('drawers')
+            ->select('drawers.id', 'drawers.name', DB::raw('COUNT(stock_histories.id) as available_quantity'))
+            ->join('stock_purchases', 'drawers.id', '=', 'stock_purchases.drawer_id')
+            ->join('stock_histories', 'stock_purchases.id', '=', 'stock_histories.stock_purchase_id')
+            ->where('stock_purchases.product_id', $this->id)
+            ->where('drawers.rack_id', $rackId)
+            ->whereNull('stock_histories.sale_id')
+            ->groupBy('drawers.id', 'drawers.name')
+            ->having('available_quantity', '>', 0)
+            ->orderBy('drawers.name')
             ->get();
     }
 }

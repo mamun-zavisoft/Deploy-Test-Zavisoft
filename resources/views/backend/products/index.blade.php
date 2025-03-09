@@ -105,14 +105,7 @@
                                                             </p>
                                                         </div>
                                                     </div>
-
-                                                    <!-- Product Description -->
-                                                    <div class="mb-4 p-3 border rounded shadow-sm bg-light">
-                                                        <h5 class="fw-bold mb-2">Description</h5>
-                                                        <p class="text-dark">{{ $product->description ?: 'No description available.' }}</p>
-                                                    </div>
-
-                                                    <div class="d-flex flex-wrap gap-4">
+                                                    <div class="d-flex flex-wrap gap-4 mb-4">
                                                         <div class="p-4 border rounded shadow-sm flex-grow-1 bg-light">
                                                             <h5 class="fw-bold mb-2">Purchase Price</h5>
                                                             <p class="text-primary fs-4 fw-bold">{{ number_format($product->purchase_price, 2) }}</p>
@@ -126,20 +119,63 @@
                                                             <p class="text-dark fs-4 fw-bold">{{ $product->total_available_qty }}</p>
                                                         </div>
                                                     </div>
+                                                    
+                                                    <!-- Inventory Locations Section -->
+                                                    <div class="mt-4 mb-4 border rounded shadow-sm"> 
+                                                        <div class="p-3 border-bottom bg-light"> 
+                                                            <div class="d-flex justify-content-between align-items-center"> 
+                                                                <h5 class="fw-bold mb-0">Inventory Locations</h5> 
+                                                                <span class="badge bg-primary">Total: {{ $product->total_available_qty }}</span> 
+                                                            </div> 
+                                                        </div> 
+                                                        <div class="p-0"> 
+                                                            <!-- Rack #1 --> 
+                                                            @foreach($product->getAvailableRacks() as $rack)
+                                                            <div class="border-bottom"> 
+                                                                <div class="d-flex justify-content-between align-items-center p-3"> 
+                                                                    <div> 
+                                                                        <h6 class="mb-0 fw-bold">{{ $rack->name }}</h6> 
+                                                                    </div> 
+                                                                    <div class="d-flex align-items-center"> 
+                                                                        <span class="badge bg-info me-3">{{ $rack->available_quantity }} units</span> 
+                                                                        <button type="button" class="btn btn-sm btn-primary" onclick="toggleDrawer('drawer-{{ $product->id }}-{{ $rack->id }}')"> 
+                                                                            <i data-feather="eye" class="feather-eye"></i>
+                                                                        </button> 
+                                                                    </div> 
+                                                                </div> 
+                                                                <!-- Drawer Details (Hidden by default) --> 
+                                                                <div id="drawer-{{ $product->id }}-{{ $rack->id }}" class="p-3 bg-light border-top" style="display: none;"> 
+                                                                    <div class="px-2">
+                                                                        <div class="d-flex justify-content-between fw-bold mb-2">
+                                                                            <div>Drawer</div>
+                                                                            <div>Quantity</div>
+                                                                        </div>
+                                                                        @foreach($product->getDrawersInRack($rack->id) as $drawer)
+                                                                            <div class="d-flex justify-content-between py-2 border-bottom">
+                                                                                <div>{{ $drawer->name }}</div>
+                                                                                <div><span class="badge bg-secondary">{{ $drawer->available_quantity }}</span></div>
+                                                                            </div>
+                                                                        @endforeach
+                                                                        
+                                                                    </div>
+                                                                </div> 
+                                                            </div> 
+                                                            @endforeach
+                                                        </div> 
+                                                    </div>
                                                 </div>
                                                 <!-- Modal Footer -->
-                                                <div class="modal-footer justify-content-end">
+                                                {{-- <div class="modal-footer justify-content-end">
                                                     <button type="button" class="btn btn-secondary me-2" onclick="window.print()">
-                                                        <i class="fas fa-print me-1"></i> Print
+                                                        <i data-feather="printer" class="feather-printer me-1"></i> Print
                                                     </button>
                                                     <button type="button" class="btn btn-primary">
-                                                        <i class="fas fa-download me-1"></i> Download PDF
+                                                        <i data-feather="download" class="feather-download me-1"></i> Download PDF
                                                     </button>
-                                                </div>
+                                                </div> --}}
                                             </div>
                                         </div>
                                     </div>
-
                                 @endforeach
                             </tbody>
                         </table>
@@ -150,3 +186,18 @@
         </div>
     </div>
 @endsection
+@push('scripts')    
+<script>
+    function toggleDrawer(drawerId) {
+        const drawer = document.getElementById(drawerId);
+        if (drawer) {
+            if (drawer.style.display === "none") {
+                drawer.style.display = "block";
+            } else {
+                drawer.style.display = "none";
+            }
+        }
+    }
+    </script>
+    
+@endpush

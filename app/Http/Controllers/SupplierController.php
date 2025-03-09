@@ -36,7 +36,7 @@ class SupplierController extends Controller
                 'name' => $request->name,
                 'zone_id' => $request->zone_id,
                 'phone' => $request->phone,
-                'balance' => $request->balance
+                'balance' => $request->balance ?? 0
             ]);
     
             return response()->json(['message' => 'Supplier created successfully!', 'type' => 'success' ], 200);

@@ -69,7 +69,7 @@
                                             <div class="modal-content">
                                                 <div class="page-wrapper-new p-0">
                                                     <div class="content">
-                                                        <div class="modal-header border-0 custom-modal-header">
+                                                        <div class="modal-header border-0 custom-modal-header justify-content-between">
                                                             <div class="page-title">
                                                                 <h4>Edit Service Chart</h4>
                                                             </div>
@@ -136,7 +136,7 @@
             <div class="modal-content">
                 <div class="page-wrapper-new p-0">
                     <div class="content">
-                        <div class="modal-header border-0 custom-modal-header">
+                        <div class="modal-header border-0 custom-modal-header justify-content-between">
                             <div class="page-title">
                                 <h4>Create Service Chart</h4>
                             </div>
