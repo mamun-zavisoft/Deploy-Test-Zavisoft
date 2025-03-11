@@ -235,7 +235,7 @@
                         @csrf
                     <a class="dropdown-item logout pb-0" href="#" onclick="event.preventDefault();
                                         this.closest('form').submit();"><img
-                            src="#" class="me-2"
+                            src="{{ URL::asset('/build/img/icons/log-out.svg') }}" class="me-2"
                             alt="img">Logout</a>
                     </form>
                 </div>
