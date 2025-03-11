@@ -145,9 +145,6 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" onclick="$('#storeForm')[0].reset()">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
                     </div>
                     <div class="text-start ms-3 mb-2">
                         <small>Self=SteadFast Vehicle & External=OutSide Vehicle</small>
