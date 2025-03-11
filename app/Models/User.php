@@ -36,6 +36,11 @@ class User extends Authenticatable implements Mediable
         'zone_id',
     ];
 
+    public static $SUPER_ADMIN = 1;
+    public static $ADMIN = 2;    
+    public static $MANAGER = 3;
+    public static $IN_CHARGE = 4;
+    
     /**
      * The attributes that should be hidden for serialization.
      *

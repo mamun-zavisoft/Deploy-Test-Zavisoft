@@ -31,7 +31,7 @@
                             </div>
                             <div class="col-lg-3 col-sm-6 col-12">
                                 <div class="form-group">
-                                    <label for="email">Email<span class="manitory">*</span></label>
+                                    <label for="email">Email</label>
                                     <input type="email" name="email" class="form-control" value="{{ old('email') }}" id="email" placeholder="Enter email">
                                     @error('email')
                                         <div class="invalid-feedback d-block">{{ $message }}</div>
