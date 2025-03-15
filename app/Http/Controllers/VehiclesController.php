@@ -6,6 +6,7 @@ use App\Actions\FetchVehicle;
 use Illuminate\Http\Request;
 use App\Models\Vehicle;
 use App\Models\Zone;
+use App\Models\Service;
 use Illuminate\Support\Facades\DB;
 
 class VehiclesController extends Controller
@@ -49,6 +50,13 @@ class VehiclesController extends Controller
             DB::rollBack();
             return response()->json(['message' => $th->getMessage(), 'type' => 'error']);
         }
+    }
+
+
+    public function show(Vehicle $vehicle){
+
+        $services = Service::where('vehicle_id', $vehicle->id)->get();
+        return view('backend.vehicles.show',compact('vehicle','services',));
     }
 
 

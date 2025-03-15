@@ -35,6 +35,7 @@ class DashboardController extends Controller
         $products  = Product::select('id','name','purchase_price')->get();
         $totalDueAmount = $purchases->sum('due_amount');
         $totalPurchaseAmount  = $purchases->sum('grand_total');
+        $totalPurchasePaidAmount  = $purchases->sum('paid_amount');
 
 
         $services = Service::with('serviceDetails')->orderBy('id', 'desc')

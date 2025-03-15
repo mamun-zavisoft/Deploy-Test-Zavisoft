@@ -47,6 +47,9 @@
                                         <td>{{ $vehicle->created_at?->format('d M Y') }}</td>
                                         <td class="action-table-data">
                                             <div class="edit-delete-action">
+                                            <a class="me-2 p-2" href="{{ route('admin.vehicles.show', $vehicle->id) }}">
+                                                <i data-feather="eye" class="eye-action"></i>
+                                            </a>
                                                 <a class="me-2 p-2" href="#" data-bs-toggle="modal"
                                                     data-bs-target="#edit-vehicle-{{ $vehicle->id }}">
                                                     <i data-feather="edit" class="feather-edit"></i>
