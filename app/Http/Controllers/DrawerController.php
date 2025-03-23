@@ -20,7 +20,7 @@ class DrawerController extends Controller
         $racks = Rack::select('id', 'name')->get();
 
         if ($request->ajax()) {
-            return view('components.drawers.table', ['entity' => $drawers, 'racks' => $racks])->render();
+            return view('components.drawers.table', ['drawers' => $drawers, 'racks' => $racks])->render();
         }
        
         return view('backend.drawers.index', compact('drawers', 'racks'));

@@ -30,7 +30,7 @@ class PurchaseController extends Controller
         $suppliers = Supplier::select('id', 'name')->get();
 
         if(request()->ajax()) {
-            return view('components.purchases.table', ['entity' => $purchases])->render();
+            return view('components.purchases.table', ['purchases' => $purchases])->render();
         }
 
         return view('backend.purchases.index', compact('purchases', 'accounts','suppliers'));

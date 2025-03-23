@@ -16,7 +16,7 @@ class ZoneController extends Controller
         $zones = (new FetchZone)->execute($request);
 
         if ($request->ajax()) {
-            return view('components.zones.table', ['entity' => $zones])->render();
+            return view('components.zones.table', ['zones' => $zones])->render();
         }
 
         return view('backend.zones.index',compact('zones'));

@@ -22,6 +22,9 @@ class FetchDrawer
                     $query->where('name', 'like', "%{$search}%");
                 });
             })
+            ->when($rack_id, function ($query) use ($rack_id) {
+                $query->where('rack_id', $rack_id);
+            })
             ->select('id', 'name', 'rack_id', 'created_at')
             ->orderBy('id', 'desc')
             ->paginate($perPage)

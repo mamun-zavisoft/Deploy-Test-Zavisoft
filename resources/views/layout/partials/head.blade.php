@@ -64,6 +64,9 @@
 <!-- Feathericon CSS -->
 <link rel="stylesheet" href="{{ url('build/css/feather.css') }}">
 
+<!-- Status Button Css -->
+ <link rel="stylesheet" href="{{ url('build/css/toggle.css') }}">
+
 <!-- Summernote CSS -->
 <link rel="stylesheet" href="{{ url('build/plugins/summernote/summernote-bs4.min.css') }}">
 

@@ -40,7 +40,7 @@ class UserController extends Controller
 
 
         if (request()->ajax()) {
-            return view('components.users.table', ['entity' => $users])->render();
+            return view('components.users.table', ['users' => $users])->render();
         }
 
         return view('backend.users.index', compact('users', 'roles'));
