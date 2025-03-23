@@ -44,6 +44,8 @@ Route::middleware('auth')->name('admin.')->group(function () {
     Route::get('/stock-purchases/{id}', [StockPurchaseController::class, 'create'])->name('stock-purchases.create');
     Route::post('/stock-purchases/{id}/store', [StockPurchaseController::class, 'store'])->name('stock-purchases.store');
     Route::get('/service/{id}/details', [ServiceController::class, 'printInvoice'])->name('service.print');
+    Route::patch('/brands/{id}/status', [BrandController::class, 'updateStatus'])->name('brands.status');
+
 
     // ajax call routes
     Route::get('/drawers/fetch/{rackId}', [DrawerController::class, 'fetchDrawersByRack'])->name('racks.fetchDrawers');

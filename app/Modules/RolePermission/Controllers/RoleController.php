@@ -24,7 +24,7 @@ class RoleController extends Controller
             ->paginate($perPage);
 
         if (request()->ajax()) {
-            return view('components.roles.table', ['entity' => $roles])->render();
+            return view('components.roles.table', ['roles' => $roles])->render();
         }
 
         return view('backend.roles.index', compact('roles'));

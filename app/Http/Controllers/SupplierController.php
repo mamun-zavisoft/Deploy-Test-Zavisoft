@@ -14,7 +14,7 @@ class SupplierController extends Controller
        $suppliers = (new FetchSupplier)->execute($request);
        $zones = Zone::select('id', 'name')->get();
         if ($request->ajax()) {
-            return view('components.suppliers.table', ['entity' => $suppliers, 'zones' => $zones])->render();
+            return view('components.suppliers.table', ['suppliers' => $suppliers, 'zones' => $zones])->render();
         }
 
         return view('backend.suppliers.index', compact('suppliers', 'zones'));
