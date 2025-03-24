@@ -4,26 +4,31 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\VehicleModel;
+use App\Actions\FetchVehicleModel;
 use Illuminate\Support\Facades\DB;
 
 class VehicleModelController extends Controller
 {
-    public function index(){
-        $perPage = request()->input('per_page', 10);
-        $vehicleModels = VehicleModel::all()->paginate($perPage);
-        
-        return view('backend.vehicle_models.index', compact('vehicleModels'));
+    public function index(Request $request){
+       
+        $vehicleModels = (new FetchVehicleModel())->execute($request);
+
+        if ($request->ajax()) {
+            return view('components.vehicleModels.table', ['vehicleModels' => $vehicleModels])->render();
+        }
+    
+        return view('backend.vehicleModels.index', compact('vehicleModels'));
     }
 
 
     public function store(Request $request){
       try{
         $request->validate([
-            'name' => 'required|string|max:50',
-            'manufacturer' => 'nullable|string|max:50',
-            'engine_cc' => 'nullable|integer',
-            'fuel_capacity' => 'nullable|numeric',
-            'payload_capacity' => 'nullable|numeric',
+            'name' => 'required|string|max:50|unique:vehicle_models,name',
+            'manufacturer' => 'required|string|max:50',
+            'engine_cc' => 'required|integer',
+            'fuel_capacity' => 'required|numeric',
+            'payload_capacity' => 'required|numeric',
             'body_length' => 'nullable|numeric',
         ]);
 
@@ -51,10 +56,10 @@ class VehicleModelController extends Controller
         try{
             $data = $request->validate([
                 'name' => 'required|string|max:50',
-                'manufacturer' => 'nullable|string|max:50',
-                'engine_cc' => 'nullable|integer',
-                'fuel_capacity' => 'nullable|numeric',
-                'payload_capacity' => 'nullable|numeric',
+                'manufacturer' => 'required|string|max:50',
+                'engine_cc' => 'required|integer',
+                'fuel_capacity' => 'required|numeric',
+                'payload_capacity' => 'required|numeric',
                 'body_length' => 'nullable|numeric',
             ]);
 
@@ -73,7 +78,7 @@ class VehicleModelController extends Controller
 
     public function destroy(VehicleModel $vehicleModel){
         $vehicleModel->delete();
-        return response()->json(['message' => 'Vehicle Model deleted successfully', 'type' => 'success'],200);
+        return redirect()->back()->with('success', 'Vehicle Model deleted successfully!');
     }
     
 }

@@ -13,8 +13,11 @@ class FetchVehicle
         $type = $request->input('vehicle_type', '');
         $typeValue = $type === 'self' ? '1' : '2';
         $zone_id = $request->input('zone_id', '');
+        $vehicle_model_id = $request->input('vehicle_model_id', '');
+        $hub_id = $request->input('hub_id', '');
+
         return Vehicle::query()
-            ->with('zone')
+            ->with('zone', 'vehicleModel', 'hub')
             ->when($search, function ($query) use ($search) {
                 $query->whereAny(['license_plate', 'zone_id', 'status'], 'like', "%{$search}%");
             })
@@ -24,7 +27,15 @@ class FetchVehicle
             ->when($zone_id, function ($query) use ($zone_id) {
                 $query->where('zone_id', $zone_id);
             })
-            ->select('id','owner_type','license_plate','zone_id','status','created_at')
+            ->when($vehicle_model_id, function ($query) use ($vehicle_model_id) {
+                $query->where('vehicle_model_id', $vehicle_model_id);
+            })
+            ->when($hub_id, function ($query) use ($hub_id) {
+                $query->where('hub_id', $hub_id);
+            })
+            ->select('id','owner_type','license_plate','zone_id','status', 'registration_date',
+            'registration_validity', 'vehicle_model_id', 'hub_id', 'tax_token_validity', 'road_permit_validity', 
+            'fitness_validity', 'insurance_validity', 'vehicle_type', 'current_odometer', 'created_at')
             ->orderBy('id','desc')->paginate($perPage)->withQueryString();
             
     }

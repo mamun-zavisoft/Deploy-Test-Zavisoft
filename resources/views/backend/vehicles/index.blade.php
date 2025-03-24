@@ -20,7 +20,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-sm-3 col-12 ms-2" style="width: 200px;">
+                        <!-- <div class="col-lg-4 col-sm-3 col-12 ms-2" style="width: 200px;">
                             <div class="mb-3 add-product">
                                 <div class="add-newplus">
                                     <label class="form-label">Zone</label>
@@ -32,13 +32,39 @@
                                     @endforeach    
                                 </select>
                             </div>
+                        </div> -->
+                        <div class="col-lg-4 col-sm-3 col-12 ms-2" style="width: 200px;">
+                            <div class="mb-3 add-product">
+                                <div class="add-newplus">
+                                    <label class="form-label">Hub</label>
+                                </div>
+                                <select class="select filter-input" name="hub_id">
+                                    <option value="">Choose</option>
+                                    @foreach ($hubs as $hub)
+                                    <option value="{{$hub->id}}" @selected(request()->hub_id == $hub->id)>{{ $hub->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-3 col-12 ms-2" style="width: 200px;">
+                            <div class="mb-3 add-product">
+                                <div class="add-newplus">
+                                    <label class="form-label">Vehicle Model</label>
+                                </div>
+                                <select class="select filter-input" name="vehicle_model_id">
+                                    <option value="">Choose</option>
+                                    @foreach ($vehicleModels as $vehicleModel)
+                                    <option value="{{$vehicleModel->id}}" @selected(request()->vehicle_model_id == $vehicleModel->id)>{{ $vehicleModel->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                     </x-filter>
 
                     <!-- /Filter -->
 
                     <div class="table-responsive" id="dataTable">
-                        <x-vehicles.table :entity="$vehicles"/>
+                        <x-vehicles.table :vehicles="$vehicles" :zones="$zones" :vehicleModels="$vehicleModels" :hubs="$hubs"/>
                     </div>
                 </div>
             </div>
@@ -48,8 +74,8 @@
 
     <!-- Add Vehicle -->
     <div class="modal fade" id="add-vehicle">
-        <div class="modal-dialog modal-dialog-centered custom-modal-two">
-            <div class="modal-content">
+        <div class="modal-dialog modal-dialog-centered custom-modal-two" style="max-width: 95%; width: 1400px; max-height: 95vh; height: 90vh;">
+            <div class="modal-content" style="height: 100%;"> 
                 <div class="page-wrapper-new p-0">
                     <div class="content">
                         <div class="modal-header border-0 custom-modal-header justify-content-between">
@@ -68,27 +94,84 @@
                             <form action="{{ route('admin.vehicles.store') }}" method="POST"
                                 id="storeForm">
                                 @csrf
-                                <div class="mb-3">
-                                    <label class="form-label">Owner Type*</label>
-                                    <select class="select" name="owner_type">
-                                        <option value="">Choose</option>
-                                        <option value="1">Self</option>
-                                        <option value="2">External</option>
-                                    </select>
+                                <div class="row">
+                                    <div class="mb-3 col-6">
+                                        <label class="form-label">Owner Type*</label>
+                                        <select class="select form-control" name="owner_type">
+                                            <option value="">Choose</option>
+                                            <option value="1">Self</option>
+                                            <option value="2">External</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3 col-6">
+                                        <label class="form-label">Register Number*</label>
+                                        <input type="text" name="license_plate" class="form-control">
+                                    </div>
+                                    <div class="mb-3 col-6">
+                                        <label class="form-label">Status*</label>
+                                        <select class="select form-control" name="status">
+                                            <option value="">Choose</option>
+                                            <option value="1">Active</option>
+                                            <option value="2">In Service</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3 col-6">
+                                        <label class="form-label">Select Hub*</label>
+                                        <select class="select form-control" name="hub_id">
+                                            <option value="">Choose</option>
+                                            @foreach ($hubs as $hub)
+                                            <option value="{{$hub->id}}">{{ $hub->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="mb-3 col-6">
+                                        <label class="form-label">Vehicle Type*</label>
+                                        <select class="select form-control" name="vehicle_type">
+                                            <option value="">Choose</option>
+                                            <option value="1">Covered Van</option>
+                                            <option value="2">Motor Bike</option>
+                                            <option value="3">Pick Up</option>
+                                            <option value="4">Truck</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3 col-6">
+                                        <label class="form-label">Select Model*</label>
+                                        <select class="select form-control" name="vehicle_model_id">
+                                            <option value="">Choose</option>
+                                            @foreach ($vehicleModels as $vehicleModel)
+                                            <option value="{{ $vehicleModel->id }}">{{ $vehicleModel->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="mb-3 col-6">
+                                        <label class="form-label">ODO(current odometer)</label>
+                                        <input type="number" name="current_odometer" class="form-control">
+                                    </div>
+                                    <div class="mb-3 col-6">
+                                        <label class="form-label">Registration Date*</label>
+                                        <input type="date" name="registration_date" class="form-control">
+                                    </div>
+                                    <div class="mb-3 col-6">
+                                        <label class="form-label">Registration Validity*</label>
+                                        <input type="date" name="registration_validity" class="form-control">
+                                    </div>
+                                    <div class="mb-3 col-6">
+                                        <label class="form-label">Tax Token Validity*</label>
+                                        <input type="date" name="tax_token_validity" class="form-control">
+                                    </div>
+                                    <div class="mb-3 col-6">
+                                        <label class="form-label">Fitness Validity*</label>
+                                        <input type="date" name="fitness_validity" class="form-control">
+                                    </div>
+                                    <div class="mb-3 col-6">
+                                        <label class="form-label">Road Permit Validity*</label>
+                                        <input type="date" name="road_permit_validity" class="form-control">
+                                    </div>
+                                    <div class="mb-3 col-6">
+                                        <label class="form-label">Insurance Validity*</label>
+                                        <input type="date" name="insurance_validity" class="form-control">
+                                    </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Vehicle Register Number*</label>
-                                    <input type="text" name="license_plate" class="form-control">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Status*</label>
-                                    <select class="select" name="status">
-                                        <option value="">Choose</option>
-                                        <option value="1">Active</option>
-                                        <option value="2">In Service</option>
-                                    </select>
-                                </div>
-
                                 <div class="modal-footer-btn">
                                     <button type="button" class="btn btn-cancel me-2"
                                         data-bs-dismiss="modal">Cancel</button>
@@ -156,7 +239,7 @@
 
                 }).done(function(response) {
                     if (response.type == 'success') {
-                        $('.edit-vehicle').modal('hide');
+                        $('#edit-vehicle').modal('hide');
                         toastr.success(response.message);
                         setTimeout(() => {
                             location.reload();

@@ -18,4 +18,14 @@ class Vehicle extends Model
     {
         return $this->belongsTo(Zone::class);
     }
+
+    public function vehicleModel()
+    {
+        return $this->belongsTo(VehicleModel::class);
+    }
+
+    public function hub()
+    {
+        return $this->belongsTo(Hub::class);
+    }
 }

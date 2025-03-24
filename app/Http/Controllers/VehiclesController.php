@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Vehicle;
 use App\Models\Zone;
 use App\Models\Service;
+use App\Models\VehicleModel;
+use App\Models\Hub;
 use Illuminate\Support\Facades\DB;
 
 class VehiclesController extends Controller
@@ -16,11 +18,13 @@ class VehiclesController extends Controller
     {
         $vehicles = (new FetchVehicle)->execute($request);
         $zones = Zone::select('id', 'name')->get();
+        $vehicleModels = VehicleModel::select('id', 'name')->get();
+        $hubs = Hub::select('id', 'name')->get();
 
         if ($request->ajax()){
-            return view('components.vehicles.table', ['entity' => $vehicles])->render();
+            return view('components.vehicles.table', ['vehicles' => $vehicles, 'zones' => $zones, 'vehicleModels' => $vehicleModels, 'hubs' => $hubs])->render();
         }
-        return view('backend.vehicles.index', compact('vehicles', 'zones'));
+        return view('backend.vehicles.index', compact('vehicles', 'zones', 'vehicleModels', 'hubs'));
     }
 
 
@@ -40,6 +44,7 @@ class VehiclesController extends Controller
                 'road_permit_validity' => 'required|date',
                 'insurance_validity' => 'required|date',
                 'license_plate' => 'required|string|max:50|unique:vehicles,license_plate',
+                'current_odometer' => 'required|numeric',
                 'status' => 'required|in:1,2'
             ]);
 
@@ -57,6 +62,7 @@ class VehiclesController extends Controller
                 'road_permit_validity' => $request->road_permit_validity,
                 'insurance_validity' => $request->insurance_validity,
                 'license_plate' => $request->license_plate,
+                'current_odometer' => $request->current_odometer,
                 'zone_id' => auth()->user()?->zone_id,
                 'status' => $request->status
             ]);
@@ -85,13 +91,14 @@ class VehiclesController extends Controller
                 'vehicle_type' => 'required|in:1,2,3,4,5,' . $vehicle->id,
                 'hub_id' => 'required|exists:hubs,id',
                 'vehicle_model_id' => 'required|exists:vehicle_models,id',
-                'registration_date' => 'required|date,' . $vehicle->id,
-                'registration_validity' => 'required|date,' . $vehicle->id,
-                'tax_token_validity' => 'required|date.' . $vehicle->id,
-                'fitness_validity' => 'required|date,' . $vehicle->id,
-                'road_permit_validity' => 'required|date,' . $vehicle->id,
-                'insurance_validity' => 'required|date,' . $vehicle->id,
+                'registration_date' => 'required|date_format:Y-m-d',
+                'registration_validity' => 'required|date_format:Y-m-d',
+                'tax_token_validity' => 'required|date_format:Y-m-d',
+                'fitness_validity' => 'required|date_format:Y-m-d',
+                'road_permit_validity' => 'required|date_format:Y-m-d',
+                'insurance_validity' => 'required|date_format:Y-m-d',
                 'license_plate' => 'required|string|max:50|unique:vehicles,license_plate,' . $vehicle->id,
+                'current_odometer' => 'required|numeric',
                 'status' => 'required|in:1,2'
             ]);
 
@@ -108,6 +115,7 @@ class VehiclesController extends Controller
                 'road_permit_validity' => $request->road_permit_validity,
                 'insurance_validity' => $request->insurance_validity,
                 'license_plate' => $request->license_plate,
+                'current_odometer' => $request->current_odometer,
                 'zone_id' => auth()->user()?->zone_id,
                 'status' => $request->status
             ]);

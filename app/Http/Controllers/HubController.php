@@ -16,7 +16,7 @@ class HubController extends Controller
         $zones = Zone::select('id', 'name')->get();
 
         if ($request->ajax()) {
-            return view('components.hubs.table', ['hubs' => $hubs])->render();
+            return view('components.hubs.table', ['hubs' => $hubs, 'zones' => $zones])->render();
         }
 
         return view('backend.hubs.index', compact('hubs', 'zones'));
@@ -26,10 +26,10 @@ class HubController extends Controller
 
         try{
             $request->validate([
-                'name' => 'required|string|max:50',
+                'name' => 'required|string|max:50|unique:hubs,name',
                 'zone_id' => 'nullable|exists:zones,id',
                 'custom_hub_id' => 'required|string|unique:hubs,custom_hub_id',
-                'phone' => 'nullable|string|max:15',
+                'phone' => 'nullable|string|max:15|unique:hubs,phone',
                 'address' => 'nullable|string|max:255',
             ]);
 
