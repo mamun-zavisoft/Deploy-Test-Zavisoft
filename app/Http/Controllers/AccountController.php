@@ -26,14 +26,13 @@ class AccountController extends Controller
             $request->validate([
                 'name' => 'required|string|max:50',
                 'type' => 'required|numeric',
-                'balance' => 'nullable|numeric|min:0'
+                'balance' => 'nullable|numeric|min:0|max:10000000',
+            ],
+            [
+                'balance.max' => 'Balance should not exceed 10,000,000.'
             ]);
 
             DB::beginTransaction();
-
-            if ($request->balance > 14) {
-                return response()->json(['message' => 'Amount is too high', 'type' => 'error']);
-            }
 
             $account = Account::create([
                 'name' => $request->name,

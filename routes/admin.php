@@ -16,6 +16,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\StockPurchaseController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\VehicleFuelController;
 use App\Http\Controllers\VehiclesController;
 use App\Http\Controllers\ZoneController;
 use App\Models\Drawer;
@@ -37,6 +38,7 @@ Route::middleware('auth')->name('admin.')->group(function () {
     Route::resource('/vehicles', VehiclesController::class);
     Route::resource('/services', ServiceController::class);
     Route::resource('/sales', SaleController::class);
+    Route::resource('/vehicle-fuels', VehicleFuelController::class);
      
     // single action routes
     Route::get('/product/search', [ProductController::class, 'search'])->name('products.search');

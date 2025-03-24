@@ -43,6 +43,10 @@
                                 href="{{ route('admin.vehicles.index') }}">
                                 <i data-feather="truck"></i><span>Vehicles</span></a>
                         </li>
+                        <li class="{{ Request::is('vehicle-fuels*') ? 'active' : '' }}"><a
+                                href="{{ route('admin.vehicle-fuels.index') }}">
+                                <i data-feather="filter"></i><span>Fueling</span></a>
+                        </li>
 
                     </ul>
                 </li>

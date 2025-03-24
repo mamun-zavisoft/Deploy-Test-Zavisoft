@@ -11,7 +11,7 @@
                 <div class="search-input ms-3">
                     <a href="javascript:void(0);" class="btn btn-searchset"><i data-feather="search"
                             class="feather-search"></i></a>
-                    <input type="search" name="search" class="form-control form-control-sm" placeholder="Search" value="{{ request('search') }}" autocomplete="off">
+                    <input type="search" name="search" class="form-control form-control-sm" placeholder="{{ $placeholder ?? 'Search...' }}" value="{{ request('search') }}" autocomplete="off">
                 </div>
                 <button type="submit" id="reset-filter" class="btn btn-secondary rounded-pill custom-submit-btn">Reset</button>
             </div>
