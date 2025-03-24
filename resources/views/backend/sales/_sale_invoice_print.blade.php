@@ -1,4 +1,4 @@
-<!-- Service Invoice Template for Print using DIVs instead of tables -->
+<!-- Sales Invoice Template for Print using DIVs instead of tables -->
 <style>
     /* Print-specific styles */
     @media print {
@@ -113,7 +113,7 @@
         flex: 0 0 10%;
     }
     .invoice-col-price {
-        flex: 0 0 20%;
+        flex: 0 0 15%;
         text-align: right;
     }
     .invoice-col-qty {
@@ -121,7 +121,7 @@
         text-align: right;
     }
     .invoice-col-total {
-        flex: 0 0 10%;
+        flex: 0 0 15%;
         text-align: right;
     }
     .invoice-totals {
@@ -163,8 +163,8 @@
         background-color: #ffc107;
         color: #212529;
     }
-    .badge-danger {
-        background-color: #dc3545;
+    .badge-info {
+        background-color: #17a2b8;
         color: white;
     }
     .logo-section {
@@ -194,89 +194,61 @@
     <div class="invoice-header">
         <div class="logo-section">
             <img src="{{ asset('build/img/logo.png') }}" class="img-fluid p-2" style="width: 180px; height: 80px" alt="">
-            <p>Vehicle Service Management</p>
+            <p>Sales Management System</p>
         </div>
         <div class="company-details">
-            <h1>SERVICE INVOICE</h1>
-            <p>Invoice #: <strong>{{ $service->transaction_id }}</strong></p>
-            <p>Date: <strong>{{ $service->created_at?->format('d M Y') }}</strong></p>
+            <h1>SALES INVOICE</h1>
+            <p>Invoice #: <strong>{{ $sale->transaction_id }}</strong></p>
+            <p>Date: <strong>{{ $sale->created_at?->format('d M Y') }}</strong></p>
         </div>
     </div>
 
-    <!-- Invoice Customer & Vehicle Info -->
+    <!-- Invoice Customer Info -->
     <div class="invoice-row">
         <div class="invoice-col invoice-col-6">
             <div class="invoice-to">
-                <h4>Vehicle Information</h4>
-                <p><strong>License Plate:</strong> {{ $service->vehicle?->license_plate ?? 'N/A' }}</p>
-                <p><strong>Type:</strong> 
-                    {{-- <span class="badge {{ $service->vehicle?->owner_type == 1 ? 'badge-success' : 'badge-warning' }}">
-                        {{ $service->vehicle?->owner_type == 1 ? 'Self' : 'External' }}
-                    </span> --}}
-                    <span>{{ $service->vehicle?->owner_type == 1 ? 'Self' : 'External' }}</span>
-                </p>
-                @if(isset($service->vehicle?->customer))
-                <p><strong>Owner:</strong> {{ $service->vehicle?->customer?->name ?? 'N/A' }}</p>
-                <p><strong>Contact:</strong> {{ $service->vehicle?->customer?->phone ?? 'N/A' }}</p>
+                <h4>Customer Information</h4>
+                @if ($sale->type == "only_sale")
+                    <p><strong>Sale Type:</strong> <span>POS</span></p>
+                    <p><strong>Customer Phone:</strong> {{ $sale->phone ?? 'N/A' }}</p>
+                @elseif ($sale->type == "external")
+                    <p><strong>Customer Type:</strong> <span>External</span></p>
+                @else
+                    <p><strong>Customer Type:</strong> <span>In House</span></p>
                 @endif
             </div>
         </div>
         <div class="invoice-col invoice-col-6">
             <div class="invoice-meta">
                 <div class="invoice-meta-item">
-                    <div><strong>Service Type:</strong></div>
+                    <div><strong>Sale Type:</strong></div>
                     <div>
-                        <span>{{ $service->service_type == 1 ? 'Self (In House)' : 'External ' }}</span>
+                        @if ($sale->type == "only_sale")
+                            <span>POS</span>
+                        @elseif ($sale->type == "external")
+                            <span>External</span>
+                        @else
+                            <span>In House</span>
+                        @endif
                     </div>
                 </div>
                 <div class="invoice-meta-item">
                     <div><strong>Payment Status:</strong></div>
                     <div>
-                        @if ($service->paid_status == 'full_due')
-                            <span class="fw-bold">Due</span>
-                        @elseif ($service->paid_status == 'partial_paid')
-                            <span class="fw-bold">Partial Paid</span>
-                        @elseif ($service->paid_status == 'full_paid')
+                        @if ($sale->paid_status == 'full_paid')
                             <span class="fw-bold">Paid</span>
-                        @elseif ($service->paid_status == 'in_house')
-                            <span class="fw-bold">In House</span>
                         @else
-                            <span class="fw-bold">Not Defined</span>
+                            <span class="fw-bold">Unpaid</span>
                         @endif
                     </div>
-                </div>
-                <div class="invoice-meta-item">
-                    <div><strong>Payment Type:</strong></div>
-                    <div>{{ $service->payment_type_id ?? 'Cash' }}</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Service Details -->
+    <!-- Sale Details -->
     <div class="invoice-section">
-        <div class="invoice-section-title">Service Details</div>
-        <div class="invoice-item-header">
-            <div class="invoice-col-index">#</div>
-            <div class="invoice-col-name">Service Name</div>
-            <div class="invoice-col-code">Code</div>
-            <div class="invoice-col-price">Amount</div>
-        </div>
-        
-        @foreach($service->serviceDetails as $index => $data)
-        <div class="invoice-item">
-            <div class="invoice-col-index">{{ $index + 1 }}</div>
-            <div class="invoice-col-name">{{ $data->serviceChart?->name }}</div>
-            <div class="invoice-col-code">{{ $data->serviceChart?->code }}</div>
-            <div class="invoice-col-price">{{ number_format($data->serviceChart?->price) }}</div>
-        </div>
-        @endforeach
-    </div>
-
-    <!-- Parts Used -->
-    @if($service->sale && count($service->sale?->saleDetails) > 0)
-    <div class="invoice-section">
-        <div class="invoice-section-title">Parts Used</div>
+        <div class="invoice-section-title">Sale Details</div>
         <div class="invoice-item-header">
             <div class="invoice-col-index">#</div>
             <div class="invoice-col-name">Product Name</div>
@@ -285,49 +257,40 @@
             <div class="invoice-col-total">Total</div>
         </div>
         
-        @foreach($service->sale?->saleDetails as $index => $saleDetail)
+        @foreach($sale->saleDetails as $index => $data)
         <div class="invoice-item">
             <div class="invoice-col-index">{{ $index + 1 }}</div>
-            <div class="invoice-col-name">{{ $saleDetail?->product?->name }}</div>
-            <div class="invoice-col-price">{{ number_format($saleDetail?->unit_price) }}</div>
-            <div class="invoice-col-qty">{{ $saleDetail?->qty }}</div>
-            <div class="invoice-col-total">{{ number_format($saleDetail?->qty * $saleDetail->unit_price) }}</div>
+            <div class="invoice-col-name">{{ $data->product?->name }}</div>
+            <div class="invoice-col-price">{{ number_format($data->unit_price) }}</div>
+            <div class="invoice-col-qty">{{ $data->qty }}</div>
+            <div class="invoice-col-total">{{ number_format($data->qty * $data->unit_price) }}</div>
         </div>
         @endforeach
     </div>
-    @endif
 
     <!-- Invoice Totals -->
     <div class="invoice-totals">
         <div class="invoice-total-row">
-            <div><strong>Service Total:</strong></div>
-            <div>{{ number_format($service->total_amount) }}</div>
+            <div><strong>Total Price:</strong></div>
+            <div>{{ number_format($total ?? 0) }}</div>
         </div>
-        @if($service->discount > 0)
+        @if($sale->discount_amount > 0)
         <div class="invoice-total-row">
             <div><strong>Discount:</strong></div>
-            <div>{{ number_format($service->discount) }}</div>
+            <div>{{ number_format($sale->discount_amount) }}</div>
         </div>
         @endif
-        <div class="invoice-total-row">
-            <div><strong>Grand Total:</strong></div>
-            <div>{{ number_format($service->grand_total) }}</div>
-        </div>
-        <div class="invoice-total-row">
-            <div><strong>Paid Amount:</strong></div>
-            <div>{{ number_format($service->paid_amount) }}</div>
-        </div>
         <div class="invoice-total-row grand-total">
-            <div><strong>Due Amount:</strong></div>
-            <div>{{ number_format($service->due_amount) }}</div>
+            <div><strong>Grand Total:</strong></div>
+            <div>{{ number_format($sale->grand_total) }}</div>
         </div>
     </div>
 
     <!-- Notes if any -->
-    @if(!empty($service->notes))
+    @if(!empty($sale->note))
     <div class="invoice-section">
         <div class="invoice-section-title">Additional Notes</div>
-        <p>{{ $service->notes }}</p>
+        <p>{{ $sale->note }}</p>
     </div>
     @endif
 

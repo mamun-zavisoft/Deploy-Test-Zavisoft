@@ -158,8 +158,17 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                {{-- Print Invoice --}}
+                                                <div id="print-invoice-template-{{ $sale->id }}" style="display: none;">
+                                                    @include('backend.sales._sale_invoice_print')
+                                                </div>
 
                                                 <!-- Footer Actions -->
+                                                <div class="modal-footer justify-content-end">
+                                                    <button type="button" class="btn btn-secondary me-2" onclick="printInvoice(this, {{ $sale->id }})">
+                                                        <i class="fas fa-print me-1"></i> Print
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -221,5 +230,23 @@
                 })
             }) 
         });
+
+        function printInvoice(button, id) {
+            setTimeout(() => {
+                let printContent = document.getElementById('print-invoice-template-' + id);
+                if (!printContent) {
+                    alert("Print template not found!");
+                    return;
+                }
+
+                let originalContent = document.body.innerHTML;
+                document.body.innerHTML = printContent.innerHTML;
+
+                window.print();
+
+                document.body.innerHTML = originalContent;
+                location.reload();
+            }, 300);
+        }
     </script>
 @endpush
