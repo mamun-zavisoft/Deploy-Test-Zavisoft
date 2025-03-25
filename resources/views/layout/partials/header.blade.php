@@ -31,7 +31,7 @@
 
         <!-- Search -->
         <li class="nav-item nav-searchinputs">
-            <div class="top-nav-search">
+            {{-- <div class="top-nav-search">
                 <a href="javascript:void(0);" class="responsive-search">
                     <i class="fa fa-search"></i>
                 </a>
@@ -80,7 +80,7 @@
                         </div>
                     </div>
                 </form>
-            </div>
+            </div> --}}
         </li>
         <!-- /Search -->
 
@@ -92,10 +92,10 @@
       
         <!-- Notifications -->
         <li class="nav-item dropdown nav-item-box">
-            <a href="javascript:void(0);" class="dropdown-toggle nav-link disabled" data-bs-toggle="dropdown"
+            {{-- <a href="javascript:void(0);" class="dropdown-toggle nav-link disabled" data-bs-toggle="dropdown"
             aria-disabled="true">
                 <i data-feather="bell"></i>
-            </a>
+            </a> --}}
             <div class="dropdown-menu notifications">
                 <div class="topnav-dropdown-header">
                     <span class="notification-title">Notifications</span>
@@ -199,14 +199,14 @@
         </li>
         <!-- /Notifications -->
 
-        <li class="nav-item nav-item-box">
+        {{-- <li class="nav-item nav-item-box">
             <a href="javascript:void(0);" class="disabled" aria-disabled="true" tabindex="-1"><i data-feather="settings"></i></a>
-        </li>
+        </li> --}}
         <li class="nav-item dropdown has-arrow main-drop">
             <a href="javascript:void(0);" class="dropdown-toggle nav-link userset" data-bs-toggle="dropdown">
                 <span class="user-info">
                     <span class="user-letter">
-                        <img src="#" alt=""
+                        <img src="{{ auth()->user() ? auth()->user()->image : '#' }}" alt=""
                             class="img-fluid">
                     </span>
                     <span class="user-detail">
