@@ -25,7 +25,7 @@ return new class extends Migration
             $table->date('fitness_validity')->nullable();
             $table->date('road_permit_validity')->nullable();
             $table->date('insurance_validity')->nullable();
-            $table->double('current_odometer')->comment('in kilometer');
+            $table->double('current_odometer')->nullable()->comment('in kilometer');
             $table->enum('status', [1, 2])->default(1)->comment('1=active, 2=in service');
             $table->timestamps();
         });

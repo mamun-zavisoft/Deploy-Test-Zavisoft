@@ -60,12 +60,14 @@ class CommonSeeder extends Seeder
             'owner_type' => 1,
             'license_plate' => 'Dhaka-839574',
             'zone_id' => $zone->id,
+            'current_odometer' => 300,
             'status' => 1,
         ]);
         Vehicle::create([
             'owner_type' => 2,
             'license_plate' => 'Dhaka-934759',
             'zone_id' => $zone->id,
+            'current_odometer' => 500,
             'status' => 1,
         ]);
         ServiceChart::insert([
