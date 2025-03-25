@@ -84,8 +84,7 @@
                                         <div class="modal-footer-btn">
                                             <button type="button" class="btn btn-cancel me-2"
                                                 data-bs-dismiss="modal">Cancel</button>
-                                            <button type="submit" class="btn btn-submit">Save
-                                                Changes</button>
+                                            <button type="submit" class="btn btn-submit">Save</button>
                                         </div>
                                     </form>
                                 </div>

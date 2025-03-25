@@ -105,7 +105,7 @@
                         </div>
 
                         <div class="text-end">
-                            <button class="btn btn-primary" type="submit">Complete Sale</button>
+                            <button class="btn btn-primary" type="submit">Save</button>
                         </div>
                     </form>
                 </div>

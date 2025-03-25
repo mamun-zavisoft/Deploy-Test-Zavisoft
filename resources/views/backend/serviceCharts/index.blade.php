@@ -46,7 +46,7 @@
                                     <input type="text" name="price" class="form-control">
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Code*</label>
+                                    <label class="form-label">Code</label>
                                     <input type="text" class="form-control" name="code">
                                 </div>
                                 <div class="col-lg-12">
@@ -59,7 +59,7 @@
                                 <div class="modal-footer-btn">
                                     <button type="button" class="btn btn-cancel me-2"
                                         data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-submit" id="submit_btn">Create Service Chart</button>
+                                    <button type="submit" class="btn btn-submit" id="submit_btn">Save</button>
                                 </div>
                             </form>
                         </div>

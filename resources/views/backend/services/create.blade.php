@@ -219,7 +219,7 @@
                         </div>
 
                         <div class="text-end">
-                            <button type="submit" class="btn btn-primary">Save Service</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
                         </div>
                     </form>
                 </div>
@@ -275,7 +275,7 @@
                                 <div class="modal-footer-btn">
                                     <button type="button" class="btn btn-cancel me-2"
                                         data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-submit" id="submit_btn1">Create Vehicle</button>
+                                    <button type="submit" class="btn btn-submit" id="submit_btn1">Save</button>
                                 </div>
                             </form>
                         </div>

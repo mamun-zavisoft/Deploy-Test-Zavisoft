@@ -168,8 +168,7 @@
                                         <div class="modal-footer-btn">
                                             <button type="button" class="btn btn-cancel me-2"
                                                 data-bs-dismiss="modal">Cancel</button>
-                                            <button type="submit" class="btn btn-submit">Save
-                                                Changes</button>
+                                            <button type="submit" class="btn btn-submit">Save</button>
                                         </div>
                                     </form>
                                 </div>
@@ -235,39 +234,34 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
                             
-                            <!-- Service Details Section -->
-                            <div class="card mb-4">
-                                <div class="card-header bg-light">
-                                    <h5 class="card-title fw-bold m-0">Vehicle Details</h5>
+                        <!-- Service Details Section -->
+                        <div class="card mb-5">
+                            <div class="card-header bg-light">
+                                <h5 class="card-title fw-bold m-0">Vehicle Details</h5>
+                            </div>
+                            <div class="card-body ms-2">
+                                <!-- Table Head -->
+                                <div class="d-flex fw-bold border-bottom pb-2">
+                                    <div class="p-2" style="flex: 1;">Reg.No</div>
+                                    <div class="p-2" style="flex: 1;">ODO</div>
+                                    <div class="p-2" style="flex: 1;">Tax.T.Validity</div>
+                                    <div class="p-2" style="flex: 1;">Fitness Validity</div>
+                                    <div class="p-2" style="flex: 1;">Road Permit Validity</div>
+                                    <div class="p-2" style="flex: 1;">Insurance Validity</div>
                                 </div>
-                                <div class="card-body ms-2">
-                                    <!-- Table Head -->
-                                    <div class="d-flex fw-bold border-bottom pb-2">
-                                        <div class="p-2" style="flex: 1;">Reg.No</div>
-                                        <div class="p-2" style="flex: 1;">ODO</div>
-                                        <div class="p-2" style="flex: 1;">Tax.T.Validity</div>
-                                        <div class="p-2" style="flex: 1;">Fitness Validity</div>
-                                        <div class="p-2" style="flex: 1;">Road Permit Validity</div>
-                                        <div class="p-2" style="flex: 1;">Insurance Validity</div>
-                                    </div>
 
-                                    <!-- Table Body -->
-                                    <div class="d-flex border-bottom py-2">
-                                        <div class="p-2" style="flex: 1;">#{{ $vehicle->license_plate }}</div>
-                                        <div class="p-2" style="flex: 1;">{{ $vehicle->current_odometer }}km</div>
-                                        <div class="p-2" style="flex: 1;">{{ $vehicle->tax_token_validity }}</div>
-                                        <div class="p-2" style="flex: 1;">{{ $vehicle->fitness_validity }}</div>
-                                        <div class="p-2" style="flex: 1;">{{ $vehicle->road_permit_validity }}</div>
-                                        <div class="p-2" style="flex: 1;">{{ $vehicle->insurance_validity }}</div>
-                                    </div>
+                                <!-- Table Body -->
+                                <div class="d-flex border-bottom py-2">
+                                    <div class="p-2" style="flex: 1;">{{ $vehicle->license_plate }}</div>
+                                    <div class="p-2" style="flex: 1;">{{ $vehicle->current_odometer }} km</div>
+                                    <div class="p-2" style="flex: 1;">{{ $vehicle->tax_token_validity }}</div>
+                                    <div class="p-2" style="flex: 1;">{{ $vehicle->fitness_validity }}</div>
+                                    <div class="p-2" style="flex: 1;">{{ $vehicle->road_permit_validity }}</div>
+                                    <div class="p-2" style="flex: 1;">{{ $vehicle->insurance_validity }}</div>
                                 </div>
                             </div>
-                        <!-- Modal Footer -->
-                        <div class="modal-footer justify-content-end">
-                            <button type="button" class="btn btn-secondary me-2" onclick="window.print()">
-                                <i class="fas fa-print me-1"></i> Print
-                            </button>
                         </div>
                     </div>
                 </div>

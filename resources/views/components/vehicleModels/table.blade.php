@@ -17,7 +17,7 @@
                 <td>{{ $loop->iteration + $vehicleModels->firstItem() - 1 }}</td>
                 <td>{{ $vehicleModel->name }}</td>
                 <td>{{ $vehicleModel->manufacturer }}</td>
-                <td>{{ $vehicleModel->engine_cc }}</td>
+                <td>{{ $vehicleModel->engine_cc }} CC</td>
                 <td>{{ $vehicleModel->fuel_capacity }} L</td>
                 <td>{{ $vehicleModel->payload_capacity }} kg</td>
                 <td>{{ $vehicleModel->body_length }} feet</td>
@@ -101,8 +101,7 @@
                                         <div class="modal-footer-btn">
                                             <button type="button" class="btn btn-cancel me-2"
                                                 data-bs-dismiss="modal">Cancel</button>
-                                            <button type="submit" class="btn btn-submit">Save
-                                                Changes</button>
+                                            <button type="submit" class="btn btn-submit">Save</button>
                                         </div>
                                     </form>
                                 </div>

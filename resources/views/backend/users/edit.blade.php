@@ -113,7 +113,7 @@
 
                         <div class="row">
                             <div class="col-lg-12 sticky-footer">
-                                <button type="submit" class="btn btn-submit me-2">Update</button>
+                                <button type="submit" class="btn btn-submit me-2">Save</button>
                                 <a href="{{ route('users.index') }}" class="btn btn-cancel">Cancel</a>
                             </div>
                         </div>

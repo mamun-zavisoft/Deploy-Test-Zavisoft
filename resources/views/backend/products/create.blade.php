@@ -226,7 +226,7 @@
                 <div class="col-lg-12">
                     <div class="btn-addproduct mb-4">
                         <button type="button" class="btn btn-cancel me-2">Cancel</button>
-                        <button type="submit" class="btn btn-submit" id="submit_product_btn">Save Product</button>
+                        <button type="submit" class="btn btn-submit" id="submit_product_btn">Save</button>
                     </div>
                 </div>
             </form>
@@ -279,8 +279,7 @@
                                 <div class="modal-footer-btn">
                                     <button type="button" class="btn btn-cancel me-2"
                                         data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-submit" id="submit_btn">Create
-                                        Category</button>
+                                    <button type="submit" class="btn btn-submit" id="submit_btn">Save</button>
                                 </div>
                             </form>
                         </div>
@@ -335,7 +334,7 @@
                                 <div class="modal-footer-btn">
                                     <button type="button" class="btn btn-cancel me-2"
                                         data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-submit" id="submit_btn">Create Brand</button>
+                                    <button type="submit" class="btn btn-submit" id="submit_btn">Save</button>
                                 </div>
                             </form>
                         </div>
