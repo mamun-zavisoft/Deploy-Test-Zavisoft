@@ -20,9 +20,13 @@
                 <td>
                     {{ $loop->iteration + $vehicles->firstItem() - 1 }}
                 </td>
-                <td>{{ $vehicle->owner_type == 1 ? 'self' : 'external' }}</td>
+                <td>
+                    <span class="badge rounded-pill {{ $vehicle->owner_type == 1 ? 'bg-primary' : 'bg-secondary' }}">
+                        {{ $vehicle->owner_type == 1 ? 'Self' : 'External' }}
+                    </span>
+                </td>
                 <td>{{ $vehicle->license_plate }}</td>
-                <td>{{ $vehicle->vehicleModel?->name }}</td>
+                <td>{{ $vehicle->vehicleModel?->name ?? '-' }}</td>
                 <td>
                     @if ($vehicle->vehicle_type == 1)
                         Covered Van
@@ -34,11 +38,13 @@
                         Truck
                     @elseif ($vehicle->vehicle_type == 5)
                         TBA/Other
+                    @else
+                        -
                     @endif
                 </td>
-                <td>{{ $vehicle->hub?->name }}</td>
-                <td>{{ $vehicle->registration_date }}</td>
-                <td>{{ $vehicle->registration_validity }}</td>
+                <td>{{ $vehicle->hub?->name ?? '-' }}</td>
+                <td>{{ $vehicle->registration_date ?? '-' }}</td>
+                <td>{{ $vehicle->registration_validity ?? '-' }}</td>
                 
                 <td><span
                         class="badge rounded-pill bg-outline-{{ $vehicle->status == 1 ? 'success' : 'warning' }}">{{ $vehicle->status == 1 ? 'Active' : 'In Service' }}</span>
@@ -75,7 +81,7 @@
                     <div class="modal-content" style="height: 100%;">
                         <div class="page-wrapper-new p-0">
                             <div class="content">
-                                <div class="modal-header border-0 custom-modal-header">
+                                <div class="modal-header border-0 custom-modal-header justify-content-between">
                                     <div class="page-title">
                                         <h4>Edit Vehicle</h4>
                                     </div>
