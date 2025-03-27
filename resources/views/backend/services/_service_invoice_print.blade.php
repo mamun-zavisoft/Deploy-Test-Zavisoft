@@ -209,12 +209,7 @@
             <div class="invoice-to">
                 <h4>Vehicle Information</h4>
                 <p><strong>License Plate:</strong> {{ $service->vehicle?->license_plate ?? 'N/A' }}</p>
-                <p><strong>Type:</strong> 
-                    {{-- <span class="badge {{ $service->vehicle?->owner_type == 1 ? 'badge-success' : 'badge-warning' }}">
-                        {{ $service->vehicle?->owner_type == 1 ? 'Self' : 'External' }}
-                    </span> --}}
-                    <span>{{ $service->vehicle?->owner_type == 1 ? 'Self' : 'External' }}</span>
-                </p>
+                
                 @if(isset($service->vehicle?->customer))
                 <p><strong>Owner:</strong> {{ $service->vehicle?->customer?->name ?? 'N/A' }}</p>
                 <p><strong>Contact:</strong> {{ $service->vehicle?->customer?->phone ?? 'N/A' }}</p>

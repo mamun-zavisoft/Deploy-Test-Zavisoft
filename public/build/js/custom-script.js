@@ -61,7 +61,7 @@ $(document).ready(function () {
                 $(this).addClass('copied'); // Add 'copied' class
                 setTimeout(() => {
                     $(this).removeClass('copied'); // Remove 'copied' class after a delay
-                }, 2000); // 2 seconds delay
+                }, 1000); // 1 seconds delay
             })
             .catch(err => {
                 console.error('Could not copy text: ', err);
@@ -77,7 +77,7 @@ $(document).ready(function () {
                     $(this).addClass('copied'); // Add 'copied' class
                     setTimeout(() => {
                         $(this).removeClass('copied'); // Remove 'copied' class after a delay
-                    }, 2000); // 2 seconds delay
+                    }, 1000); // 1 seconds delay
                 })
                 .catch(err => {
                     console.error('Could not copy text: ', err);

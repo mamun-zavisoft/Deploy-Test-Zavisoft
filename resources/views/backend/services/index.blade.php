@@ -107,14 +107,14 @@
                                                                     <div class="row mb-2">
                                                                         <div class="col-md-4 fw-bold">Vehicle Type:</div>
                                                                         <div class="col-md-8">
-                                                                            <span class="text-{{ $service->vehicle?->owner_type == 1 ? 'success' : 'warning' }}">
-                                                                                {{ $service->vehicle?->owner_type == 1 ? 'Self' : 'External' }}
+                                                                            <span class="text-{{ $service->service_type == 'self' ? 'success' : 'warning' }}">
+                                                                                {{ $service->service_type == 'self' ? 'Self' : 'External' }}
                                                                             </span>
                                                                         </div>
                                                                     </div>
                                                                     <div class="row mb-2">
                                                                         <div class="col-md-4 fw-bold">Vehicle Number:</div>
-                                                                        <div class="col-md-8">{{ $service->vehicle?->license_plate ?? 'N/A' }}</div>
+                                                                        <div class="col-md-8"><span class="copyable">{{ $service->vehicle?->license_plate ?? 'N/A' }}</span></div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -125,13 +125,13 @@
                                                                     <h5 class="card-title fw-bold mb-3">Service Info</h5>
                                                                     <div class="row mb-2">
                                                                         <div class="col-md-5 fw-bold">Invoice NO:</div>
-                                                                        <div class="col-md-7">{{ $service->transaction_id }}</div>
+                                                                        <div class="col-md-7"><span class="copyable">{{ $service->transaction_id }}</span></div>
                                                                     </div>
                                                                     <div class="row mb-2">
                                                                         <div class="col-md-5 fw-bold">Service Type:</div>
                                                                         <div class="col-md-7">
-                                                                            <span class="text-{{ $service->service_type == 1 ? 'success' : 'warning' }}">
-                                                                                {{ $service->service_type == 1 ? 'Self' : 'External' }}
+                                                                            <span class="text-{{ $service->service_type == 'self' ? 'success' : 'warning' }}">
+                                                                                {{ $service->service_type == 'self' ? 'Self' : 'External' }}
                                                                             </span>
                                                                         </div>
                                                                     </div>
