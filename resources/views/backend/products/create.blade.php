@@ -368,15 +368,16 @@
 
             $('.remove-product').on('click', function() {
                 var $phoneImg = $(this).closest('.phone-img');
-                var $imageUpload = $phoneImg.prev('.image-upload');
+                var $imageUpload = $phoneImg.siblings('.image-upload');
                 var $fileInput = $imageUpload.find('.file-input');
 
                 $fileInput.val('');
                 $phoneImg.addClass('d-none');
                 $imageUpload.removeClass('d-none');
+                $phoneImg.find('.image-preview').attr('src', '');
+                return false;
             });
         });
-
 
         $('#storeProductForm').submit(function(e) {
             e.preventDefault();
