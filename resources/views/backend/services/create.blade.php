@@ -97,15 +97,14 @@
                         </div>
 
                         <div class="row mb-4">
-                            <div class="col-md-6">
+                            <div class="col-md-6" id="paymentType">
                                 <div class="form-group">
                                     <label>Payment Type</label>
                                     <select name="payment_type_id" class="form-control">
                                         <option value="">Select Payment Type</option>
-                                        <option value="">Cash</option>
-                                        {{-- @foreach ($paymentTypes as $type)
-                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
-                                    @endforeach --}}
+                                        @foreach($paymentTypes as $key => $value)
+                                            <option value="{{ $key }}">{{ $value }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -127,9 +126,11 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-6 mb-3">
-                                                <label for="payment_type" class="form-label">Payment Type</label>
+                                                <label for="payment_type" class="form-label">Paid Status
+                                                    <span class="text-danger">*</span>
+                                                </label>
                                                 <select class="form-control select2" id="payment_type" name="payment_type">
-                                                    <option value="">Select Payment Type</option>
+                                                    <option value="">Select Paid Status</option>
                                                     <option value="full_due" selected>Full Due</option>
                                                     <option value="partial_paid">Partial Paid</option>
                                                     <option value="full_paid">Full Paid</option>
@@ -265,7 +266,9 @@
                                     <div class="accordion-body">
                                         <div class="row g-3">
                                             <div class="col-md-6">
-                                                <label class="form-label fw-bold">Owner Type*</label>
+                                                <label class="form-label fw-bold">Owner Type
+                                                    <span class="text-danger">*</span>
+                                                </label>
                                                 <select name="owner_type" class="form-select">
                                                     <option value="">Choose</option>
                                                     <option value="1" selected>Self</option>
@@ -273,11 +276,26 @@
                                                 </select>
                                             </div>
                                             <div class="col-md-6">
-                                                <label class="form-label fw-bold">Register Number*</label>
+                                                <label class="form-label fw-bold">Register Number
+                                                    <span class="text-danger">*</span>
+                                                </label>
                                                 <input type="text" name="license_plate" class="form-control">
                                             </div>
                                             <div class="col-md-6">
-                                                <label class="form-label fw-bold">ODO (current odometer)*</label>
+                                                <label class="form-label fw-bold">Vehicle Type
+                                                    <span class="text-danger">*</span>
+                                                </label>
+                                                <select name="vehicle_type" class="form-select">
+                                                    <option value="">Choose</option>
+                                                    <option value="1">Covered Van</option>
+                                                    <option value="2">Motor Bike</option>
+                                                    <option value="3">Pick Up</option>
+                                                    <option value="4">Truck</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label fw-bold">ODO (current odometer)
+                                                    <span class="text-danger">*</span></label>
                                                 <input type="number" name="current_odometer" class="form-control"
                                                     placeholder="Current Mileage" onwheel="this.blur()">
                                             </div>
@@ -288,16 +306,6 @@
                                                     @foreach ($hubs as $hub)
                                                     <option value="{{ $hub->id }}">{{ $hub->name }}</option>
                                                     @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="form-label fw-bold">Vehicle Type</label>
-                                                <select name="vehicle_type" class="form-select">
-                                                    <option value="">Choose</option>
-                                                    <option value="1">Covered Van</option>
-                                                    <option value="2">Motor Bike</option>
-                                                    <option value="3">Pick Up</option>
-                                                    <option value="4">Truck</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-6">
@@ -854,7 +862,7 @@
                 }
             });
 
-            // Handle payment type selection
+            // Handle paid status selection
             $('#payment_type').change(function() {
                 $('#payment_amount').val('');
                 if ($(this).val() === 'partial_paid') {
@@ -1105,6 +1113,17 @@
 
             // Trigger change event on page load to set initial visibility
             $('select[name="owner_type"]').trigger('change');
+
+
+            $('#serviceType').change(function () {
+                if($(this).val() === 'self') {
+                    $('#paymentType').hide();
+                }else {
+                    $('#paymentType').show();
+                }
+            });
+
+            $('#serviceType').trigger('change');
         });
     </script>
 @endpush
