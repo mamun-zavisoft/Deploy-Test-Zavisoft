@@ -15,22 +15,25 @@
             <div class="card-body">
                 <form id="reportFilterForm">
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-lg-3 col-md-6">
                             <div class="form-group">
                                 <label>Date Range</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        {{-- <span class="input-group-text"><i class="fa fa-calendar"></i></span> --}}
-                                    </div>
-                                    <input type="text" class="form-control daterange" 
-                                        value="{{ $startDate }} - {{ $endDate }}">
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text" for="dateRangeSelect">
+                                        <i class="fa fa-calendar"></i>
+                                    </label>
+                                    <input type="text" 
+                                           class="form-select daterange" 
+                                           id="dateRangeSelect"
+                                           value="{{ $startDate }} - {{ $endDate }}"
+                                           readonly>
                                 </div>
                                 <input type="hidden" name="start_date" id="start_date" value="{{ $startDate }}">
                                 <input type="hidden" name="end_date" id="end_date" value="{{ $endDate }}">
                             </div>
                         </div>
                         
-                        <div class="col-md-3">
+                        <div class="col-lg-2 col-md-6">
                             <div class="form-group">
                                 <label>Vehicle Type</label>
                                 <select class="form-control select2" name="vehicle_type" id="vehicle_type">
@@ -41,7 +44,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-lg-3 col-md-6">
                             <div class="form-group">
                                 <label>Vehicle</label>
                                 <select class="form-control select2" name="vehicle_id" id="vehicle_id">
@@ -53,7 +56,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-2">
+                        <div class="col-lg-2 col-md-6 d-flex align-items-center">
                             <div class="form-group">
                                 <label>&nbsp;</label>
                                 <button type="submit" class="btn btn-primary btn-block">Filter</button>
