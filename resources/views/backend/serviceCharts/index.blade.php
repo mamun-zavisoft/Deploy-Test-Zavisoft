@@ -3,7 +3,8 @@
 @section('content')
     <div class="page-wrapper">
         <div class="content">
-            <x-breadcrumb-modal title="Service Chart List" sub-title="Manage Service Chart" button="Add Service Chart" modal-id="add-serviceChart" />
+            <x-breadcrumb title="Service Chart List" sub-title="Manage Service Chart" permission="service-chart-create" button="Add Service Chart"
+            button-route="admin.service-charts.create" />
 
                   <!-- /Filter -->
                 <div class="card table-list-card">

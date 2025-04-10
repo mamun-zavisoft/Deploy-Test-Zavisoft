@@ -9,6 +9,14 @@ use Illuminate\Support\Facades\DB;
 
 class AccountController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:account-create')->only('create', 'store');
+        $this->middleware('permission:account-list')->only('index');
+        $this->middleware('permission:account-update')->only('edit', 'update');
+        $this->middleware('permission:account-delete')->only('destroy');
+    }
+
     public function index(Request $request)
     {
         $accounts = (new FetchAccount)->execute($request);

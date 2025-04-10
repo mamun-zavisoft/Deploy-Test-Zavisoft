@@ -2,7 +2,8 @@
 @section('content')
     <div class="page-wrapper">
         <div class="content">
-            <x-breadcrumb-modal title="Hub List" sub-title="Manage hub" button="Add hub" modal-id="add-hub" />
+            <x-breadcrumb title="Hub List" sub-title="Manage hub" permission="hub-create" button="Add hub"
+            button-route="admin.hubs.create" />
 
             <!-- filter -->
             <div class="card table-list-card">

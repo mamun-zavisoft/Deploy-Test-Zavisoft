@@ -2,7 +2,8 @@
 @section('content')
     <div class="page-wrapper">
         <div class="content">
-            <x-breadcrumb-modal title="Brand List" sub-title="Manage Your Brands" button="Add Brand" modal-id="add-brand" />
+        <x-breadcrumb title="Brands List" sub-title="Manage Your Brands" permission="brand-create" button="Add Brand"
+        button-route="admin.brands.create" />
 
             <!-- /product list -->
             <div class="card table-list-card">

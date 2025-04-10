@@ -5,7 +5,9 @@
             <th>Category</th>
             <th>Image</th>
             <th>Created On</th>
+            @permission(['category-update', 'category-delete'])
             <th class="no-sort">Action</th>
+            @endpermission
         </tr>
     </thead>
     <tbody id="tbody">
@@ -25,10 +27,13 @@
                 <td>{{ $category->created_at->format('d M Y') }}</td>
                 <td class="action-table-data">
                     <div class="edit-delete-action">
+                        @permission('category-update')
                         <a class="me-2 p-2" href="#" data-bs-toggle="modal"
                             data-bs-target="#edit-category-{{ $category->id }}">
                             <i data-feather="edit" class="feather-edit"></i>
                         </a>
+                        @endpermission
+                        @permission('category-delete')
                         <form action="{{ route('admin.categories.destroy', $category->id) }}"
                             method="post" class="delete-form">
                             @csrf
@@ -37,8 +42,8 @@
                                 <i data-feather="trash-2" class="feather-trash-2"></i>
                             </a>
                         </form>
+                        @endpermission
                     </div>
-
                 </td>
             </tr>
 

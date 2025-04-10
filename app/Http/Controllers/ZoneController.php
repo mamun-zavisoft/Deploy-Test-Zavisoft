@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\DB;
 
 class ZoneController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:zone-create')->only('create', 'store');
+        $this->middleware('permission:zone-list')->only('index');
+        $this->middleware('permission:zone-update')->only('edit', 'update');
+        $this->middleware('permission:zone-delete')->only('destroy');
+    }
+
     public function index(Request $request)
     {
         $zones = (new FetchZone)->execute($request);

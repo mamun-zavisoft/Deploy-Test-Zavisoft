@@ -11,6 +11,14 @@ use Illuminate\Http\Request;
 
 class DrawerController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:drawer-create')->only(['create', 'store']);
+        $this->middleware('permission:drawer-list')->only(['index']);
+        $this->middleware('permission:drawer-update')->only(['edit', 'update']);
+        $this->middleware('permission:drawer-delete')->only(['destroy']);
+    }
+    
     public function index(Request $request)
     {
         $drawers = (new FetchDrawer)->execute($request);

@@ -12,6 +12,14 @@ use Illuminate\Support\Facades\DB;
 
 class HubController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:hub-create')->only('create', 'store');
+        $this->middleware('permission:hub-list')->only('index');
+        $this->middleware('permission:hub-update')->only('edit', 'update');
+        $this->middleware('permission:hub-delete')->only('destroy');
+    }
+    
     public function index(Request $request)
     {
 

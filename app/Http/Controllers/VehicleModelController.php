@@ -9,6 +9,14 @@ use Illuminate\Support\Facades\DB;
 
 class VehicleModelController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:vehicle-model-create')->only('create', 'store');
+        $this->middleware('permission:vehicle-model-list')->only('index');
+        $this->middleware('permission:vehicle-model-update')->only('edit', 'update');
+        $this->middleware('permission:vehicle-model-delete')->only('destroy');
+    }
+    
     public function index(Request $request)
     {
 

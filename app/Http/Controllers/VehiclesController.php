@@ -14,6 +14,14 @@ use Illuminate\Support\Facades\Log;
 
 class VehiclesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:vehicle-create')->only(['create', 'store']);
+        $this->middleware('permission:vehicle-list')->only(['index']);
+        $this->middleware('permission:vehicle-update')->only(['edit', 'update']);
+        $this->middleware('permission:vehicle-delete')->only(['destroy']);
+    }
+
     public function index(Request $request)
     {
         $vehicles = (new FetchVehicle)->execute($request);

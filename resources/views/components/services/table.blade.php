@@ -10,7 +10,9 @@
             <th>Due Amount</th>
             <th>Paid Status</th>
             <th>Created On</th>
+            @permission('service-show')
             <th class="no-sort">Action</th>
+            @endpermission
         </tr>
     </thead>
     <tbody>
@@ -49,6 +51,7 @@
                 <td>{{ $service->created_at?->format('d M Y') }}</td>
                 <td class="action-table-data">
                     <div class="edit-delete-action">
+                        @permission('service-show')
                         <a class="me-2 p-2" href="javascript:void(0);" data-bs-toggle="modal"
                             data-bs-target="#service-{{ $service->id }}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -58,7 +61,7 @@
                                 <circle cx="12" cy="12" r="3"></circle>
                             </svg>
                         </a>
-
+                        @endpermission
                     </div>
                 </td>
             </tr>
@@ -265,7 +268,7 @@
             </div>
         @empty
             <tr class="text-center">
-                <td colspan="9">No Service Found</td>
+                <td colspan="10">No Service Found</td>
             </tr>
         @endforelse
     </tbody>

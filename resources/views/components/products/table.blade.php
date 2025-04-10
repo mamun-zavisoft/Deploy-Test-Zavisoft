@@ -7,7 +7,9 @@
             <th>Brand</th>
             <th>Sale Price</th>
             <th>Qty</th>
+            @permission(['product-show', 'product-update', 'product-delete'])
             <th class="no-sort">Action</th>
+            @endpermission
         </tr>
     </thead>
     <tbody>
@@ -29,15 +31,18 @@
                 <td>{{ $product->total_available_quantity }}</td>
                 <td class="action-table-data">
                     <div class="edit-delete-action">
+                        @permission('product-show')
                         <a class="me-2 edit-icon  p-2" href="{{ url('product-details') }}"
                             data-bs-toggle="modal" data-bs-target="#products-{{ $product->id }}">
                             <i data-feather="eye" class="feather-eye"></i>
                         </a>
-                        {{-- @permission('product-update') --}}
+                        @endpermission
+                        @permission('product-update')
                         <a class="me-2 p-2" href="{{ route('admin.products.edit', $product->id) }}">
                             <i data-feather="edit" class="feather-edit"></i>
                         </a>
-                        {{-- @endpermission --}}
+                        @endpermission
+                        @permission('product-delete')
                         <form action="{{ route('admin.products.destroy', $product->id) }}"
                             class="delete-form" method="post">
                             @csrf
@@ -46,6 +51,7 @@
                                 <i data-feather="trash-2" class="feather-trash-2"></i>
                             </a>
                         </form>
+                        @endpermission
                     </div>
                 </td>
             </tr>

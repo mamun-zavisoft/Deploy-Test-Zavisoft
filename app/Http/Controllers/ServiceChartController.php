@@ -9,6 +9,14 @@ use Illuminate\Support\Facades\DB;
 
 class ServiceChartController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:service-chart-create')->only(['create', 'store']);
+        $this->middleware('permission:service-chart-list')->only(['index']);
+        $this->middleware('permission:service-chart-update')->only(['edit', 'update']);
+        $this->middleware('permission:service-chart-delete')->only(['destroy']);
+    }
+    
     public function index(Request $request)
     {
         $serviceCharts = (new FetchServiceChart)->execute($request);

@@ -10,6 +10,14 @@ use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:role-create')->only('create', 'store');
+        $this->middleware('permission:role-list')->only('index');
+        $this->middleware('permission:role-update')->only('edit', 'update');
+        $this->middleware('permission:role-delete')->only('destroy');
+    }
+
     public function index()
     {
         $search = request()->input('search', '');

@@ -18,6 +18,14 @@ use Illuminate\Support\Facades\DB;
 
 class ServiceController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:service-create')->only(['create', 'store']);
+        $this->middleware('permission:service-list')->only(['index']);
+        $this->middleware('permission:service-update')->only(['edit', 'update']);
+        $this->middleware('permission:service-delete')->only(['destroy']);    
+    }
+
     public function index(Request $request)
     {
         $services = (new FetchService)->execute(request());

@@ -2,7 +2,8 @@
 @section('content')
     <div class="page-wrapper">
         <div class="content">
-            <x-breadcrumb-modal title="Drawer List" sub-title="Manage drawer" button="Add drawer" modal-id="add-drawer" />
+            <x-breadcrumb title="Drawer List" sub-title="Manage drawer" permission="drawer-create" button="Add drawer"
+            button-route="admin.drawers.create" />
 
             <!-- filter -->
             <div class="card table-list-card">

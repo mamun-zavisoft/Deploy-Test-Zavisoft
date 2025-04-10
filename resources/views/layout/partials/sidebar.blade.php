@@ -11,6 +11,7 @@
                         <li><a href="{{ route('admin.sales.create') }}"><i data-feather="shopping-cart"></i><span>Add Sale</span></a></li>
                         <li><a href="{{ route('admin.purchases.create') }}"><i data-feather="shopping-bag"></i><span>Make Purchase</span></a></li>
                         <li><a href="{{ route('admin.vehicle-fuels.create') }}"><i data-feather="filter"></i><span>Fueling</span></a></li>
+
                         <li class="{{ Request::is('vehicles*') ? 'active' : '' }}"><a href="{{ route('admin.vehicles.index') }}"><i data-feather="truck"></i><span>Vehicles</span></a></li>
                     </ul>
                 </li>
@@ -42,11 +43,25 @@
                     <h6 class="submenu-hdr">Inventory</h6>
                     <ul>
                         <li class="{{ Request::is('products*') ? 'active' : '' }}"><a href="{{ route('admin.products.index') }}"><i data-feather="box"></i><span>Products</span></a></li>
+                        @permission('category-list')
                         <li class="{{ Request::is('categories') ? 'active' : '' }}"><a href="{{ route('admin.categories.index') }}"><i data-feather="codepen"></i><span>Category</span></a></li>
+                        @endpermission
+
+                        @permission('brand-list')
                         <li class="{{ Request::is('brands') ? 'active' : '' }}"><a href="{{ route('admin.brands.index') }}"><i data-feather="tag"></i><span>Brands</span></a></li>
+                        @endpermission
+                        
+                        @permission('rack-list')
                         <li class="{{ Request::is('racks') ? 'active' : '' }}"><a href="{{ route('admin.racks.index') }}"><i data-feather="layers"></i><span>Racks</span></a></li>
+                        @endpermission
+
+                        @permission('drawer-list')
                         <li class="{{ Request::is('drawers*') ? 'active' : '' }}"><a href="{{ route('admin.drawers.index') }}"><i data-feather="hard-drive"></i><span>Drawers</span></a></li>
+                        @endpermission
+
+                        @permission('service-chart-list')
                         <li class="{{ Request::is('service-charts*') ? 'active' : '' }}"><a href="{{ route('admin.service-charts.index') }}"><i data-feather="bar-chart"></i><span>Service Charts</span></a></li>
+                        @endpermission
                     </ul>
                 </li>
 
@@ -54,18 +69,28 @@
                 <li class="submenu-open">
                     <h6 class="submenu-hdr">Vehicles</h6>
                     <ul>
+                        @permission('vehicle-model-list')
                         <li class="{{ Request::is('vehicle-model*') ? 'active' : '' }}"><a href="{{ route('admin.vehicle-models.index') }}"><i data-feather="package"></i><span>Vehicle Models</span></a></li>
+                        @endpermission
+
+                        @permission('vehicle-list')
                         <li class="{{ Request::is('vehicles*') ? 'active' : '' }}"><a href="{{ route('admin.vehicles.index') }}"><i data-feather="truck"></i><span>Vehicles</span></a></li>
+                        @endpermission
+
+                        @permission('vehicle-fuel-list')
                         <li class="{{ Request::is('vehicle-fuels*') ? 'active' : '' }}"><a href="{{ route('admin.vehicle-fuels.index') }}"><i data-feather="filter"></i><span>Fueling</span></a></li>
+                        @endpermission
                     </ul>
                 </li>
 
                 {{-- Accounts & Finance --}}
                 <li class="submenu-open">
+                @permission('account-list')
                     <h6 class="submenu-hdr">Accounts & Finance</h6>
                     <ul>
                         <li class="{{ Request::is('accounts*') ? 'active' : '' }}"><a href="{{ route('admin.accounts.index') }}"><i data-feather="credit-card"></i><span>Accounts</span></a></li>
                     </ul>
+                @endpermission
                 </li>
                 
                 {{-- Report --}}
@@ -78,18 +103,25 @@
 
                 {{-- Hubs --}}
                 <li class="submenu-open">
+                    @permission('hub-list')
                     <h6 class="submenu-hdr">Hubs</h6>
                     <ul>
                         <li class="{{ Request::is('hubs*') ? 'active' : '' }}"><a href="{{ route('admin.hubs.index') }}"><i data-feather="share-2"></i><span>Hub</span></a></li>
                     </ul>
+                    @endpermission
                 </li>
 
                 {{-- Peoples --}}
                 <li class="submenu-open">
                     <h6 class="submenu-hdr">Peoples</h6>
                     <ul>
+                        @permission('supplier-list')
                         <li class="{{ Request::is('suppliers') ? 'active' : '' }}"><a href="{{ route('admin.suppliers.index') }}"><i data-feather="users"></i><span>Suppliers</span></a></li>
+                        @endpermission
+
+                        @permission('zone-list')
                         <li class="{{ Request::is('zones') ? 'active' : '' }}"><a href="{{ route('admin.zones.index') }}"><i data-feather="archive"></i><span>Zones</span></a></li>
+                        @endpermission
                     </ul>
                 </li>
 
@@ -100,7 +132,10 @@
                         @permission('user-list')
                             <li class="{{ Request::is('users') ? 'active' : '' }}"><a href="{{ route('users.index') }}"><i data-feather="user-check"></i><span>Users</span></a></li>
                         @endpermission
+
+                        @permission('role-list')
                         <li class="{{ Request::is('roles') ? 'active' : '' }}"><a href="{{ route('roles.index') }}"><i data-feather="shield"></i><span>Roles & Permissions</span></a></li>
+                        @endpermission
                     </ul>
                 </li>
 

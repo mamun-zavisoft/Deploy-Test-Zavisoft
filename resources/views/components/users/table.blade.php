@@ -18,7 +18,9 @@
             <th>Role</th>
             <th>Permissions</th>
             {{-- <th>Status</th> --}}
+            @permission(['user-update', 'user-delete'])
             <th class="no-sort">Action</th>
+            @endpermission
         </tr>
     </thead>
     <tbody>

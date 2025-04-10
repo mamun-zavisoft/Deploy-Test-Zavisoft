@@ -11,7 +11,9 @@
             <th>Reg.Validity</th>
             <th>Status</th>
             <th>Created On</th>
+            @permission(['vehicle-show','vehicle-update', 'vehicle-delete'])
             <th class="no-sort">Action</th>
+            @endpermission
         </tr>
     </thead>
     <tbody>
@@ -52,6 +54,7 @@
                 <td>{{ $vehicle->created_at?->format('d M Y') }}</td>
                 <td class="action-table-data">
                     <div class="edit-delete-action">
+                        @permission('vehicle-show')
                         <a class="me-2 p-2" href="javascript:void(0);" data-bs-toggle="modal"
                             data-bs-target="#vehicle-{{ $vehicle->id }}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye action-eye">
@@ -59,10 +62,14 @@
                                 <circle cx="12" cy="12" r="3"></circle>
                             </svg>
                         </a>
+                        @endpermission
+                        @permission('vehicle-update')
                         <a class="me-2 p-2" href="#" data-bs-toggle="modal"
                             data-bs-target="#edit-vehicle-{{ $vehicle->id }}">
                             <i data-feather="edit" class="feather-edit"></i>
                         </a>
+                        @endpermission
+                        @permission('vehicle-delete')
                         <form action="{{ route('admin.vehicles.destroy', $vehicle->id) }}" method="post"
                             class="delete-form">
                             @csrf
@@ -71,8 +78,8 @@
                                 <i data-feather="trash-2" class="feather-trash-2"></i>
                             </a>
                         </form>
+                        @endpermission
                     </div>
-
                 </td>
             </tr>
             <!-- Edit Vehicle -->

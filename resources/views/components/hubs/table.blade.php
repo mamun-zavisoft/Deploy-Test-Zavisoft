@@ -7,7 +7,9 @@
             <th>Hub Id</th>
             <th>Phone</th>
             <th>Address</th>
+            @permission(['hub-show', 'hub-update', 'hub-delete'])
             <th class="no-sort">Action</th>
+            @endpermission
         </tr>
     </thead>
     <tbody id="tbody">
@@ -21,13 +23,18 @@
                 <td>{{ $hub->address }}</td>
                 <td class="action-table-data">
                     <div class="edit-delete-action">
+                        @permission('hub-show')
                         <a class="me-2 edit-icon p-2" href="{{ route('admin.hubs.show', $hub->id) }}" >
                             <i data-feather="eye" class="feather-eye"></i>
                         </a>
+                        @endpermission
+                        @permission('hub-update')
                         <a class="me-2 p-2" href="#" data-bs-toggle="modal"
                             data-bs-target="#edit-hub-{{ $hub->id }}">
                             <i data-feather="edit" class="feather-edit"></i>
                         </a>
+                        @endpermission
+                        @permission('hub-delete')
                         <form action="{{ route('admin.hubs.destroy', $hub->id) }}"
                             method="post" class="delete-form">
                             @csrf
@@ -36,10 +43,9 @@
                                 <i data-feather="trash-2" class="feather-trash-2"></i>
                             </a>
                         </form>
+                        @endpermission
                     </div>
-
                 </td>
-
             </tr>
 
             <!-- Edit hub -->

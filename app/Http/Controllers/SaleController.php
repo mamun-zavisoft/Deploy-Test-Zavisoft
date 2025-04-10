@@ -11,6 +11,14 @@ use Illuminate\Support\Facades\DB;
 
 class SaleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:sale-create')->only(['create', 'store']);
+        $this->middleware('permission:sale-list')->only(['index']);
+        $this->middleware('permission:sale-update')->only(['edit', 'update']);
+        $this->middleware('permission:sale-show')->only(['show']);
+    }
+    
     public function index(Request $request)
     {
         $sales = (new FetchSale)->execute($request);

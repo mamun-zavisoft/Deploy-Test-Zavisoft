@@ -9,6 +9,14 @@ use Illuminate\Support\Facades\DB;
 
 class BrandController extends Controller
 {
+    public function __construct()
+    {
+       $this->middleware('permission:brand-create')->only(['create', 'store']);
+       $this->middleware('permission:brand-list')->only('index');
+       $this->middleware('permission:brand-update')->only(['edit', 'update']);
+       $this->middleware('permission:brand-delete')->only(['destroy']);
+    }
+
     public function index(Request $request)
     {
         $brands = (new FetchBrand)->execute($request);

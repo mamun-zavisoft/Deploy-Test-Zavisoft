@@ -8,7 +8,9 @@
             <th>Fuel Capacity</th>
             <th>Payload Capacity</th>
             <th>Body Length</th>
+            @permission(['vehicle-model-update', 'vehicle-model-delete'])
             <th class="no-sort">Action</th>
+            @endpermission
         </tr>
     </thead>
     <tbody id="tbody">
@@ -27,10 +29,13 @@
                             data-bs-target="#vehicleModels-{{ $vehicleModel->id }}">
                             <i data-feather="eye" class="feather-eye"></i>
                         </a> -->
+                        @permission('vehicle-model-update')
                         <a class="me-2 p-2" href="#" data-bs-toggle="modal"
                             data-bs-target="#edit-vehicleModel-{{ $vehicleModel->id }}">
                             <i data-feather="edit" class="feather-edit"></i>
                         </a>
+                        @endpermission
+                        @permission('vehicle-model-delete')
                         <form action="{{ route('admin.vehicle-models.destroy', $vehicleModel->id) }}"
                             method="post" class="delete-form">
                             @csrf
@@ -39,10 +44,9 @@
                                 <i data-feather="trash-2" class="feather-trash-2"></i>
                             </a>
                         </form>
+                        @endpermission
                     </div>
-
                 </td>
-
             </tr>
 
             <!-- Edit Vehicle Model -->
