@@ -6,7 +6,9 @@
             <th>Zone</th>
             <th>Phone</th>
             <th>Balance</th>
+            @permission(['supplier-update', 'supplier-delete'])
             <th class="no-sort">Action</th>
+            @endpermission
         </tr>
     </thead>
     <tbody id="tbody">
@@ -21,10 +23,13 @@
                 <td>{{ number_format((int)$supplier->balance, 0) }}</td>
                 <td class="action-table-data">
                     <div class="edit-delete-action">
+                        @permission('supplier-update')
                         <a class="me-2 p-2" href="#" data-bs-toggle="modal"
                             data-bs-target="#edit-supplier-{{ $supplier->id }}">
                             <i data-feather="edit" class="feather-edit"></i>
                         </a>
+                        @endpermission
+                        @permission('supplier-delete')
                         <form action="{{ route('admin.suppliers.destroy', $supplier->id) }}"
                             method="post" class="delete-form">
                             @csrf
@@ -33,8 +38,8 @@
                                 <i data-feather="trash-2" class="feather-trash-2"></i>
                             </a>
                         </form>
+                        @endpermission
                     </div>
-
                 </td>
             </tr>
 

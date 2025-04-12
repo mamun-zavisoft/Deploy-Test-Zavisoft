@@ -8,6 +8,14 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:category-create')->only(['create', 'store']);
+        $this->middleware('permission:category-list')->only(['index']);
+        $this->middleware('permission:category-update')->only(['edit', 'update']);
+        $this->middleware('permission:category-delete')->only(['destroy']);
+    }
+    
     public function index(Request $request)
     {
         $categories = (new FetchCategory)->execute($request);

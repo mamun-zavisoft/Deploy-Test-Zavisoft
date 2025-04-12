@@ -3,7 +3,7 @@
 @section('content')
     <div class="page-wrapper">
         <div class="content">
-            <x-breadcrumb-modal title="Vehicle List" sub-title="Manage Vehicle" button="Add Vehicle" modal-id="add-vehicle" />
+            <x-breadcrumb-modal title="Vehicle List" sub-title="Manage Vehicle" permission="vehicle-create" button="Add Vehicle" modal-id="add-vehicle" />
 
             <!-- Filter -->
             <div class="card table-list-card">
@@ -120,7 +120,7 @@
                                                 <input type="text" name="license_plate" class="form-control">
                                             </div>
                                             <div class="col-md-6">
-                                                <label class="form-label fw-bold">Vehicle Type<span class="text-danger">*</span></label>
+                                                <label class="form-label fw-bold">Vehicle Type</label>
                                                 <select name="vehicle_type" class="form-select">
                                                     <option value="">Choose</option>
                                                     <option value="1">Covered Van</option>

@@ -4,7 +4,9 @@
             <th class="no-sort">SL</th>
             <th>Name</th>
             <th>Available Stored Quantity</th>
+            @permission(['rack-show', 'rack-update', 'rack-delete'])
             <th class="no-sort">Action</th>
+            @endpermission
         </tr>
     </thead>
     <tbody id="tbody">
@@ -17,14 +19,19 @@
                 <td>{{ $rack->total_products_count }}</td>
                 <td class="action-table-data">
                     <div class="edit-delete-action">
+                        @permission('rack-show')
                         <a class="me-2 edit-icon  p-2" href="#" data-bs-toggle="modal"
                         data-bs-target="#drawers-{{ $rack->id }}">
                             <i data-feather="eye" class="feather-eye"></i>
                         </a>
+                        @endpermission
+                        @permission('rack-update')
                         <a class="me-2 p-2" href="#" data-bs-toggle="modal"
                             data-bs-target="#edit-rack-{{ $rack->id }}">
                             <i data-feather="edit" class="feather-edit"></i>
                         </a>
+                        @endpermission
+                        @permission('rack-delete')
                         <form action="{{ route('admin.racks.destroy', $rack->id) }}"
                             method="post" class="delete-form">
                             @csrf
@@ -33,8 +40,8 @@
                                 <i data-feather="trash-2" class="feather-trash-2"></i>
                             </a>
                         </form>
+                        @endpermission
                     </div>
-
                 </td>
             </tr>
 

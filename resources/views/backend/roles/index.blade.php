@@ -3,7 +3,8 @@
 @section('content')
 <div class="page-wrapper">
     <div class="content">
-        <x-breadcrumb title="Role List" sub-title="Manage Your Roles" button="Add New Role" button-route="roles.create" />
+        <x-breadcrumb title="Role List" sub-title="Manage Your Roles" permission="role-create" button="Add New Role"
+         button-route="roles.create" />
 
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">

@@ -2,7 +2,7 @@
 @section('content')
     <div class="page-wrapper">
         <div class="content">
-            <x-breadcrumb title="Sales List" sub-title="Manage Your Sales" button="Add Sale"
+            <x-breadcrumb title="Sales List" sub-title="Manage Your Sales" permission="sale-create" button="Add Sale"
                 button-route="admin.sales.create" />
 
             <!-- /filter -->

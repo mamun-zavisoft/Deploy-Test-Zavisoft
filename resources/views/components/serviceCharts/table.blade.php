@@ -7,7 +7,9 @@
             <th>Code</th>
             <th>Description</th>
             {{-- <th>Created On</th> --}}
+            @permission(['service-chart-edit', 'service-chart-delete'])
             <th class="no-sort">Action</th>
+            @endpermission
         </tr>
     </thead>
     <tbody id="tbody">
@@ -23,10 +25,13 @@
                 {{-- <td>{{ $serviceChart->created_at?->format('d M Y') }}</td> --}}
                 <td class="action-table-data">
                     <div class="edit-delete-action">
+                        @permission('service-chart-edit')
                         <a class="me-2 p-2" href="#" data-bs-toggle="modal"
                             data-bs-target="#edit-serviceChart-{{ $serviceChart->id }}">
                             <i data-feather="edit" class="feather-edit"></i>
                         </a>
+                        @endpermission
+                        @permission('service-chart-delete')
                         <form action="{{ route('admin.service-charts.destroy', $serviceChart->id) }}"
                             method="post" class="delete-form">
                             @csrf
@@ -35,8 +40,8 @@
                                 <i data-feather="trash-2" class="feather-trash-2"></i>
                             </a>
                         </form>
+                        @endpermission
                     </div>
-
                 </td>
             </tr>
 

@@ -2,7 +2,7 @@
 @section('content')
     <div class="page-wrapper">
         <div class="content">
-            <x-breadcrumb title="Services List" button="Add Service" button-route="admin.services.create" />
+            <x-breadcrumb title="Services List" permission="service-create" button="Add Service" button-route="admin.services.create" />
 
             <!-- /filter -->
                 <div class="card table-list-card">

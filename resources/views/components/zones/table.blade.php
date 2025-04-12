@@ -6,7 +6,9 @@
             <th>Phone</th>
             <th>Location</th>
             <th>Created On</th>
+            @permission(['zone-update', 'zone-delete'])
             <th class="no-sort">Action</th>
+            @endpermission
         </tr>
     </thead>
     <tbody id="tbody">
@@ -21,6 +23,13 @@
                 <td>{{ $zone->created_at?->format('d M Y') }}</td>
                 <td class="action-table-data">
                     <div class="edit-delete-action">
+                        @permission('zone-update')
+                            <a class="me-2 p-2" href="#" data-bs-toggle="modal"
+                                data-bs-target="#edit-zone-{{ $zone->id }}">
+                                <i data-feather="edit" class="feather-edit"></i>
+                            </a>
+                        @endpermission
+                        @permission('zone-delete')
                         <a class="me-2 p-2" href="#" data-bs-toggle="modal"
                             data-bs-target="#edit-zone-{{ $zone->id }}">
                             <i data-feather="edit" class="feather-edit"></i>
@@ -33,8 +42,8 @@
                                 <i data-feather="trash-2" class="feather-trash-2"></i>
                             </a>
                         </form>
+                        @endpermission
                     </div>
-
                 </td>
             </tr>
 

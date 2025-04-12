@@ -9,6 +9,13 @@ use Illuminate\Http\Request;
 
 class SupplierController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:supplier-create')->only(['create', 'store']);
+        $this->middleware('permission:supplier-list')->only(['index']);
+        $this->middleware('permission:supplier-update')->only(['edit', 'update']);
+        $this->middleware('permission:supplier-delete')->only(['destroy']);
+    }
     public function index(Request $request)
     {
         $suppliers = (new FetchSupplier)->execute($request);

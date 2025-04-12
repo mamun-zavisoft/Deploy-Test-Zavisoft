@@ -6,7 +6,9 @@
             <th>Logo</th>
             <th>Created On</th>
             <th>Status</th>
+            @permission(['brand-update', 'brand-delete'])
             <th class="no-sort">Action</th>
+            @endpermission
         </tr>
     </thead>
     <tbody >
@@ -35,10 +37,13 @@
                 </td>
                 <td class="action-table-data">
                     <div class="edit-delete-action">
+                        @permission('brand-update')
                         <a class="me-2 p-2" href="#" data-bs-toggle="modal"
                             data-bs-target="#edit-brand-{{ $brand->id }}">
                             <i data-feather="edit" class="feather-edit"></i>
                         </a>
+                        @endpermission
+                        @permission('brand-delete')
                         <form action="{{ route('admin.brands.destroy', $brand->id) }}"
                             method="post" class="delete-form">
                             @csrf
@@ -47,6 +52,7 @@
                                 <i data-feather="trash-2" class="feather-trash-2"></i>
                             </a>
                         </form>
+                        @endpermission
                     </div>
 
                 </td>

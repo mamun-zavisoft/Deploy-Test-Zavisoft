@@ -5,7 +5,9 @@
             <th>Rack</th>
             <th>Drawer</th>
             <th>Available Stored Quantity</th>
+            @permission([ 'drawer-show','drawer-update', 'drawer-delete'])
             <th class="no-sort">Action</th>
+            @endpermission
         </tr>
     </thead>
     <tbody id="tbody">
@@ -17,14 +19,19 @@
                 <td>{{ $drawer->available_products_count }}</td>
                 <td class="action-table-data">
                     <div class="edit-delete-action">
+                        @permission('drawer-show')
                         <a class="me-2 edit-icon p-2" href="#" data-bs-toggle="modal"
                             data-bs-target="#drawer-products-{{ $drawer->id }}">
                             <i data-feather="eye" class="feather-eye"></i>
                         </a>
+                        @endpermission
+                        @permission('drawer-update')
                         <a class="me-2 p-2" href="#" data-bs-toggle="modal"
                             data-bs-target="#edit-drawer-{{ $drawer->id }}">
                             <i data-feather="edit" class="feather-edit"></i>
                         </a>
+                        @endpermission
+                        @permission('drawer-delete')
                         <form action="{{ route('admin.drawers.destroy', $drawer->id) }}"
                             method="post" class="delete-form">
                             @csrf
@@ -33,10 +40,9 @@
                                 <i data-feather="trash-2" class="feather-trash-2"></i>
                             </a>
                         </form>
+                        @endpermission
                     </div>
-
                 </td>
-
             </tr>
 
             <!-- Edit drawer -->

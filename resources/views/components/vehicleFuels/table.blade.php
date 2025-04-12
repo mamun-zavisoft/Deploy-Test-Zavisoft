@@ -8,7 +8,9 @@
             <th>Fuel Qty</th>
             <th>Fuel Rate</th>
             <th>Total Price</th>
+            @permission('vehicle-fuel-update')
             <th class="no-sort">Action</th>
+            @endpermission
         </tr>
     </thead>
     <tbody>
@@ -26,11 +28,13 @@
                 <td>৳{{ $fueling->fuel_rate }}</td>
                 <td>৳{{ $fueling->total_price }}</td>
                 <td  class="action-table-data">
+                    @permission('vehicle-fuel-update')
                     <div class="edit-delete-action">
                         <a href="{{ route('admin.vehicle-fuels.edit', $fueling->id) }}" class="me-2 p-2 mb-0">
                             <i data-feather="edit" class="feather-edit"></i>
                         </a>
                     <div/>
+                    @endpermission
                 </td>
             </tr>
         @empty

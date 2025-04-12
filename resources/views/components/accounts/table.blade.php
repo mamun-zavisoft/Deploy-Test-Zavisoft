@@ -6,7 +6,9 @@
             <th>Type</th>
             <th>Balance</th>
             <th>Created On</th>
+            @permission(['account-update', 'account-delete'])
             <th class="no-sort">Action</th>
+            @endpermission
         </tr>
     </thead>
     <tbody>
@@ -21,9 +23,12 @@
             <td>{{ $account->created_at->format('d M Y') }}</td>
             <td class="action-table-data">
                 <div class="edit-delete-action">
+                    @permission('account-update')
                     <a class="me-2 p-2" href="#" data-bs-toggle="modal" data-bs-target="#edit-account-{{ $account->id }}">
                         <i data-feather="edit" class="feather-edit"></i>
                     </a>
+                    @endpermission
+                    @permission('account-delete')
                     <form action="{{ route('admin.accounts.destroy', $account->id) }}" method="post" class="delete-form">
                         @csrf
                         @method('DELETE')
@@ -31,8 +36,8 @@
                             <i data-feather="trash-2" class="feather-trash-2"></i>
                         </a>
                     </form>
+                    @endpermission
                 </div>
-
             </td>
         </tr>
 

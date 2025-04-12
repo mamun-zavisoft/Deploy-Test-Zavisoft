@@ -20,6 +20,8 @@ class PurchaseController extends Controller
     public function __construct(PurchaseService $purchaseService)
     {
         $this->purchaseService = $purchaseService;
+        $this->middleware('permission:purchase-create')->only('create', 'store');
+        $this->middleware('permission:purchase-list')->only('index');
     }
 
     public function index()

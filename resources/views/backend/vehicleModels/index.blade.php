@@ -2,7 +2,7 @@
 @section('content')
     <div class="page-wrapper">
         <div class="content">
-            <x-breadcrumb-modal title="Vehicle Model List" sub-title="Manage vehicle model" button="Add vehicle model" modal-id="add-vehicleModel" />
+            <x-breadcrumb-modal title="Vehicle Model List" sub-title="Manage vehicle model" permission="vehicle-model-create" button="Add vehicle model" modal-id="add-vehicleModel" />
 
             <!-- filter -->
             <div class="card table-list-card">

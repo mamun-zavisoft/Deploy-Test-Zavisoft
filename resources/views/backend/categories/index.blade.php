@@ -2,7 +2,7 @@
 @section('content')
     <div class="page-wrapper">
         <div class="content">
-            <x-breadcrumb-modal title="Category List" sub-title="Manage Your Categories" button="Add Category" modal-id="add-category" />
+            <x-breadcrumb-modal title="Category List" sub-title="Manage Your Categories" permission="category-create" button="Add Category" modal-id="add-category" />
 
             <!-- /product list -->
             <div class="card table-list-card">

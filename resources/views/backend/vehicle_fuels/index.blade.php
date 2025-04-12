@@ -2,7 +2,7 @@
 @section('content')
     <div class="page-wrapper">
         <div class="content">
-            <x-breadcrumb title="Fueling List" sub-title="Manage Fueling" button="Add Fueling"
+            <x-breadcrumb title="Fueling List" sub-title="Manage Fueling" permission="vehicle-fuel-create" button="Add Fueling"
                 button-route="admin.vehicle-fuels.create" />
 
             <!--  filter -->

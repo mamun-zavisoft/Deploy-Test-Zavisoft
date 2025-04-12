@@ -14,6 +14,14 @@ use Illuminate\Support\Facades\Log;
 
 class VehiclesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:vehicle-create')->only(['create', 'store']);
+        $this->middleware('permission:vehicle-list')->only(['index']);
+        $this->middleware('permission:vehicle-update')->only(['edit', 'update']);
+        $this->middleware('permission:vehicle-delete')->only(['destroy']);
+    }
+
     public function index(Request $request)
     {
         $vehicles = (new FetchVehicle)->execute($request);
@@ -50,6 +58,7 @@ class VehiclesController extends Controller
             ],
             [
                 'current_odometer.required_if' => 'The current odometer field is required when owner type is Self.',
+                'license_plate.unique' => 'The Registration Number has already been taken.',
             ]);
             
             $data['registration_date'] = $request->registration_date ? date('Y-m-d', strtotime($request->registration_date)) : null;

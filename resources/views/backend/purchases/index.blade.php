@@ -2,7 +2,7 @@
 @section('content')
     <div class="page-wrapper">
         <div class="content">
-            <x-breadcrumb title="Purchase List" sub-title="Manage Your Purchases" button="Add Purchase"
+            <x-breadcrumb title="Purchase List" sub-title="Manage Your Purchases" permission="purchase-create" button="Add Purchase"
                 button-route="admin.purchases.create" />
 
             <!--  filter -->

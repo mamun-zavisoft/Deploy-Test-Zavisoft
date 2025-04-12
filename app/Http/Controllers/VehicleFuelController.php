@@ -10,6 +10,15 @@ use Illuminate\Support\Facades\DB;
 
 class VehicleFuelController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permission:vehicle-fuel-create')->only('create', 'store');
+        $this->middleware('permission:vehicle-fuel-list')->only('index');
+        $this->middleware('permission:vehicle-fuel-update')->only('edit', 'update');
+        $this->middleware('permission:vehicle-fuel-destroy')->only('destroy');
+    }
+
     /**
      * Display a listing of the vehicle fuel records.
      */

@@ -11,7 +11,9 @@
             <th>Paid</th>
             <th>Due</th>
             <th>Paid Status</th>
+            @permission(['purchase-show', 'purchase-update', 'purchase-delete'])
             <th class="no-sort">Action</th>
+            @endpermission
         </tr>
     </thead>
     <tbody>
@@ -53,6 +55,7 @@
                         <span class="badge-linedanger">Not Defined</span>
                     @endif
                 </td>
+                @permission('purchase-show')
                 <td class="action-table-data">
                     <div class="edit-delete-action">
                         <a class="me-2 p-2" href="javascript:void(0);" data-bs-toggle="modal"
@@ -70,6 +73,7 @@
                         </a> --}}
                     </div>
                 </td>
+                @endpermission
             </tr>
 
             {{-- status change modal  --}}

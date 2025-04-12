@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class VehicleReportController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:vehicle-report-list')->only(['index', 'report']);
+    }
+
     public function index(Request $request)
     {
         // Default to last 7 days if no dates provided

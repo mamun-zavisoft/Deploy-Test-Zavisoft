@@ -32,6 +32,7 @@ class PermissionSeeder extends Seeder
 
             ['guard_name' => 'admin', 'group_name' => 'product', 'name' => 'product-list'],
             ['guard_name' => 'admin', 'group_name' => 'product', 'name' => 'product-create'],
+            ['guard_name' => 'admin', 'group_name' => 'product', 'name' => 'product-show'],
             ['guard_name' => 'admin', 'group_name' => 'product', 'name' => 'product-update'],
             ['guard_name' => 'admin', 'group_name' => 'product', 'name' => 'product-delete'],
 
@@ -86,6 +87,7 @@ class PermissionSeeder extends Seeder
 
             ['guard_name' => 'admin', 'group_name' => 'vehicle', 'name' => 'vehicle-list'],
             ['guard_name' => 'admin', 'group_name' => 'vehicle', 'name' => 'vehicle-create'],
+            ['guard_name' => 'admin', 'group_name' => 'vehicle', 'name' => 'vehicle-show'],
             ['guard_name' => 'admin', 'group_name' => 'vehicle', 'name' => 'vehicle-update'],
             ['guard_name' => 'admin', 'group_name' => 'vehicle', 'name' => 'vehicle-delete'],
 
@@ -93,6 +95,24 @@ class PermissionSeeder extends Seeder
             ['guard_name' => 'admin', 'group_name' => 'service-chart', 'name' => 'service-chart-create'],
             ['guard_name' => 'admin', 'group_name' => 'service-chart', 'name' => 'service-chart-update'],
             ['guard_name' => 'admin', 'group_name' => 'service-chart', 'name' => 'service-chart-delete'],
+
+            ['guard_name' => 'admin', 'group_name' => 'hub', 'name' => 'hub-list'],
+            ['guard_name' => 'admin', 'group_name' => 'hub', 'name' => 'hub-create'],
+            ['guard_name' => 'admin', 'group_name' => 'hub', 'name' => 'hub-show'],
+            ['guard_name' => 'admin', 'group_name' => 'hub', 'name' => 'hub-update'],
+            ['guard_name' => 'admin', 'group_name' => 'hub', 'name' => 'hub-delete'],
+
+            ['guard_name' => 'admin', 'group_name' => 'vehicle-model', 'name' => 'vehicle-model-list'],
+            ['guard_name' => 'admin', 'group_name' => 'vehicle-model', 'name' => 'vehicle-model-create'],
+            ['guard_name' => 'admin', 'group_name' => 'vehicle-model', 'name' => 'vehicle-model-update'],
+            ['guard_name' => 'admin', 'group_name' => 'vehicle-model', 'name' => 'vehicle-model-delete'],
+
+            ['guard_name' => 'admin', 'group_name' => 'vehicle-fuel', 'name' => 'vehicle-fuel-list'],
+            ['guard_name' => 'admin', 'group_name' => 'vehicle-fuel', 'name' => 'vehicle-fuel-create'],
+            ['guard_name' => 'admin', 'group_name' => 'vehicle-fuel', 'name' => 'vehicle-fuel-update'],
+            ['guard_name' => 'admin', 'group_name' => 'vehicle-fuel', 'name' => 'vehicle-fuel-delete'],
+
+            ['guard_name' => 'admin', 'group_name' => 'vehicle-report', 'name' => 'vehicle-report-list'],
 
         ];
 

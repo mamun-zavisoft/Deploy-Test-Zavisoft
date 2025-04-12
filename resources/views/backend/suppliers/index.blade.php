@@ -2,7 +2,7 @@
 @section('content')
     <div class="page-wrapper">
         <div class="content">
-            <x-breadcrumb-modal title="Supplier List" sub-title="Manage suppliers" button="Add Supplier" modal-id="add-supplier" />
+            <x-breadcrumb-modal title="Supplier List" sub-title="Manage suppliers" permission="supplier-create" button="Add Supplier" modal-id="add-supplier" />
 
             <!-- filter -->
             <div class="card table-list-card">

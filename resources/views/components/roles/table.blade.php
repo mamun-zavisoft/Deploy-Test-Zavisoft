@@ -5,7 +5,9 @@
             <th>Role Name</th>
             <th>Guard Name</th>
             <th>Permissions</th>
+            @permission(['role-update', 'role-delete'])
             <th class="text-end">Action</th>
+            @endpermission
         </tr>
     </thead>
     <tbody>
@@ -24,6 +26,7 @@
                         @endforeach
                     </div>
                 </td>
+                @permission(['role-update', 'role-delete'])
                 <td class="action-table-data">
                     <div class="edit-delete-action">
                         <a href="{{ route('roles.edit', $role->id) }}" class="me-2 p-2">
@@ -38,6 +41,7 @@
                         </form>
                     </div>
                 </td>
+                @endpermission
             </tr>
             @empty
             <tr class="text-center">

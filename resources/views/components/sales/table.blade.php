@@ -7,7 +7,9 @@
             <th>Grand Total</th>
             <th>Paid Status</th>
             <th>Date</th>
+            @permission('sale-show')
             <th class="no-sort">Action</th>
+            @endpermission
         </tr>
     </thead>
     <tbody>
@@ -42,6 +44,7 @@
                 <td>{{ $sale->created_at?->format('d M Y h:i A') }}</td>
                 <td class="action-table-data">
                     <div class="edit-delete-action">
+                        @permission('sale-show')
                         <a class="me-2 p-2" href="javascript:void(0);" data-bs-toggle="modal"
                             data-bs-target="#sale-{{ $sale->id }}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -51,7 +54,7 @@
                                 <circle cx="12" cy="12" r="3"></circle>
                             </svg>
                         </a>
-
+                        @endpermission
                     </div>
                 </td>
             </tr>

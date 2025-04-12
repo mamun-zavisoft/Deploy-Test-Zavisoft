@@ -3,7 +3,7 @@
 @section('content')
     <div class="page-wrapper">
         <div class="content">
-            <x-breadcrumb-modal title="Account List" sub-title="Manage Account" button="Add Account" modal-id="add-account" />
+            <x-breadcrumb-modal title="Account List" sub-title="Manage Account" permission="account-create" button="Add Account" modal-id="add-account" />
 
                     <!-- filter -->
            
