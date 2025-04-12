@@ -33,11 +33,9 @@
                 @endpermission
 
                 {{-- Dashboard --}}
-                @permission('dashboard')
                 <li class="{{ Request::is('/') ? 'active' : '' }}">
                     <a href="{{ route('dashboard') }}"><i data-feather="home"></i><span>Dashboard</span></a>
                 </li>
-                @endpermission
 
                 {{-- Calendar --}}
 

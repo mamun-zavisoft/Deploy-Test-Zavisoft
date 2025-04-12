@@ -114,8 +114,6 @@ class PermissionSeeder extends Seeder
 
             ['guard_name' => 'admin', 'group_name' => 'vehicle-report', 'name' => 'vehicle-report-list'],
 
-            ['guard_name' => 'admin', 'group_name' => 'dashboard', 'name' => 'dashboard'],
-
         ];
 
         $newPermissions = [];
