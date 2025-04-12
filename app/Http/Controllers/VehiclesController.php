@@ -58,6 +58,7 @@ class VehiclesController extends Controller
             ],
             [
                 'current_odometer.required_if' => 'The current odometer field is required when owner type is Self.',
+                'license_plate.unique' => 'The Registration Number has already been taken.',
             ]);
             
             $data['registration_date'] = $request->registration_date ? date('Y-m-d', strtotime($request->registration_date)) : null;

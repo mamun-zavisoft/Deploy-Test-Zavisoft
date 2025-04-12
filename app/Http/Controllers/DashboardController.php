@@ -34,7 +34,7 @@ class DashboardController extends Controller
         // Get the last 5 purchases with proper eager loading
         $purchases = Purchase::with(['purchaseDetails.product' => function ($query) {
             $query->select('id', 'name', 'purchase_price');
-        }])
+        }, 'purchaseDetails.product.media'])
             ->select(
                 'id',
                 'zone_id',

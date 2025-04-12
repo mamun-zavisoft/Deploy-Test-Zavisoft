@@ -6,6 +6,7 @@ use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class PermissionCheck
 {
@@ -21,13 +22,11 @@ class PermissionCheck
             return redirect()->route('login')->with('error', 'You need to log in first.');
         }
 
-        if (auth()->user() && in_array(Auth::user()?->role, [User::$SUPER_ADMIN, User::$IN_CHARGE])) {
+        $user_permissions = Cache::get('user_permissions' . Auth::user()->id) ?? [];
+        if ((Auth::check() && in_array($permissions, $user_permissions)) || in_array(Auth::user()?->role, [User::$SUPER_ADMIN, User::$IN_CHARGE])) {
             return $next($request);
-        } else {
-            if ((auth()->user() && auth()->user()->hasPermission($permissions))) {
-                return $next($request);
-            }
         }
+
 
         return redirect()->route('dashboard')->with('error', 'You do not have permission to access this resource.');
     }

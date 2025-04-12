@@ -120,7 +120,7 @@
                                                 <input type="text" name="license_plate" class="form-control">
                                             </div>
                                             <div class="col-md-6">
-                                                <label class="form-label fw-bold">Vehicle Type<span class="text-danger">*</span></label>
+                                                <label class="form-label fw-bold">Vehicle Type</label>
                                                 <select name="vehicle_type" class="form-select">
                                                     <option value="">Choose</option>
                                                     <option value="1">Covered Van</option>
