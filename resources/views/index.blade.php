@@ -199,7 +199,7 @@
                                         <div class="modal-dialog modal-dialog-centered" style="max-width: 90%; width: 1400px;">
                                             <div class="modal-content">
                                                 <!-- Modal Header -->
-                                                <div class="modal-header border-0 custom-modal-header">
+                                                <div class="modal-header border-0 custom-modal-header justify-content-between">
                                                     <div class="page-title">
                                                         <h4>Service Details</h4>
                                                     </div>
