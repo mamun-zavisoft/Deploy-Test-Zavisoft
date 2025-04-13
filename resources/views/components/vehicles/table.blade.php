@@ -27,7 +27,13 @@
                         {{ $vehicle->owner_type == 1 ? 'Self' : 'External' }}
                     </span>
                 </td>
-                <td><span class="copyable">{{ $vehicle->license_plate }}</span></td>
+                <td><span class="copyable">
+                    @if ($vehicle->hub)
+                        {{ $vehicle->license_plate }}
+                    @else
+                        <span class="text-danger">{{ $vehicle->license_plate }}</span>
+                    @endif    
+                </span></td>
                 <td>{{ $vehicle->vehicleModel?->name ?? '-' }}</td>
                 <td>
                     @if ($vehicle->vehicle_type == 1)
@@ -375,7 +381,7 @@
 
         @empty
             <tr class="text-center">
-                <td colspan="9">No Vehicle Found</td>
+                <td colspan="10">No Vehicle Found</td>
             </tr>
         @endforelse
 

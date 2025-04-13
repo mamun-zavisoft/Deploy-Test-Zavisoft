@@ -526,10 +526,21 @@
                 addPartRow();
             });
 
+            // Calculate parts totals when quantity changes
+            function checkPartRows() {
+                if ($('.part-row').length === 0) {
+                    $('#partsCheckbox').prop('checked', false);
+                    $('#partsSection').addClass('d-none');
+                    partsTotal = 0;
+                    updateTotals();
+                }
+            }
+
             // Remove part row
             $(document).on('click', '.remove-part', function() {
                 $(this).closest('.part-row').remove();
                 calculatePartsTotals();
+                checkPartRows();
             });
 
             // Calculate service price when selection changes

@@ -413,6 +413,16 @@
             let SubmitBtn = $('#submit_btn');
             SubmitBtn.prop('disabled', true);
             let formData = new FormData(this);
+            
+            // Validate purchase price and sale price
+            let purchasesPrice = parseFloat(formData.get('purchase_price'));
+            let salePrice = parseFloat(formData.get('sale_price'));
+            if (purchasesPrice > salePrice) {
+                toastr.error('Purchase price cannot be greater than sale price.');
+                SubmitBtn.prop('disabled', false);
+                return;
+            }
+
             $.ajax({
                 type: $(this).attr('method'),
                 url: $(this).attr('action'),

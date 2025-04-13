@@ -214,13 +214,11 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <div class="col-lg-12">
@@ -421,7 +419,7 @@
                         toastr.error(value);
                     });
                 }
-            });
+            })
         });
 
         $('#categoryStoreForm').on('submit', function (e) {
