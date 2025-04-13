@@ -87,6 +87,9 @@ class ServiceChartController extends Controller
 
     public function destroy(ServiceChart $serviceChart)
     {
+        if ($serviceChart->serviceDetails()->exists()) {
+            return redirect()->back()->with('error', 'Cannot delete this service chart has related details.');
+        }
         $serviceChart->delete();
 
         return redirect()->back()->with('success', 'Service chart deleted successfully!');

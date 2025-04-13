@@ -92,6 +92,9 @@ class VehicleModelController extends Controller
 
     public function destroy(VehicleModel $vehicleModel)
     {
+        if ($vehicleModel->vehicles()->exists()) {
+            return redirect()->back()->with('error', 'Vehicle Model cannot be deleted as it is associated with vehicles.');
+        }
         $vehicleModel->delete();
 
         return redirect()->back()->with('success', 'Vehicle Model deleted successfully!');

@@ -149,7 +149,7 @@ class VehiclesController extends Controller
     public function destroy(Vehicle $vehicle)
     {
         if ($vehicle->service()->count() > 0) {
-            return redirect()->back()->with('error', 'Vehicle has services, cannot be deleted.');
+            return redirect()->back()->with('error', 'You cannot delete this vehicle because it’s linked to one or more services');
         }
         $vehicle->delete();
         return redirect()->back()->with('success', 'Vehicle deleted successfully!');

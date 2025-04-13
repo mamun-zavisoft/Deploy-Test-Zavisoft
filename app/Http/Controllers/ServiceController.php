@@ -91,7 +91,7 @@ class ServiceController extends Controller
             $owner_type = $request->service_type == 'self' ? '1' : '2';
 
             if ($vehicle && $vehicle->owner_type != $owner_type) {
-                return response()->json(['message' => 'Invalid vehicle selection!', 'type' => 'error'], 422);
+                return response()->json(['message' => 'Please select a vehicle that matches the service type!', 'type' => 'error'], 422);
             }
 
             DB::beginTransaction();

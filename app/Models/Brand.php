@@ -14,6 +14,11 @@ class Brand extends Model implements Mediable
 
     protected $appends = ['image'];
 
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
     public function setImageAttribute($file)
     {
         if ($file) {

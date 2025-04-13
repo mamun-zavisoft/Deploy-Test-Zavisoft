@@ -58,7 +58,7 @@
                                     <input type="number" name="payload_capacity" class="form-control">
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Body Length*(Feet)</label>
+                                    <label class="form-label">Body Length(Feet)</label>
                                     <input type="number" name="body_length" class="form-control">
                                 </div>
                                 <div class="modal-footer-btn">

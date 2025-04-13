@@ -29,7 +29,8 @@ class PurchaseController extends Controller
         $perPage = $request->per_page ?? 10;
         $purchases = $this->purchaseService->getAllPurchases($perPage);
         $accounts = Account::select('id', 'name', 'balance')->get();
-        $suppliers = Supplier::select('id', 'name')->get();
+        $suppliers = Supplier::select('id', 'name', 'phone')->get();
+
 
         if (request()->ajax()) {
             return view('components.purchases.table', ['purchases' => $purchases])->render();

@@ -118,7 +118,10 @@ class HubController extends Controller
 
     public function destroy(Hub $hub)
     {
-
+        if ($hub->vehicles()->exists()) 
+        {
+            return redirect()->back()->with('error', 'Hub has vehicles, cannot delete!');
+        }
         $hub->delete();
 
         return redirect()->back()->with('success', 'Hub deleted successfully!');

@@ -194,7 +194,7 @@
                                         <div class="d-flex border-bottom py-2">
                                             <div class="p-2" style="flex: 1;">{{ $data->product?->name }}</div>
                                             <div class="p-2" style="flex: 1;">{{ $data->quantity }}</div>
-                                            <div class="p-2" style="flex: 1;">{{ $data->product->purchase_price }}</div>
+                                            <div class="p-2" style="flex: 1;">{{ $data->product?->purchase_price }}</div>
                                             <div class="p-2" style="flex: 1;">{{ $data->product->sale_price }}</div>
                                             <div class="p-2" style="flex: 1;">{{ $data->quantity * $data->product->purchase_price }}</div> 
                                         </div>

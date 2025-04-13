@@ -8,7 +8,7 @@ class VehicleModel extends Model
 {
     protected $guarded = [];
 
-    public function vehicle()
+    public function vehicles()
     {
         return $this->hasMany(Vehicle::class);
     }

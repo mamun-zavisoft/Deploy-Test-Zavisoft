@@ -318,15 +318,17 @@
                                             <div class="row mb-2">
                                                 <div class="col-md-4 fw-bold">Vehicle Type:</div>
                                                 <div class="col-md-8">
-                                                    {{ $vehicle->owner_type == 1
-                                                        ? 'Covered Van'
-                                                        : ($vehicle->vehicle_type == 2
-                                                            ? 'MotorBike'
-                                                            : ($vehicle->vehicle_type == 3
-                                                                ? 'Pickup'
-                                                                : ($vehicle->vehicle_type == 4
-                                                                    ? 'Truck'
-                                                                    : 'Unknown'))) }}
+                                                    @if ($vehicle->vehicle_type == 1)
+                                                        Covered Van
+                                                    @elseif ($vehicle->vehicle_type == 2)
+                                                        Motor Bike
+                                                    @elseif ($vehicle->vehicle_type == 3)
+                                                        Pick Up
+                                                    @elseif ($vehicle->vehicle_type == 4)
+                                                        Truck
+                                                    @else
+                                                        Unknown
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="row mb-2">
