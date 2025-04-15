@@ -371,7 +371,7 @@
                         toastr.error(value);
                     });
                 }
-                if (response && response.message) {
+                else if (response && response.message) {
                     toastr.error(response.message);
                 }
             });
