@@ -137,8 +137,14 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <h5 class="card-title font-weight-bold mb-3">Supplier Info</h5>
-                                            <p class="mb-1">Supplier Name: {{ $purchase->supplier?->name }}</p>
-                                            <p class="mb-1">Supplier Number: {{ $purchase->supplier?->phone }}</p>
+                                            <p class="mb-1">Supplier Name:
+                                                <span class="fw-bolder ps-2"> {{ $purchase->supplier?->name }}
+                                                </span>
+                                            </p>
+                                            <p class="mb-1">Supplier Number: 
+                                                <span class="fw-bolder ps-2">{{ $purchase->supplier?->phone }}
+                                                </span>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
