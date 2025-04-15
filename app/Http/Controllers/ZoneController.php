@@ -89,6 +89,11 @@ class ZoneController extends Controller
         if ($userCount > 0) {
             return redirect()->back()->with('error', 'Zone has users, cannot delete!');
         }
+
+        if ($zone->racks()->exists())
+        {
+            return redirect()->back()->with('error', 'Zone has racks, cannot delete!');
+        }
         $zone->delete();
 
         return redirect()->back()->with('success', 'Zone deleted successfully!');
