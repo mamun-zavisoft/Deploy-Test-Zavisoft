@@ -12,4 +12,8 @@ class Supplier extends Model
     {
         return $this->belongsTo(Zone::class);
     }
+    public function purchases()
+    {
+        return $this->hasMany(Purchase::class);
+    }
 }

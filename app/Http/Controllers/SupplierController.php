@@ -89,6 +89,9 @@ class SupplierController extends Controller
         // if ($category->products()->exists()) {
         //     return response()->json(['message' => 'Category has products, cannot delete!'], 422);
         // }
+        if ($supplier->purchases()->exists()) {
+            return redirect()->back()->with('error', 'Supplier has purchases, cannot delete!');
+        }
         $supplier->delete();
 
         return redirect()->back()->with('success', 'Supplier deleted successfully!');
