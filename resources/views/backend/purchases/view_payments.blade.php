@@ -174,6 +174,8 @@
                     contentType: false,
                     processData: false,
                 }).done(function(response) {
+                    console.log(response);
+                    
                     if (response.type == 'success') {
                         toastr.success(response.message);
                         setTimeout(() => {
@@ -184,6 +186,8 @@
                         toastr.error(response.message);
                     }
                 }).fail(function(xhr) {
+                    console.log(xhr);
+                    
                     $('#submit_btn').attr('disabled', false);
                     let response = xhr.responseJSON;
                     if (response && response.errors) {
@@ -191,7 +195,7 @@
                             toastr.error(value);
                         });
                     }
-                    if (response && response.message) {
+                    else if (response && response.message) {
                         toastr.error(response.message);
                     }
                 });
