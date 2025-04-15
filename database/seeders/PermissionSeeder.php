@@ -110,7 +110,6 @@ class PermissionSeeder extends Seeder
             ['guard_name' => 'admin', 'group_name' => 'vehicle-fuel', 'name' => 'vehicle-fuel-list'],
             ['guard_name' => 'admin', 'group_name' => 'vehicle-fuel', 'name' => 'vehicle-fuel-create'],
             ['guard_name' => 'admin', 'group_name' => 'vehicle-fuel', 'name' => 'vehicle-fuel-update'],
-            ['guard_name' => 'admin', 'group_name' => 'vehicle-fuel', 'name' => 'vehicle-fuel-delete'],
 
             ['guard_name' => 'admin', 'group_name' => 'vehicle-report', 'name' => 'vehicle-report-list'],
 
