@@ -2,7 +2,8 @@
 @section('content')
     <div class="page-wrapper">
         <div class="content">
-            <x-breadcrumb-modal title="Hub List" sub-title="Manage hub" permission="hub-create" button="Add hub" modal-id="add-hub" />
+            <x-breadcrumb-modal title="Hub List" sub-title="Manage hub" permission="hub-create" button="Add hub"
+                modal-id="add-hub" />
 
             <!-- filter -->
             <div class="card table-list-card">
@@ -12,24 +13,34 @@
                             <div class="add-newplus">
                                 <label class="form-label">Zone</label>
                             </div>
-                            <select class="select filter-input" name="zone_id">
-                                <option value="">Choose</option>
-                                @foreach($zones as $zone)    
-                                    <option value="{{$zone->id}}" @selected(request()->zone_id == $zone->id)>{{ $zone->name }}</option>
-                                @endforeach    
-                            </select>
-                        </div>
-                    </div>
-                </x-filter>       
+                            <div class="d-flex align-items-center">
+                                <select class="select filter-input me-2" name="zone_id">
+                                    <option value="">Choose</option>
+                                    @foreach ($zones as $zone)
+                                        <option value="{{ $zone->id }}" @selected(request()->zone_id == $zone->id)>{{ $zone->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
 
-                    <!-- /Filter -->
+                            </div>
+                        </div>
+                        <!-- Import Excel Button -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#importExcelModal">
+                            Import Excel
+                        </button>
+                    </div>
+
+                </x-filter>
+
+                <!-- /Filter -->
                 <div class="table-responsive" id="dataTable">
                     <x-hubs.table :hubs="$hubs" :racks="$zones" />
                 </div>
-                </div>
             </div>
-            <!-- /hub list -->
         </div>
+        <!-- /hub list -->
+    </div>
     </div>
 
     <!-- Add Hub -->
@@ -48,8 +59,7 @@
                             </button>
                         </div>
                         <div class="modal-body custom-modal-body new-employee-field">
-                            <form action="{{ route('admin.hubs.store') }}" method="POST"
-                                id="storeForm">
+                            <form action="{{ route('admin.hubs.store') }}" method="POST" id="storeForm">
                                 @csrf
                                 <div class="mb-3">
                                     <label class="form-label">Name*</label>
@@ -76,6 +86,38 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import Hub Modal -->
+    <div class="modal fade" id="importExcelModal" tabindex="-1" aria-labelledby="importHubModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="importHubModalLabel">Import Excel (.xlsx)</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="saveButton" action="{{ route('admin.import.hubs') }}" method="POST"
+                    enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="excelFile" class="form-label">Choose File</label>
+                            <input type="file" class="form-control" id="excelFile" name="file"
+                                accept=".xlsx,.xls,.csv">
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <a href="{{ asset('Hub Address List .xlsx') }}" download
+                            class="btn btn-secondary btn-sm d-flex align-items-center justify-content-center">
+                            <span class="spinner-border spinner-border-sm me-2 d-none" id="importSpinner" role="status"
+                                aria-hidden="true"></span>
+                            Download Sample
+                        </a>
+                        <button type="submit" class="btn btn-primary" id="importSpinner">Import</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -157,7 +199,60 @@
                     }
                 });
             });
+
+            $('#saveButton').on('submit', function(e) {
+                e.preventDefault();
+
+                let formData = new FormData(this);
+                let submitButton = $(this).find('button[type="submit"]');
+                let spinner = $('#importSpinner');
+
+                submitButton.prop('disabled', true);
+                spinner.removeClass('d-none');
+
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        console.log(response);
+                        // Close the modal
+                        $('#importExcelModal').modal('hide');
+
+                        // Show success message
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: response.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(() => {
+                            // Optionally refresh the page or table
+                            location.reload();
+                        });
+
+                    },
+                    error: function(xhr) {
+                        let message = 'Something went wrong!';
+                        console.log(xhr.responseJSON.error);
+                        if (xhr.responseJSON.error) {
+                            message = xhr.responseJSON.error;
+                        }
+
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: message
+                        });
+                    },
+                    complete: function() {
+                        submitButton.prop('disabled', false);
+                        spinner.addClass('d-none');
+                    }
+                });
+            });
         });
     </script>
 @endpush
-
