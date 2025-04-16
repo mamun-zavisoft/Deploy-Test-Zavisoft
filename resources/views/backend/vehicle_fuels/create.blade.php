@@ -157,8 +157,24 @@
             }
 
             // Form submission with AJAX
-            $('#storeForm').submit(function(e) {
+            $('#storeForm').submit(async function(e) {
                 e.preventDefault();
+
+                $confirm = await Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to update fueling later!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, proceed!',
+                    cancelButtonText: 'Cancel'
+                });
+
+                if(! $confirm.isConfirmed){
+                    return false;
+                }
+                
                 let SubmitBtn = $('#submit_btn');
                 SubmitBtn.prop('disabled', true);
                 let formData = new FormData(this);
