@@ -5,6 +5,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DrawerController;
 use App\Http\Controllers\HubController;
+use App\Http\Controllers\HubImportController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RackController;
@@ -61,4 +62,7 @@ Route::middleware('auth')->name('admin.')->group(function () {
     Route::controller(SettingController::class)->group(function () {
         Route::delete('/media/{modelName}/{id}', 'destroyMedia')->name('media.destroy');
     });
+
+    Route::post('/import-hubs', [HubImportController::class, 'import'])->name('import.hubs');
+
 });
