@@ -290,6 +290,13 @@
                 // Validate all product quantities before submission
                 let isValid = true;
                 $('.product-card').each(function() {
+                    let productCard = $(this);
+                    let purchasedQty = parseInt(productCard.data('purchased-qty')) || 0;
+                    let totalAssigned = getTotalAssignedQuantity(productCard);
+                    if (totalAssigned < purchasedQty) {
+                        toastr.error('Please assign the full quantity to this rack or distribute the remaining quantity to another rack.');
+                        isValid = false;
+                    }
                     if (!validateAssignedQuantity($(this))) {
                         isValid = false;
                     }
