@@ -9,21 +9,6 @@
             <div class="card table-list-card">
                 <x-filter>
                     <div class="col-lg-4 col-sm-3 col-12 ms-2" style="width: 200px;">
-                        <div class="mb-3 add-product">
-                            <div class="add-newplus">
-                                <label class="form-label">Zone</label>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <select class="select filter-input me-2" name="zone_id">
-                                    <option value="">Choose</option>
-                                    @foreach ($zones as $zone)
-                                        <option value="{{ $zone->id }}" @selected(request()->zone_id == $zone->id)>{{ $zone->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-
-                            </div>
-                        </div>
                         <!-- Import Excel Button -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#importExcelModal">
