@@ -42,7 +42,7 @@ class HubController extends Controller
                 'zone_id' => 'nullable|exists:zones,id',
                 'custom_hub_id' => 'required|string|unique:hubs,custom_hub_id',
                 'phone' => 'nullable|string|max:15|unique:hubs,phone',
-                'address' => 'nullable|string|max:255',
+                'address' => 'nullable|string|max:255|unique:hubs,address',
             ],[
                 'custom_hub_id.unique' => 'Hub id already exists',
             ]);
@@ -92,8 +92,8 @@ class HubController extends Controller
                 'name' => 'required|string|max:50',
                 'zone_id' => 'nullable|exists:zones,id',
                 'custom_hub_id' => 'required|string|unique:hubs,custom_hub_id,'.$hub->id,
-                'phone' => 'nullable|string|max:15',
-                'address' => 'nullable|string|max:255',
+                'phone' => 'nullable|string|max:15|unique:hubs,phone,'.$hub->id,
+                'address' => 'nullable|string|max:255|unique:hubs,address,'.$hub->id,
             ]);
 
             DB::beginTransaction();
