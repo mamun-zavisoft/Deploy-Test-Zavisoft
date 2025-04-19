@@ -18,7 +18,7 @@
                                 @endphp
 
                                 <div class="card mb-3 product-card" data-product-id="{{ $product->id }}"
-                                    data-purchased-qty="{{ $purchasedQty }}">
+                                    data-purchased-qty="{{ $purchasedQty }}" data-product-name="{{ $product->name }}">
                                     <div class="card-header bg-light">
                                         <h5>{{ $product->name }} (Purchased: {{ $purchasedQty }})</h5>
                                         <div class="progress mt-2">
@@ -289,13 +289,27 @@
 
                 // Validate all product quantities before submission
                 let isValid = true;
+                let partialAllocation = false;
                 $('.product-card').each(function() {
                     if (!validateAssignedQuantity($(this))) {
                         isValid = false;
                     }
+
+                    // Check if product is completely allocated
+                    let productId = $(this).data('product-id');
+                    let productName = $(this).data('product-name');
+                    let purchasedQty = parseInt($(this).data('purchased-qty')) || 0;
+                    let totalAssigned = getTotalAssignedQuantity($(this));
+
+                    if (totalAssigned < purchasedQty) {
+                        partialAllocation = true;
+                        toastr.error(
+                            `Product must be completely allocated. ${purchasedQty - totalAssigned} units remaining for product #${productName}`
+                        );
+                    }
                 });
 
-                if (!isValid) {
+                if (!isValid || partialAllocation) {
                     return false;
                 }
 
@@ -312,7 +326,8 @@
                     if (response.type == 'success') {
                         toastr.success(response.message);
                         setTimeout(() => {
-                            response.redirectUrl ? window.location.href = response.redirectUrl : `{{ route('admin.purchases.index') }}`; ;
+                            response.redirectUrl ? window.location.href = response
+                                .redirectUrl : `{{ route('admin.purchases.index') }}`;;
                         }, 1000);
                     } else {
                         toastr.error(response.message);

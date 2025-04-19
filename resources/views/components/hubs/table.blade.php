@@ -3,7 +3,6 @@
         <tr>
             <th class="no-sort">SL</th>
             <th>Name</th>
-            <th>Zone</th>
             <th>Hub Id</th>
             <th>Phone</th>
             <th>Address</th>
@@ -17,8 +16,7 @@
             <tr>
                 <td>{{ $loop->iteration + $hubs->firstItem() - 1 }}</td>
                 <td>{{ $hub->name }}</td>
-                <td>{{ $hub->zone?->name }}</td>
-                <td>{{ $hub->custom_hub_id }}</td>
+                <td class="fw-bold">{{ $hub->custom_hub_id }}</td>
                 <td>{{ $hub->phone }}</td>
                 <td>{{ $hub->address }}</td>
                 <td class="action-table-data">

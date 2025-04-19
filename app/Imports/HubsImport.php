@@ -25,9 +25,8 @@ class HubsImport implements ToModel, WithHeadingRow
             if (empty($row['name'])) {
                 return null;
             }
-
             // Generate custom hub ID if not provided
-            $custom_hub_id = !empty($row['custom_hub_id']) ? $row['custom_hub_id'] : 'hub-' . $this->rowCount;
+            $custom_hub_id = !empty($row['hub_id']) ? $row['hub_id'] : 'hub-' . $this->rowCount;
 
             // Check if hub with this name or custom_hub_id already exists
             $existingHub = Hub::where('name', $row['name'])

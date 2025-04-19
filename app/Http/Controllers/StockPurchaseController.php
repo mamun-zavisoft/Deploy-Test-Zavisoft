@@ -57,7 +57,7 @@ class StockPurchaseController extends Controller
                 'message' => 'Purchase is not received yet',
             ]);
         }
-        // dd($request->all());
+        
         // Validate the request data
         $validator = Validator::make($request->all(), [
             'products' => 'required|array',
@@ -80,15 +80,23 @@ class StockPurchaseController extends Controller
         foreach ($request->products as $productId => $productData) {
             $totalAssigned = collect($productData['locations'])->sum('quantity');
 
-            // dd($purchase);
             $purchasedQty = $purchase->purchaseDetails()
                 ->where('product_id', $productId)
                 ->value('quantity');
+
             if ($totalAssigned > $purchasedQty) {
                 return response()->json([
                     'type' => 'error',
                     'message' => 'Validation failed',
                     'errors' => ["products.$productId.quantity" => "Total assigned quantity ($totalAssigned) exceeds the purchased quantity ($purchasedQty)"],
+                ], 422);
+            }
+
+            if ($totalAssigned < $purchasedQty) {
+                return response()->json([
+                    'type' => 'error',
+                    'message' => 'Validation failed',
+                    'errors' => ["products.$productId.quantity" => "All products must be completely allocated. Only $totalAssigned of $purchasedQty units allocated for product #$productId"],
                 ], 422);
             }
         }
@@ -143,7 +151,6 @@ class StockPurchaseController extends Controller
                 'message' => 'Products stored in racks successfully.',
                 'redirectUrl' => route('admin.purchases.index'),
             ]);
-
         } catch (\Exception $e) {
             DB::rollBack();
 
