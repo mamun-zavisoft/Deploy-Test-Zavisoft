@@ -13,7 +13,7 @@ class PasswordController extends Controller
     /**
      * Update the user's password.
      */
-    public function update(Request $request)
+    public function update(Request $request): RedirectResponse
     {
         $validated = $request->validateWithBag('updatePassword', [
             'current_password' => ['required', 'current_password'],
@@ -24,6 +24,8 @@ class PasswordController extends Controller
             'password' => Hash::make($validated['password']),
         ]);
 
-        return response('/profile');
+        // ভুল কোড: return response('/profile');
+        // সঠিক কোড: নিচে দেওয়া হলো (এটি ইউজারকে প্রোফাইল পেজে রিডাইরেক্ট করবে)
+        return redirect('/profile')->with('status', 'password-updated');
     }
 }

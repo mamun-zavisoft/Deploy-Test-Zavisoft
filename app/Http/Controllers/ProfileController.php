@@ -67,6 +67,6 @@ class ProfileController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return Redirect::to('/profile');
+        return Redirect::route('profile.edit')->with('status', 'profile-update');
     }
 }
