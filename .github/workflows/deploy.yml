@@ -100,6 +100,24 @@ jobs:
             --optimize-autoloader
 
       # ----------------------------------------------------------
+      # Step 4.5: Install Node.js and build Vite assets
+      # Fixes: Vite manifest not found error
+      # ----------------------------------------------------------
+      - name: "🟢 Setup Node.js"
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: "🎨 Install NPM Dependencies & Build Assets"
+        run: |
+          npm ci
+          npm run build
+          echo "✅ Vite build completed"
+          ls -la public/build/
+
+
+      # ----------------------------------------------------------
       # Step 5: Prepare Laravel testing environment
       # ----------------------------------------------------------
       - name: "🔧 Prepare Laravel Environment"
@@ -119,6 +137,8 @@ jobs:
 
           # Ensure log directory exists
           mkdir -p storage/logs
+          mkdir -p storage/framework/{sessions,views,cache}
+          mkdir -p bootstrap/cache
           touch storage/logs/laravel.log
 
       # ----------------------------------------------------------
