@@ -12,21 +12,7 @@ use Illuminate\Validation\Rules;
 
 class RegisteredUserController extends Controller
 {
-    /**
-     * Display the registration view.
-     */
-    public function create(): View
-    {
-        return view('auth.register');
-    }
-
-    /**
-     * Handle an incoming registration request.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
-
-public function store(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -42,8 +28,11 @@ public function store(Request $request)
 
         event(new Registered($user));
 
-        // ✅ FIX: this is REQUIRED for your test
+        // 🔥 THIS IS THE FIX (MUST BE HERE)
         Auth::login($user);
+
+        // optional but safe
+        $request->session()->regenerate();
 
         return redirect(route('dashboard', false));
     }
