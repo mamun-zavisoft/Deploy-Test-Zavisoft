@@ -12,7 +12,7 @@ use Illuminate\Validation\Rules;
 
 class RegisteredUserController extends Controller
 {
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -34,6 +34,6 @@ class RegisteredUserController extends Controller
         // optional but safe
         $request->session()->regenerate();
 
-        return redirect(route('dashboard', false));
+        return redirect(route('dashboard', absolute: false));
     }
 }
