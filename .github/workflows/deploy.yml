@@ -99,6 +99,11 @@ jobs:
             --prefer-dist \
             --optimize-autoloader
 
+
+      - name: Create Test Result Directory
+        run: mkdir -p storage/test-results
+
+
       # ----------------------------------------------------------
       # Step 4.5: Install Node.js and build Vite assets
       # Fixes: Vite manifest not found error
