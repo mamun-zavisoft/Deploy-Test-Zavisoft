@@ -1,0 +1,520 @@
+# ============================================================
+# ZaviSoft — CI/CD Pipeline
+# Application: auto-clinic (Laravel)
+# Author: ZaviSoft Team
+# Description: Test, artifact upload, and deploy to EC2
+#              via self-hosted runner
+# ============================================================
+
+name: ZaviSoft CI/CD Pipeline
+
+# Triggers: push to main or develop, and pull requests
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+
+# Global environment variables
+env:
+  PHP_VERSION: "8.2"
+  APP_ENV: testing
+  APP_DEBUG: true
+  LOG_CHANNEL: stack
+
+# ============================================================
+# JOBS
+# ============================================================
+jobs:
+
+  # ============================================================
+  # JOB 1: TEST
+  # Runs on GitHub-hosted runner (ubuntu-latest)
+  # Performs: install deps, setup env, run tests, upload artifact
+  # ============================================================
+  test:
+    name: "🧪 Run Tests"
+    runs-on: ubuntu-latest  # GitHub-hosted runner for tests
+
+    # Service containers (MySQL for testing)
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root_password
+          MYSQL_DATABASE: auto_clinic_test
+          MYSQL_USER: test_user
+          MYSQL_PASSWORD: test_password
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      # ----------------------------------------------------------
+      # Step 1: Checkout the repository code
+      # ----------------------------------------------------------
+      - name: "📥 Checkout Repository"
+        uses: actions/checkout@v4
+
+      # ----------------------------------------------------------
+      # Step 2: Setup PHP with required extensions
+      # ----------------------------------------------------------
+      - name: "🐘 Setup PHP ${{ env.PHP_VERSION }}"
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          extensions: >-
+            mbstring, xml, ctype, iconv, intl, pdo,
+            pdo_mysql, dom, filter, gd, json, zip,
+            bcmath, tokenizer, fileinfo, openssl, curl
+          coverage: xdebug
+          tools: composer:v2
+
+      # ----------------------------------------------------------
+      # Step 3: Cache Composer dependencies for faster builds
+      # ----------------------------------------------------------
+      - name: "📦 Cache Composer Dependencies"
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      # ----------------------------------------------------------
+      # Step 4: Install PHP dependencies
+      # ----------------------------------------------------------
+      - name: "⚙️ Install Composer Dependencies"
+        run: |
+          composer install \
+            --no-interaction \
+            --no-progress \
+            --prefer-dist \
+            --optimize-autoloader
+
+      # ----------------------------------------------------------
+      # Step 5: Prepare Laravel testing environment
+      # ----------------------------------------------------------
+      - name: "🔧 Prepare Laravel Environment"
+        run: |
+          # Copy environment file for testing
+          cp .env.example .env
+
+          # Set test database credentials
+          sed -i 's/DB_HOST=.*/DB_HOST=127.0.0.1/' .env
+          sed -i 's/DB_DATABASE=.*/DB_DATABASE=auto_clinic_test/' .env
+          sed -i 's/DB_USERNAME=.*/DB_USERNAME=test_user/' .env
+          sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=test_password/' .env
+          sed -i 's/DB_PORT=.*/DB_PORT=3306/' .env
+
+          # Generate application key
+          php artisan key:generate --force
+
+          # Ensure log directory exists
+          mkdir -p storage/logs
+          touch storage/logs/laravel.log
+
+      # ----------------------------------------------------------
+      # Step 6: Run database migrations
+      # ----------------------------------------------------------
+      - name: "🗄️ Run Database Migrations"
+        run: |
+          php artisan migrate --force --no-interaction
+        env:
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_DATABASE: auto_clinic_test
+          DB_USERNAME: test_user
+          DB_PASSWORD: test_password
+
+      # ----------------------------------------------------------
+      # Step 7: Run PHPUnit Tests & Capture Results
+      # ----------------------------------------------------------
+      - name: "🧪 Run PHPUnit Tests"
+        run: |
+          # Run tests and output results to multiple formats
+          php artisan test \
+            --env=testing \
+            --log-junit storage/test-results/junit.xml \
+            2>&1 | tee storage/test-results/test-output.txt
+
+          # Capture exit code
+          TEST_EXIT_CODE=${PIPESTATUS[0]}
+
+          echo "=========================================="
+          echo "TEST SUMMARY"
+          echo "=========================================="
+          echo "Timestamp   : $(date '+%Y-%m-%d %H:%M:%S UTC')"
+          echo "Branch      : ${{ github.ref_name }}"
+          echo "Commit SHA  : ${{ github.sha }}"
+          echo "Triggered by: ${{ github.actor }}"
+          echo "Exit Code   : $TEST_EXIT_CODE"
+          echo "=========================================="
+
+          # Exit with test exit code to fail job if tests fail
+          exit $TEST_EXIT_CODE
+        env:
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_DATABASE: auto_clinic_test
+          DB_USERNAME: test_user
+          DB_PASSWORD: test_password
+
+      # ----------------------------------------------------------
+      # Step 8: Generate Test Summary Report
+      # ----------------------------------------------------------
+      - name: "📊 Generate Test Summary"
+        if: always()  # Run even if tests fail
+        run: |
+          mkdir -p storage/test-results
+
+          # Create a comprehensive test report
+          cat > storage/test-results/test-summary.txt << EOF
+          ============================================================
+          ZAVISOFT CI/CD PIPELINE — TEST RESULTS
+          ============================================================
+          Repository  : ${{ github.repository }}
+          Branch      : ${{ github.ref_name }}
+          Commit SHA  : ${{ github.sha }}
+          Commit Msg  : ${{ github.event.head_commit.message }}
+          Triggered by: ${{ github.actor }}
+          Run ID      : ${{ github.run_id }}
+          Timestamp   : $(date '+%Y-%m-%d %H:%M:%S UTC')
+          Workflow    : ${{ github.workflow }}
+          ============================================================
+
+          TEST OUTPUT:
+          ------------
+          $(cat storage/test-results/test-output.txt 2>/dev/null || echo "No test output found")
+
+          ============================================================
+          EOF
+
+          echo "Test summary generated successfully"
+          cat storage/test-results/test-summary.txt
+
+      # ----------------------------------------------------------
+      # Step 9: Upload test results as GitHub Artifact
+      # ----------------------------------------------------------
+      - name: "📤 Upload Test Results Artifact"
+        uses: actions/upload-artifact@v4
+        if: always()  # Upload even if tests fail — important for debugging
+        with:
+          name: test-results-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            storage/test-results/
+          retention-days: 30  # Keep for 30 days
+          if-no-files-found: warn
+
+      # ----------------------------------------------------------
+      # Step 10: Post test results as PR comment (optional)
+      # ----------------------------------------------------------
+      - name: "💬 Post Test Results to PR"
+        uses: actions/github-script@v7
+        if: github.event_name == 'pull_request' && always()
+        with:
+          script: |
+            const fs = require('fs');
+            let summary = '';
+            try {
+              summary = fs.readFileSync('storage/test-results/test-summary.txt', 'utf8');
+            } catch(e) {
+              summary = 'Test results not available';
+            }
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '## 🧪 Test Results\n\n' + summary + '\n'
+            });
+
+  # ============================================================
+  # JOB 2: DEPLOY
+  # Runs on: self-hosted EC2 runner (zavisoft label)
+  # Depends on: test job must pass
+  # Performs: download artifact, display results, deploy app
+  # ============================================================
+  deploy:
+    name: "🚀 Deploy to EC2"
+    runs-on: [self-hosted, zavisoft, production]  # Self-hosted runner labels
+    needs: test  # Only runs if test job succeeds
+
+    # Only deploy on push to main branch
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    # Deployment environment (for GitHub Environments protection)
+    environment:
+      name: production
+      url: http://YOUR_EC2_IP
+
+    steps:
+      # ----------------------------------------------------------
+      # Step 1: Checkout repository on the runner
+      # ----------------------------------------------------------
+      - name: "📥 Checkout Repository"
+        uses: actions/checkout@v4
+        with:
+          clean: true  # Clean workspace before checkout
+
+      # ----------------------------------------------------------
+      # Step 2: Download test results artifact
+      # ----------------------------------------------------------
+      - name: "📥 Download Test Results Artifact"
+        uses: actions/download-artifact@v4
+        with:
+          name: test-results-${{ github.run_id }}-${{ github.run_attempt }}
+          path: /tmp/test-results/
+
+      # ----------------------------------------------------------
+      # Step 3: Display artifact content
+      # ----------------------------------------------------------
+      - name: "📋 Display Test Results Artifact"
+        run: |
+          echo "============================================"
+          echo " DOWNLOADED ARTIFACT CONTENTS"
+          echo "============================================"
+
+          echo "Files in artifact:"
+          ls -la /tmp/test-results/
+
+          echo ""
+          echo "--- Test Summary ---"
+          cat /tmp/test-results/test-summary.txt || echo "Summary file not found"
+
+          echo ""
+          echo "--- Test Output ---"
+          cat /tmp/test-results/test-output.txt || echo "Output file not found"
+
+          echo "============================================"
+          echo " Artifact display complete"
+          echo "============================================"
+
+      # ----------------------------------------------------------
+      # Step 4: Prepare deployment environment
+      # ----------------------------------------------------------
+      - name: "🔧 Prepare Deployment Environment"
+        run: |
+          echo "============================================"
+          echo " Preparing Deployment Environment"
+          echo "============================================"
+
+          # Create deployment directories
+          mkdir -p /var/www/auto-clinic/releases
+          mkdir -p /var/www/auto-clinic/shared/storage/app/public
+          mkdir -p /var/www/auto-clinic/shared/storage/framework/{sessions,views,cache}
+          mkdir -p /var/www/auto-clinic/shared/storage/logs
+          mkdir -p /var/www/auto-clinic/shared/bootstrap/cache
+
+          echo "Release : ${{ github.sha }}"
+          echo "Branch  : ${{ github.ref_name }}"
+          echo "Actor   : ${{ github.actor }}"
+
+      # ----------------------------------------------------------
+      # Step 5: Create release directory with timestamp
+      # ----------------------------------------------------------
+      - name: "📁 Create Release Directory"
+        run: |
+          # Create timestamped release directory
+          RELEASE_DIR="/var/www/auto-clinic/releases/$(date '+%Y%m%d%H%M%S')-${{ github.sha }}"
+          echo "RELEASE_DIR=$RELEASE_DIR" >> $GITHUB_ENV
+
+          mkdir -p $RELEASE_DIR
+
+          # Copy application files to release directory
+          cp -r $GITHUB_WORKSPACE/. $RELEASE_DIR/
+
+          echo "Release directory created: $RELEASE_DIR"
+          ls -la $RELEASE_DIR
+
+      # ----------------------------------------------------------
+      # Step 6: Install Composer dependencies (production mode)
+      # ----------------------------------------------------------
+      - name: "📦 Install Composer Dependencies (Production)"
+        run: |
+          cd $RELEASE_DIR
+
+          # Install without dev dependencies for production
+          composer install \
+            --no-interaction \
+            --no-dev \
+            --prefer-dist \
+            --optimize-autoloader \
+            --no-scripts
+
+          echo "Composer dependencies installed"
+
+      # ----------------------------------------------------------
+      # Step 7: Configure environment file for production
+      # ----------------------------------------------------------
+      - name: "⚙️ Configure Production Environment"
+        run: |
+          cd $RELEASE_DIR
+
+          # Create .env from example
+          cp .env.example .env
+
+          # Set production values using GitHub Secrets
+          sed -i 's/APP_ENV=.*/APP_ENV=production/' .env
+          sed -i 's/APP_DEBUG=.*/APP_DEBUG=false/' .env
+          sed -i 's|APP_URL=.*|APP_URL=${{ secrets.APP_URL }}|' .env
+          sed -i 's/APP_KEY=.*/APP_KEY=${{ secrets.APP_KEY }}/' .env
+
+          # Database configuration
+          sed -i 's/DB_HOST=.*/DB_HOST=${{ secrets.DB_HOST }}/' .env
+          sed -i 's/DB_DATABASE=.*/DB_DATABASE=${{ secrets.DB_DATABASE }}/' .env
+          sed -i 's/DB_USERNAME=.*/DB_USERNAME=${{ secrets.DB_USERNAME }}/' .env
+          sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=${{ secrets.DB_PASSWORD }}/' .env
+
+          # Set cache and session to use Redis (production optimization)
+          sed -i 's/CACHE_DRIVER=.*/CACHE_DRIVER=redis/' .env
+          sed -i 's/SESSION_DRIVER=.*/SESSION_DRIVER=redis/' .env
+          sed -i 's/QUEUE_CONNECTION=.*/QUEUE_CONNECTION=redis/' .env
+
+          echo "Environment configured for production"
+
+      # ----------------------------------------------------------
+      # Step 8: Link shared storage (persistent across releases)
+      # ----------------------------------------------------------
+      - name: "🔗 Link Shared Storage"
+        run: |
+          # Remove storage from release (will be replaced by symlink)
+          rm -rf $RELEASE_DIR/storage
+
+          # Symlink to shared persistent storage
+          ln -nfs /var/www/auto-clinic/shared/storage $RELEASE_DIR/storage
+
+          # Symlink bootstrap/cache
+          rm -rf $RELEASE_DIR/bootstrap/cache
+          ln -nfs /var/www/auto-clinic/shared/bootstrap/cache $RELEASE_DIR/bootstrap/cache
+
+          echo "Shared storage linked"
+
+      # ----------------------------------------------------------
+      # Step 9: Run artisan commands
+      # ----------------------------------------------------------
+      - name: "🎯 Run Laravel Artisan Commands"
+        run: |
+          cd $RELEASE_DIR
+
+          # Run migrations
+          php artisan migrate --force --no-interaction
+
+          # Optimize for production
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
+          php artisan event:cache
+
+          # Create storage symlink
+          php artisan storage:link --force
+
+          echo "Artisan commands completed"
+
+      # ----------------------------------------------------------
+      # Step 10: Set correct file permissions
+      # ----------------------------------------------------------
+      - name: "🔐 Set File Permissions"
+        run: |
+          # Set ownership
+          sudo chown -R ubuntu:www-data $RELEASE_DIR
+
+          # Set directory permissions
+          find $RELEASE_DIR -type d -exec chmod 755 {} \;
+
+          # Set file permissions
+          find $RELEASE_DIR -type f -exec chmod 644 {} \;
+
+          # Set storage permissions (writable by web server)
+          chmod -R 775 /var/www/auto-clinic/shared/storage
+          chmod -R 775 /var/www/auto-clinic/shared/bootstrap/cache
+
+          echo "File permissions set"
+
+      # ----------------------------------------------------------
+      # Step 11: Atomic deployment — switch current symlink
+      # This is the ZERO-DOWNTIME deployment moment
+      # ----------------------------------------------------------
+      - name: "⚡ Activate Release (Zero-Downtime Switch)"
+        run: |
+          echo "Activating release: $RELEASE_DIR"
+
+          # Atomically switch the 'current' symlink to the new release
+          # ln -nfs is atomic on Linux — no downtime during switch
+          ln -nfs $RELEASE_DIR /var/www/auto-clinic/current
+
+          echo "✅ Release activated: /var/www/auto-clinic/current → $RELEASE_DIR"
+          ls -la /var/www/auto-clinic/current
+
+      # ----------------------------------------------------------
+      # Step 12: Reload services
+      # ----------------------------------------------------------
+      - name: "🔄 Reload Services"
+        run: |
+          # Reload PHP-FPM to clear opcache
+          sudo systemctl reload php8.2-fpm
+
+          # Reload Nginx
+          sudo systemctl reload nginx
+
+          # Restart queue workers if supervisor is running
+          sudo systemctl restart supervisor 2>/dev/null || true
+          sudo supervisorctl restart all 2>/dev/null || true
+
+          echo "Services reloaded"
+
+      # ----------------------------------------------------------
+      # Step 13: Clean up old releases (keep last 5)
+      # ----------------------------------------------------------
+      - name: "🧹 Cleanup Old Releases"
+        run: |
+          cd /var/www/auto-clinic/releases
+
+          # Keep only the last 5 releases
+          ls -t | tail -n +6 | xargs -I {} rm -rf {}
+
+          echo "Old releases cleaned up. Current releases:"
+          ls -la /var/www/auto-clinic/releases/
+
+      # ----------------------------------------------------------
+      # Step 14: Health check — verify deployment
+      # ----------------------------------------------------------
+      - name: "❤️ Deployment Health Check"
+        run: |
+          echo "Running deployment health check..."
+
+          # Wait a moment for services to settle
+          sleep 5
+
+          # Check if the application responds (HTTP 200 or redirect)
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost/ || echo "000")
+
+          echo "HTTP Status: $HTTP_STATUS"
+
+          if [[ "$HTTP_STATUS" == "200" || "$HTTP_STATUS" == "302" || "$HTTP_STATUS" == "301" ]]; then
+            echo "✅ Health check PASSED — Application is live!"
+          else
+            echo "⚠️  Health check returned: $HTTP_STATUS"
+            echo "Application may need manual verification"
+          fi
+
+          # Check Laravel is running
+          cd /var/www/auto-clinic/current
+          php artisan --version
+
+          echo "============================================"
+          echo " DEPLOYMENT COMPLETE"
+          echo "============================================"
+          echo " Repository : ${{ github.repository }}"
+          echo " Branch     : ${{ github.ref_name }}"
+          echo " Commit     : ${{ github.sha }}"
+          echo " Deployed by: ${{ github.actor }}"
+          echo " Timestamp  : $(date '+%Y-%m-%d %H:%M:%S UTC')"
+          echo " Release Dir: $RELEASE_DIR"
+          echo "============================================"
