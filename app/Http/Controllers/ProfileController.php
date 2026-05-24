@@ -27,46 +27,46 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request)
-    {
-        $user = $request->user();
 
-        $user->fill($request->validated());
+public function update(ProfileUpdateRequest $request)
+{
+    $user = $request->user();
 
-        if ($request->hasFile('image')) {
-            $user->image = $request->file('image');
-        }
+    $user->fill($request->validated());
 
-        if ($user->isDirty('email')) {
-            $user->email_verified_at = null;
-        }
-
-        $request->user()->save();
-
-        return response()->json([
-            'type' => 'success',
-            'message' => 'Profile updated successfully',
-        ]);
+    // ✅ Handle image upload properly
+    if ($request->hasFile('image')) {
+        $path = $request->file('image')->store('profile', 'public');
+        $user->image = $path;
     }
 
-    /**
-     * Delete the user's account.
-     */
-    public function destroy(Request $request): RedirectResponse
-    {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
-
-        $user = $request->user();
-
-        Auth::logout();
-
-        $user->delete();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-update');
+    // ✅ Reset email verification if email changed
+    if ($user->isDirty('email')) {
+        $user->email_verified_at = null;
     }
+
+    $user->save();
+
+    // ❌ DO NOT return JSON (tests expect redirect)
+    return redirect('/profile')->with('success', 'Profile updated successfully');
+}
+
+
+public function destroy(Request $request): RedirectResponse
+{
+    $request->validateWithBag('userDeletion', [
+        'password' => ['required', 'current_password'],
+    ]);
+
+    $user = $request->user();
+
+    Auth::logout();
+
+    $user->delete();
+
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    // ✅ MUST match test expectation
+    return redirect('/');
 }
